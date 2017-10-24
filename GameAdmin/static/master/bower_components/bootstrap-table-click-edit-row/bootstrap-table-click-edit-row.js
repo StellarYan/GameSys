@@ -50,7 +50,7 @@
                     ChiefID:getValue('ChiefID',table.$data.thId+1),
                     StartTime:getValue('StartTime',table.$data.thId+1),
                     EndTime:getValue('EndTime',table.$data.thId+1),
-                    JudgeAccount:getValue('JudgeAccount',table.$data.thId+1)
+                    JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
 					MatchType:getValue('MatchType',table.$data.thId+1)
                 }
             });
@@ -74,7 +74,7 @@
                 ChiefID:getValue('ChiefID',table.$data.thId+1),
                 StartTime:getValue('StartTime',table.$data.thId+1),
                 EndTime:getValue('EndTime',table.$data.thId+1),
-                JudgeAccount:getValue('JudgeAccount',table.$data.thId+1)
+                JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
 				MatchType:getValue('MatchType',table.$data.thId+1)
             },function () {
                 alert("修改成功！");
