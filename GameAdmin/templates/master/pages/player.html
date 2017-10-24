@@ -282,9 +282,9 @@
               return row.PlayerID;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:Player,
-            ID:row.PlayerID
+            Type:"Delete",
+            Table:"Player",
+            ID:ids
           })
           $("#player").bootstrapTable('remove', {
               field: 'PlayerID',
@@ -299,8 +299,8 @@
   $(function () {
     $('.modal-footer > #submit').click(function () {
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:Player,
+            Type:"Add",
+            Table:"Player",
             PlayerID:$("#PlayerID").val(),
             ID:$("#ID").val(),
             Name:$("#Name").val(),

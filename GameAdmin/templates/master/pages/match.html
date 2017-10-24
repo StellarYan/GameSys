@@ -311,9 +311,9 @@
               return row.MatchID;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:Match,
-            ID:row.MatchID
+            Type:"Delete",
+            Table:"Match",
+            ID:ids
           })
           $table.bootstrapTable('remove', {
               field: 'MatchID',
@@ -327,8 +327,8 @@
   $(function () {
   $('.modal-footer > #submit').click(function () {
     $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:Match,
+            Type:"Add",
+            Table:"Match",
             MatchID:$("#MatchID").val(),
             Group:$("#Group").val(),
             Event:$("#Event").val(),

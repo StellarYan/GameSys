@@ -272,9 +272,9 @@
               return row.ID;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:TeamCoach,
-            ID:row.ID
+            Type:"Delete",
+            Table:"TeamCoach",
+            ID:ids
           })
           //并且执行向服务器的提交删除请求
           $("#teamcoach").bootstrapTable('remove', {
@@ -290,8 +290,8 @@
     $('.modal-footer > #submit').click(function () {
       //向服务器提交数据
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:TeamCoach,
+            Type:"Add",
+            Table:"TeamCoach",
             ID:$("#ID").val(),
             Name:$("#Name").val(),
             PhoneNum:$("#PhoneNum").val(),
