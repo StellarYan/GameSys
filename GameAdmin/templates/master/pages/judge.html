@@ -237,25 +237,25 @@
           field: 'state',
           checkbox:true,
       },{
-          field: 'ID',
+          field: 'pk',
           title: '身份证'
       }, {
-          field: 'JudgeAccount',
+          field: 'fields.JudgeAccount',
           title: '裁判账号',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Name',
+          field: 'fields.Name',
           title: '姓名',
           sortable: true,
           editable:"input"
       }, {
-          field: 'PhoneNum',
+          field: 'fields.PhoneNum',
           title: '电话',
           sortable: true,
           editable:"input"
       },{
-        field: 'Password',
+        field: 'fields.Password',
         title: '密码',
         sortable: true,
         editable:"input"
@@ -278,7 +278,7 @@
             ID:ids
           })
           $("#judge").bootstrapTable('remove', {
-              field: 'ID',
+              field: 'fields.ID',
               values: ids
           });
           //并且执行向服务器的提交过程

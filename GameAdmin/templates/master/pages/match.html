@@ -242,35 +242,35 @@
           checkbox:true,
       }, 
         {
-          field: 'MatchID',
+          field: 'pk',
           title: '比赛号'
       }, {
-          field: 'Group',
+          field: 'fields.Group',
           title: '比赛年龄组',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Event',
+          field: 'fields.Event',
           title: '项目',
           sortable: true,
           editable:"input"
       }, {
-          field: 'ChiefID',
+          field: 'fields.ChiefID',
           title: '主裁判身份证',
           sortable: true,
           editable:"input"
       }, {
-          field: 'StartTime',
+          field: 'fields.StartTime',
           title: '预期开始时间',
           sortable: true,
           editable:"input"
       }, {
-          field: 'EndTime',
+          field: 'fields.EndTime',
           title: '预期结束时间',
           sortable: true,
           editable:"input"
       }, {
-          field: 'MatchType',
+          field: 'fields.MatchType',
           title: '比赛类型',
           sortable: true,
           editable:"input"
@@ -283,19 +283,19 @@
       url: 'match.json',
       clickEdit: true,
       columns: [{
-          field: 'MatchID',
+          field: 'fields.MatchID',
           title: '比赛号'
       }, {
-          field: 'JudgeID',
+          field: 'fields.JudgeID',
           title: '裁判身份证',
       }, {
-          field: 'PlayerID',
+          field: 'fields.PlayerID',
           title: '运动员号',
       },{
-          field: 'IsChief',
+          field: 'fields.IsChief',
           title: '是否为主裁判',
       },{
-          field: 'Score',
+          field: 'fields.Score',
           title: '成绩',
           editable:"input"
       }],
@@ -316,7 +316,7 @@
             ID:ids
           })
           $table.bootstrapTable('remove', {
-              field: 'MatchID',
+              field: 'fields.MatchID',
               values: ids
           });
           //并且执行向服务器的提交过程

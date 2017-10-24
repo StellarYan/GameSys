@@ -237,20 +237,20 @@
           field: 'state',
           checkbox:true,
       },{
-        field: 'ID',
+        field: 'pk',
         title: '身份证号'
       }, {
-        field: 'Name',
+        field: 'fields.Name',
         title: '姓名',
         sortable: true,
         editable:"input"
     }, {
-        field: 'PhoneNum',
+        field: 'fields.PhoneNum',
         title: '电话',
         sortable: true,
         editable:"input"
     }, {
-        field: 'TeamName',
+        field: 'fields.TeamName',
         title: '小队名称',
         sortable: true,
         editable:"input"
@@ -272,7 +272,7 @@
             ID:ids
           })
           $("#teammedic").bootstrapTable('remove', {
-              field: 'ID',
+              field: 'fields.ID',
               values: ids
           });
           //并且执行向服务器的提交过程
