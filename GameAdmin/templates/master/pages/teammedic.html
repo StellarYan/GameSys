@@ -269,7 +269,7 @@
           $.post("Set",{
             Type:"Delete",
             Table:"TeamMedic",
-            ID:pk
+            ID:pk[0]
           },
           $("#teammedic").bootstrapTable('refresh')
           )

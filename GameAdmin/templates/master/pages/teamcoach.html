@@ -274,7 +274,7 @@
           $.post("Set",{
             Type:"Delete",
             Table:"TeamCoach",
-            ID:pk
+            ID:pk[0]
           },
           $("#teamcoach").bootstrapTable('refresh')
           )

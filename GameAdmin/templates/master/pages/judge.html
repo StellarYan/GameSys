@@ -276,7 +276,7 @@
           $.post("Set",{
             Type:"Delete",
             Table:"Judge",
-            ID:pk
+            ID:pk[0]
           }),
           $("#judge").bootstrapTable('refresh')
           //并且执行向服务器的提交过程
