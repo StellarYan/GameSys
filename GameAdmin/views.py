@@ -1,5 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+
+import json
+import os.path
 # Create your views here.
 
 
@@ -18,32 +24,36 @@ def index(request):
 
     return 0
     
-def Player(request):
-    return render(request,r"master\pages\player.html")
+def GetPlayer(request):
+    return render(request,os.path.join("master","pages","player.html"))
     
-def TeamLeader(request):
-    return render(request,r"master\pages\teamleader.html")
+def GetTeamLeader(request):
+    return render(request,os.path.join("master","pages","teamleader.html"))
     
-def TeamMedic(request):
-    return render(request,r"master\pages\teammedic.html")
+def GetTeamMedic(request):
+    return render(request,os.path.join("master","pages","teammedic.html"))
     
-def TeamCoach(request):
-    return render(request,r"master\pages\teamcoach.html")
+def GetTeamCoach(request):
+    return render(request,os.path.join("master","pages","teamcoach.html"))
     
-def Judge(request):
-    return render(request,r"master\pages\judge.html")
+def GetJudge(request):
+    return render(request,os.path.join("master","pages","judge.html"))
     
-def Team(request):
-    return render(request,r"master\pages\team.html")
+def GetTeam(request):
+    return render(request,os.path.join("master","pages","team.html"))
     
+TableDic = {"Player":Player,"TeamLeader":TeamLeader,"TeamMedic":TeamMedic,"TeamCoach":TeamCoach,"Judge":Judge,"Team":Team}
 def GetJSON(request):
     if request.method == 'GET':
-        data = serializers.serialize("json", Match.objects.all())
+        tableName =request.GET['Table']
+        target_table = TableDic[tableName]
+        
+        data = serializers.serialize("json", target_table.objects.all())
         jdata = json.loads(data)
         return JsonResponse(jdata, safe=False)
     
-def Match(request):
-    return render(request,r"master\pages\match.html")
+def GetMatch(request):
+    return render(request,os.path.join("master","pages","match.html"))
     
 def MatchJSON(request):
 
