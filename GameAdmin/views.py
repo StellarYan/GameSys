@@ -21,8 +21,7 @@ from .models import Judge
 from .models import Team
 
 def index(request):
-
-    return 0
+    return render(request,os.path.join("master","index.html"))
     
 def GetPlayer(request):
     return render(request,os.path.join("master","pages","player.html"))
