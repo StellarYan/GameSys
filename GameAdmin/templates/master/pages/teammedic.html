@@ -168,7 +168,7 @@
           <div class="box">
             <div class="box-body">
               <div id="toolbar">
-                  <button id="delete" class="btn btn-default">删除</button>
+                  <button id="delete" class="btn btn-danger">删除</button>
                   <button id="create" 
                   class="btn btn-default"
                   data-toggle="modal" 
@@ -256,7 +256,7 @@
         editable:"input"
     }],
       responseHandler: function (res) {
-          return res.messages;
+          return res;
       }
     });
   })
