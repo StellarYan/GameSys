@@ -93,7 +93,7 @@ def Set(request):
                         setattr(newobj,para,request.POST[para])
                 newobj.save()
             elif(request.POST['Type']=='Delete'):
-                tobj=target_table.objects.get(pk=request.POST['ID'])
+                tobj=target_table.objects.get(pk=request.POST['pk'])
                 tobj.delete()
         
     return render(request,os.path.join("master","pages","match.html"))
