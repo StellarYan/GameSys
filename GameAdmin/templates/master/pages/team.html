@@ -237,15 +237,15 @@
           field: 'state',
           checkbox:true,
       },{
-          field: 'TeamName',
+          field: 'pk',
           title: '小队姓名'
       }, {
-          field: 'TeamAccount',
+          field: 'fields.TeamAccount',
           title: '账号',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Password',
+          field: 'fields.Password',
           title: '密码',
           sortable: true,
           editable:"input"
@@ -262,12 +262,12 @@
               return row.TeamName;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:TeamName,
-            ID:row.TeamName
+            Type:"Delete",
+            Table:"TeamName",
+            ID:ids
           })
           $("#team").bootstrapTable('remove', {
-              field: 'TeamName',
+              field: 'fields.TeamName',
               values: ids
           });
           //并且执行向服务器的提交过程
@@ -279,8 +279,8 @@
   $(function () {
     $('.modal-footer > #submit').click(function () {
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:Team,
+            Type:"Add",
+            Table:"Team",
             TeamName:$("#TeamName").val(),
             TeamAccount:$("#TeamAccount").val(),
             Password:$("#Password").val()

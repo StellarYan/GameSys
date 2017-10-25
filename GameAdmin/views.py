@@ -19,22 +19,22 @@ def index(request):
     return 0
     
 def Player(request):
-    return render(request,r"master\pages\player.html")
+    return render(request,r"master/pages/player.html")
     
 def TeamLeader(request):
-    return render(request,r"master\pages\teamleader.html")
+    return render(request,r"master/pages/teamleader.html")
     
 def TeamMedic(request):
-    return render(request,r"master\pages\teammedic.html")
+    return render(request,r"master/pages/teammedic.html")
     
 def TeamCoach(request):
-    return render(request,r"master\pages\teamcoach.html")
+    return render(request,r"master/pages/teamcoach.html")
     
 def Judge(request):
-    return render(request,r"master\pages\judge.html")
+    return render(request,r"master/pages/judge.html")
     
 def Team(request):
-    return render(request,r"master\pages\team.html")
+    return render(request,r"master/pages/team.html")
     
 def GetJSON(request):
     if request.method == 'GET':
@@ -43,7 +43,7 @@ def GetJSON(request):
         return JsonResponse(jdata, safe=False)
     
 def Match(request):
-    return render(request,r"master\pages\match.html")
+    return render(request,r"master/pages/match.html")
     
 def MatchJSON(request):
 
