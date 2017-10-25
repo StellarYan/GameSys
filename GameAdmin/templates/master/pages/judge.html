@@ -201,9 +201,9 @@
 
 <!-- jQuery 3 -->
 <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
-<scirpt src=>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<scirpt src="{% static "/master/plugins/jquery-validate/jquery-validate.min.js" %}"></scirpt>
 <!-- BootstrapTables -->
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
@@ -286,7 +286,16 @@
   //添加操作
   $(function () {
     $('.modal-footer > #submit').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $('#testform').validate({
+        rules: {
+          ID:"required",
+          JudgeAccount:"required",
+          Name:"required",
+          PhoneNum:"required",
+          Password:"required"
+        },
+        submitHandler:function(){
+          $.post(window.location.hostname+"/GameAdmin/Set",{
             Type:"Add",
             Table:"Judge",
             ID:$("#ID").val(),
@@ -294,13 +303,15 @@
             Name:$("#Name").val(),
             PhoneNum:$("#PhoneNum").val(),
             Password:$("#Password").val()
-      },
-      $("#judge").bootstrapTable('refresh'),
-      )
-      
+          })
+        }
+      });
+      $("#judge").bootstrapTable('refresh');
         //执行插入操作，并向服务器提交数据
         //并且执行向服务器的提交过程
-    });
+    }
+      
+    );
   });
 
   //修改操作
@@ -315,7 +326,7 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="testform">
           <div class="form-group">
             <label for="ID" class="control-label col-sm-4">身份证</label>
             <div class="col-sm-6"><input type="text" class="form-control input-md" id="ID"></div>
