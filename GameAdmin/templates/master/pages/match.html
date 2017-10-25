@@ -400,13 +400,13 @@
   //删除操作
   $(function () {
       $('#delete').click(function () {
-          var ids = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+          var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
           $.post("Set",{
             Type:"Delete",
             Table:"Match",
-            ID:ids
+            ID:pk
             
           },
           $("#match").bootstrapTable('refresh')

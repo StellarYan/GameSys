@@ -270,13 +270,13 @@
   //删除操作
   $(function () {
       $('#delete').click(function () {
-          var ids = $.map($("#judge").bootstrapTable('getSelections'), function (row) {
+          var pk = $.map($("#judge").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
           $.post("Set",{
             Type:"Delete",
             Table:"Judge",
-            ID:ids
+            ID:pk
           }),
           $("#judge").bootstrapTable('refresh')
           //并且执行向服务器的提交过程

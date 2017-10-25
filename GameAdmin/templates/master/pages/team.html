@@ -258,13 +258,13 @@
 
   $(function () {
       $('#delete').click(function () {
-          var ids = $.map($("#team").bootstrapTable('getSelections'), function (row) {
+          var pk = $.map($("#team").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
           $.post("Set",{
             Type:"Delete",
             Table:"TeamName",
-            ID:ids
+            ID:pk
           },
           $("#team").bootstrapTable('refresh')
           )
