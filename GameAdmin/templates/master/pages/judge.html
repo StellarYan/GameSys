@@ -273,7 +273,7 @@
           var ids = $.map($("#judge").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"Judge",
             ID:ids
@@ -302,7 +302,7 @@
         Password:"请输入密码"
         },
         submitHandler:function(){
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Add",
             Table:"Judge",
             ID:$("#ID").val(),

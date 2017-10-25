@@ -400,7 +400,7 @@
           var ids = $.map($("#match").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"Match",
             ID:ids
@@ -415,7 +415,7 @@
   //插入操作
   $(function () {
     $('.modal-footer > #submitmatch').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
               Type:"Add",
               Table:"Match",
               MatchID:$("#MatchID").val(),
@@ -439,7 +439,7 @@
           $.map($("#score").bootstrapTable('getSelections'), function (row) {
             ids.push(row.fields.MatchID,row.fields.JudgeID,row.fields.PlayerID);
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"Score",
             MatchID:ids[0],
@@ -455,7 +455,7 @@
   //插入操作
   $(function () {
     $('.modal-footer > #submitscore').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
               Type:"Add",
               Table:"Score",
               MatchID:$("#Score-MatchID").val(),
@@ -476,7 +476,7 @@
           $.map($("#matchjudge").bootstrapTable('getSelections'), function (row) {
             ids.push(row.fields.MatchID,row.fields.JudgeID);
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"MatchJudge",
             MatchID:ids[0],
@@ -491,7 +491,7 @@
   //插入操作
   $(function () {
     $('.modal-footer > #submitmatchjudge').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
               Type:"Add",
               Table:"MatchJudge",
               MatchID:$("#MatchJudge-MatchID").val(),
@@ -511,7 +511,7 @@
           $.map($("#playmatch").bootstrapTable('getSelections'), function (row) {
             ids.push(row.fields.MatchID,row.fields.PlayerID);
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"PlayMatch",
             MatchID:ids[0],
@@ -526,7 +526,7 @@
   //插入操作
   $(function () {
     $('.modal-footer > #submitplaymatch').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
               Type:"Add",
               Table:"PlayMatch",
               MatchID:$("#PlayMatch-MatchID").val(),

@@ -281,7 +281,7 @@
           var ids = $.map($("#player").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"Player",
             ID:ids
@@ -296,7 +296,7 @@
     //插入操作
   $(function () {
     $('.modal-footer > #submit').click(function () {
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
             Type:"Add",
             Table:"Player",
             PlayerID:$("#PlayerID").val(),

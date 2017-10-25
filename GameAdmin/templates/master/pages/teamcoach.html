@@ -271,7 +271,7 @@
           var ids = $.map($("#teamcoach").bootstrapTable('getSelections'), function (row) {
               return row.pk;
           });
-          $.post(window.location.hostname+"/GameAdmin/Set",{
+          $.post("Set",{
             Type:"Delete",
             Table:"TeamCoach",
             ID:ids
@@ -287,7 +287,7 @@
   $(function () {
     $('.modal-footer > #submit').click(function () {
       //向服务器提交数据
-      $.post(window.location.hostname+"/GameAdmin/Set",{
+      $.post("Set",{
             Type:"Add",
             Table:"TeamCoach",
             ID:$("#ID").val(),
