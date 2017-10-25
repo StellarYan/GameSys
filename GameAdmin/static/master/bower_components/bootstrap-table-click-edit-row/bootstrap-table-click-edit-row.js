@@ -32,7 +32,7 @@
         var replaceData = function(){
             $.post(window.location.hostname+"/GameAdmin/Set",{
                 Type:"Upgrade",
-                Table:table.$option.uniqueId,
+                Table: table.bootstrapTable('getOptions').uniqueId,
                 TeamName: getValue('TeamName',table.$data.thId+1),
                 TeamAccount: getValue('TeamAccount',table.$data.thId+1),
                 Password: getValue('Password',table.$data.thId+1),
@@ -75,9 +75,6 @@
             table.editing = false;
             table.columns.forEach(function(column, i){
                 if (!column.editable) return;
-                if(table.$option.uniqueId=="Match") {
-                    $('#score').bootstrapTable({clickEdit:false})
-                }
                 switch(column.editable){
                     case 'input':
                         var div=$('<div class="editable-input col-md-12 col-sm-12 col-xs-12" style="position: relative;"/>');
