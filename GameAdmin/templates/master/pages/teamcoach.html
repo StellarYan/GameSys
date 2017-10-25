@@ -237,25 +237,25 @@
           field: 'state',
           checkbox:true,
       },{
-          field: 'ID',
+          field: 'pk',
           title: '身份证号'
       }, {
-          field: 'Name',
+          field: 'fields.Name',
           title: '姓名',
           sortable: true,
           editable:"input"
       }, {
-          field: 'PhoneNum',
+          field: 'fields.PhoneNum',
           title: '电话',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Gender',
+          field: 'fields.Gender',
           title: '性别',
           sortable: true,
           editable:"input"
       }, {
-          field: 'TeamName',
+          field: 'fields.TeamName',
           title: '小队名称',
           sortable: true,
           editable:"input"
@@ -269,16 +269,16 @@
   $(function () {
       $('#delete').click(function () {
           var ids = $.map($("#teamcoach").bootstrapTable('getSelections'), function (row) {
-              return row.ID;
+              return row.pk;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:TeamCoach,
-            ID:row.ID
+            Type:"Delete",
+            Table:"TeamCoach",
+            ID:ids
           })
           //并且执行向服务器的提交删除请求
           $("#teamcoach").bootstrapTable('remove', {
-              field: 'ID',
+              field: 'pk',
               values: ids
           });
       });
@@ -290,25 +290,27 @@
     $('.modal-footer > #submit').click(function () {
       //向服务器提交数据
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:TeamCoach,
+            Type:"Add",
+            Table:"TeamCoach",
             ID:$("#ID").val(),
             Name:$("#Name").val(),
             PhoneNum:$("#PhoneNum").val(),
             Gender:$("#Gender").val(),
             TeamName:$("#TeamName").val()
-      })
+      },
       $("#teamcoach").bootstrapTable('insertRow', {
           index:1,
           row:{
-            ID:$("#ID").val(),
-            Name:$("#Name").val(),
-            PhoneNum:$("#PhoneNum").val(),
-            Gender:$("#Gender").val(),
-            TeamName:$("#TeamName").val()
+            pk:$("#ID").val(),
+            "fields.Name":$("#Name").val(),
+            "fields.PhoneNum":$("#PhoneNum").val(),
+            "fields.Gender":$("#Gender").val(),
+            "fields.TeamName":$("#TeamName").val()
           }
         }
-      );
+      )
+      )
+      
       //执行插入操作
     });
   });

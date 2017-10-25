@@ -237,15 +237,15 @@
           field: 'state',
           checkbox:true,
       },{
-          field: 'TeamName',
+          field: 'pk',
           title: '小队姓名'
       }, {
-          field: 'TeamAccount',
+          field: 'fields.TeamAccount',
           title: '账号',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Password',
+          field: 'fields.Password',
           title: '密码',
           sortable: true,
           editable:"input"
@@ -259,15 +259,15 @@
   $(function () {
       $('#delete').click(function () {
           var ids = $.map($("#team").bootstrapTable('getSelections'), function (row) {
-              return row.TeamName;
+              return row.pk;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:TeamName,
-            ID:row.TeamName
+            Type:"Delete",
+            Table:"TeamName",
+            ID:ids
           })
           $("#team").bootstrapTable('remove', {
-              field: 'TeamName',
+              field: 'pk',
               values: ids
           });
           //并且执行向服务器的提交过程
@@ -279,21 +279,23 @@
   $(function () {
     $('.modal-footer > #submit').click(function () {
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:Team,
+            Type:"Add",
+            Table:"Team",
             TeamName:$("#TeamName").val(),
             TeamAccount:$("#TeamAccount").val(),
             Password:$("#Password").val()
-      })
+      },
       $("#team").bootstrapTable('insertRow', {
           index:1,
           row:{
-            TeamName:$("#TeamName").val(),
-            TeamAccount:$("#TeamAccount").val(),
-            Password:$("#Password").val()
+            pk:$("#TeamName").val(),
+            "fields.TeamAccount":$("#TeamAccount").val(),
+            "fields.Password":$("#Password").val()
           }
         }
-      );
+      )
+      )
+      
         //执行插入操作，并向服务器提交数据
         //并且执行向服务器的提交过程
     });

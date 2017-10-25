@@ -237,35 +237,35 @@
           field: 'state',
           checkbox:true,
       },{
-          field: 'PlayerID',
+          field: 'pk',
           title: '运动员号'
       }, {
-          field: 'ID',
+          field: 'fields.ID',
           title: '身份证号',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Name',
+          field: 'fields.Name',
           title: '姓名',
           sortable: true,
           editable:"input"
       }, {
-          field: 'Age',
+          field: 'fields.Age',
           title: '年龄',
           sortable: true,
           editable:"input"
       },{
-          field: 'Group',
+          field: 'fields.Group',
           title: '比赛年龄组',
           sortable: true,
           editable:"input"
       }, {
-          field: 'CultureScore',
+          field: 'fields.CultureScore',
           title: '文化成绩',
           sortable: true,
           editable:"input"
       }, {
-          field: 'TeamName',
+          field: 'fields.TeamName',
           title: '小队名称',
           sortable: true,
           editable:"input"
@@ -279,15 +279,15 @@
   $(function () {
       $('#delete').click(function () {
           var ids = $.map($("#player").bootstrapTable('getSelections'), function (row) {
-              return row.PlayerID;
+              return row.pk;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Delete,
-            Table:Player,
-            ID:row.PlayerID
+            Type:"Delete",
+            Table:"Player",
+            ID:ids
           })
           $("#player").bootstrapTable('remove', {
-              field: 'PlayerID',
+              field: 'pk',
               values: ids
           });
           //并且执行向服务器的提交过程
@@ -299,8 +299,8 @@
   $(function () {
     $('.modal-footer > #submit').click(function () {
       $.post(window.location.hostname+"/GameAdmin/Set",{
-            Type:Add,
-            Table:Player,
+            Type:"Add",
+            Table:"Player",
             PlayerID:$("#PlayerID").val(),
             ID:$("#ID").val(),
             Name:$("#Name").val(),
@@ -308,20 +308,22 @@
             Group:$("#Group").val(),
             CultureScore:$("#CultureScore").val(),
             TeamName:$("#TeamName").val()
-      })
+      },
       $("#player").bootstrapTable('insertRow', {
           index:1,
           row:{
-            PlayerID:$("#PlayerID").val(),
-            ID:$("#ID").val(),
-            Name:$("#Name").val(),
-            Age:$("#Age").val(),
-            Group:$("#Group").val(),
-            CultureScore:$("#CultureScore").val(),
-            TeamName:$("#TeamName").val()
+            pk:$("#PlayerID").val(),
+            "fields.ID":$("#ID").val(),
+            "fields.Name":$("#Name").val(),
+            "fields.Age":$("#Age").val(),
+            "fields.Group":$("#Group").val(),
+            "fields.CultureScore":$("#CultureScore").val(),
+            "fields.TeamName":$("#TeamName").val()
           }
         }
-      );
+      )
+      )
+      
         //执行插入操作，并向服务器提交数据
         //并且执行向服务器的提交过程
     });
