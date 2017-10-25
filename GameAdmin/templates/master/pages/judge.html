@@ -203,7 +203,7 @@
 <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-<scirpt src="{% static "/master/bower_components/jquery-validate/jquery-validate.min.js" %}"></scirpt>
+<script src="{% static "/master/bower_components/jquery-validate/jquery-validate.min.js" %}"></script>
 <!-- BootstrapTables -->
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
@@ -293,6 +293,13 @@
           Name:"required",
           PhoneNum:"required",
           Password:"required"
+        },
+        messages: {
+        ID: "请输入身份证号",
+        JudgeAccount:"请输入裁判账号",
+        Name:"请输入姓名",
+        PhoneNum:"请输入电话号码",
+        Password:"请输入密码"
         },
         submitHandler:function(){
           $.post(window.location.hostname+"/GameAdmin/Set",{
