@@ -285,11 +285,9 @@
             Type:"Delete",
             Table:"Player",
             ID:ids
-          })
-          $("#player").bootstrapTable('remove', {
-              field: 'pk',
-              values: ids
-          });
+          },
+          $("#player").bootstrapTable('refresh')
+          )
           //并且执行向服务器的提交过程
       });
     });
@@ -309,19 +307,7 @@
             CultureScore:$("#CultureScore").val(),
             TeamName:$("#TeamName").val()
       },
-      $("#player").bootstrapTable('insertRow', {
-          index:1,
-          row:{
-            pk:$("#PlayerID").val(),
-            "fields.ID":$("#ID").val(),
-            "fields.Name":$("#Name").val(),
-            "fields.Age":$("#Age").val(),
-            "fields.Group":$("#Group").val(),
-            "fields.CultureScore":$("#CultureScore").val(),
-            "fields.TeamName":$("#TeamName").val()
-          }
-        }
-      )
+      $("#player").bootstrapTable('refresh')
       )
       
         //执行插入操作，并向服务器提交数据

@@ -314,11 +314,9 @@
             Type:"Delete",
             Table:"Match",
             ID:ids
-          })
-          $table.bootstrapTable('remove', {
-              field: 'pk',
-              values: ids
-          });
+          },
+          $("#match").bootstrapTable('refresh')
+          )
           //并且执行向服务器的提交过程
       });
     });
@@ -335,25 +333,10 @@
             ChiefID:$("#ChiefID").val(),
             StartTime:$("#StartTime").val(),
             EndTime:$("#EndTime").val(),
-			MatchType:$("#MatchType").val()
+			      MatchType:$("#MatchType").val()
     },
-    $("#match").bootstrapTable('insertRow', {
-        index:1,
-        row:{
-          pk:$("#MatchID").val(),
-          "fields.Group":$("#Group").val(),
-          "fields.Event":$("#Event").val(),
-          "fields.ChiefID":$("#ChiefID").val(),
-          "fields.StartTime":$("#StartTime").val(),
-          "fields.EndTime":$("#EndTime").val(),
-		      "fields.MatchType":$("#MatchType").val()
-        }
-      }
+    $("#match").bootstrapTable('refresh')
     )
-    )
-    
-      //执行插入操作，并向服务器提交数据
-      //并且执行向服务器的提交过程
   });
   });
 </script>

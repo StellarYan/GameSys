@@ -31,30 +31,6 @@
 
         var replaceData = function(){
 
-            $('.table').bootstrapTable('updateRow', {
-                index: table.$data.thId,
-                row: {
-                    TeamName: getValue('TeamName',table.$data.thId+1),
-                    TeamAccount: getValue('TeamAccount',table.$data.thId+1),
-                    Password: getValue('Password',table.$data.thId+1),
-                    ID:getValue('ID',table.$data.thId+1),
-                    Name:getValue('Name',table.$data.thId+1),
-                    PhoneNum:getValue('PhoneNum',table.$data.thId+1),
-                    Gender:getValue('Gender',table.$data.thId+1),
-                    PlayerID:getValue('PlayerID',table.$data.thId+1),
-                    Age:getValue('Age',table.$data.thId+1),
-                    Group:getValue('Group',table.$data.thId+1),
-                    CultureScore:getValue('CultureScore',table.$data.thId+1),
-                    MatchID:getValue('MatchID',table.$data.thId+1),
-                    Event:getValue('Event',table.$data.thId+1),
-                    ChiefID:getValue('ChiefID',table.$data.thId+1),
-                    StartTime:getValue('StartTime',table.$data.thId+1),
-                    EndTime:getValue('EndTime',table.$data.thId+1),
-                    JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
-					MatchType:getValue('MatchType',table.$data.thId+1)
-                }
-            });
-
             $.post(window.location.hostname+"/GameAdmin/Set",{
                 Type:"Upgrade",
                 Table:table.$option.uniqueId,
@@ -77,7 +53,7 @@
                 JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
 				MatchType:getValue('MatchType',table.$data.thId+1)
             },function () {
-                alert("修改成功！");
+                $(".table").bootstrapTable('refresh')
             })
 
             $('#tooling').remove();

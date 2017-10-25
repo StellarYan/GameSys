@@ -276,11 +276,8 @@
             Type:"Delete",
             Table:"Judge",
             ID:ids
-          })
-          $("#judge").bootstrapTable('remove', {
-              field: 'pk',
-              values: ids
-          });
+          }),
+          $("#judge").bootstrapTable('refresh')
           //并且执行向服务器的提交过程
       });
     });
@@ -297,18 +294,7 @@
             PhoneNum:$("#PhoneNum").val(),
             Password:$("#Password").val()
       },
-      $("#judge").bootstrapTable('insertRow', {
-          index:1,
-          row:{
-            pk:$("#ID").val(),
-            "fields.JudgeAccount":$("#JudgeAccount").val(),
-            "fields.Name":$("#Name").val(),
-            "fields.PhoneNum":$("#PhoneNum").val(),
-            "fields.Password":$("#Password").val()
-          }
-        }
-      ),
-      alert('插入成功！')
+      $("#judge").bootstrapTable('refresh'),
       )
       
         //执行插入操作，并向服务器提交数据
@@ -317,8 +303,6 @@
   });
 
   //修改操作
-
-
 </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

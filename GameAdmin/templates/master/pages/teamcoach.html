@@ -275,12 +275,10 @@
             Type:"Delete",
             Table:"TeamCoach",
             ID:ids
-          })
-          //并且执行向服务器的提交删除请求
-          $("#teamcoach").bootstrapTable('remove', {
-              field: 'pk',
-              values: ids
-          });
+          },
+          $("#teamcoach").bootstrapTable('refresh')
+          )
+          
       });
     });
 
@@ -298,17 +296,7 @@
             Gender:$("#Gender").val(),
             TeamName:$("#TeamName").val()
       },
-      $("#teamcoach").bootstrapTable('insertRow', {
-          index:1,
-          row:{
-            pk:$("#ID").val(),
-            "fields.Name":$("#Name").val(),
-            "fields.PhoneNum":$("#PhoneNum").val(),
-            "fields.Gender":$("#Gender").val(),
-            "fields.TeamName":$("#TeamName").val()
-          }
-        }
-      )
+      $("#teamcoach").bootstrapTable('refresh')
       )
       
       //执行插入操作

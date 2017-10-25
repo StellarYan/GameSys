@@ -265,11 +265,9 @@
             Type:"Delete",
             Table:"TeamName",
             ID:ids
-          })
-          $("#team").bootstrapTable('remove', {
-              field: 'pk',
-              values: ids
-          });
+          },
+          $("#team").bootstrapTable('refresh')
+          )
           //并且执行向服务器的提交过程
       });
     });
@@ -285,19 +283,8 @@
             TeamAccount:$("#TeamAccount").val(),
             Password:$("#Password").val()
       },
-      $("#team").bootstrapTable('insertRow', {
-          index:1,
-          row:{
-            pk:$("#TeamName").val(),
-            "fields.TeamAccount":$("#TeamAccount").val(),
-            "fields.Password":$("#Password").val()
-          }
-        }
+      $("#team").bootstrapTable('refresh')
       )
-      )
-      
-        //执行插入操作，并向服务器提交数据
-        //并且执行向服务器的提交过程
     });
   });
 </script>
