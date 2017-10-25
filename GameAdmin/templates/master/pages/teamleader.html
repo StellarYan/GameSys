@@ -264,7 +264,7 @@
   $(function () {
       $('#delete').click(function () {
           var ids = $.map($("#teamleader").bootstrapTable('getSelections'), function (row) {
-              return row.ID;
+              return row.pk;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
             Type:"Delete",
@@ -284,22 +284,24 @@
       $('.modal-footer > #submit').click(function () {
         $.post(window.location.hostname+"/GameAdmin/Set",{
             Type:"Add",
-            Table:""TeamLeader"",
+            Table:"TeamLeader",
             ID:$("#ID").val(),
             Name:$("#Name").val(),
             PhoneNum:$("#PhoneNum").val(),
             TeamName:$("#TeamName").val()
-        })
+        },
         $("#teamleader").bootstrapTable('insertRow', {
             index:1,
             row:{
-              ID:$("#ID").val(),
-              Name:$("#Name").val(),
-              PhoneNum:$("#PhoneNum").val(),
-              TeamName:$("#TeamName").val()
+              pk:$("#ID").val(),
+              "fields.Name":$("#Name").val(),
+              "fields.PhoneNum":$("#PhoneNum").val(),
+              "fields.TeamName":$("#TeamName").val()
             }
           }
-        );
+        )
+        )
+        
           //执行插入操作，并向服务器提交数据
           //并且执行向服务器的提交过程
       });
