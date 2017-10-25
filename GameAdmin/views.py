@@ -6,7 +6,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 import json
 import os.path
-# Create your views here.
+
 
 
 from .models import PlayMatch
