@@ -308,7 +308,7 @@
   $(function () {
       $('#delete').click(function () {
           var ids = $.map($("#match").bootstrapTable('getSelections'), function (row) {
-              return row.MatchID;
+              return row.pk;
           });
           $.post(window.location.hostname+"/GameAdmin/Set",{
             Type:"Delete",
@@ -316,7 +316,7 @@
             ID:ids
           })
           $table.bootstrapTable('remove', {
-              field: 'fields.MatchID',
+              field: 'pk',
               values: ids
           });
           //并且执行向服务器的提交过程
@@ -336,20 +336,22 @@
             StartTime:$("#StartTime").val(),
             EndTime:$("#EndTime").val(),
 			MatchType:$("#MatchType").val()
-    })
+    },
     $("#match").bootstrapTable('insertRow', {
         index:1,
         row:{
-          MatchID:$("#MatchID").val(),
-          Group:$("#Group").val(),
-          Event:$("#Event").val(),
-          ChiefID:$("#ChiefID").val(),
-          StartTime:$("#StartTime").val(),
-          EndTime:$("#EndTime").val(),
-		  MatchType:$("#MatchType").val()
+          pk:$("#MatchID").val(),
+          "fields.Group":$("#Group").val(),
+          "fields.Event":$("#Event").val(),
+          "fields.ChiefID":$("#ChiefID").val(),
+          "fields.StartTime":$("#StartTime").val(),
+          "fields.EndTime":$("#EndTime").val(),
+		      "fields.MatchType":$("#MatchType").val()
         }
       }
-    );
+    )
+    )
+    
       //执行插入操作，并向服务器提交数据
       //并且执行向服务器的提交过程
   });
