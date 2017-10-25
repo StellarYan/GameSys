@@ -71,7 +71,7 @@ class Judge(models.Model):
     
     
 class Team(models.Model):
-    Name = models.CharField(max_length=20,primary_key=True)
+    TeamName = models.CharField(max_length=20,primary_key=True)
     TeamAccount = models.CharField(max_length=20)
     Password = models.CharField(max_length=20)
     File =models.FileField(upload_to='uploads/', max_length=100)

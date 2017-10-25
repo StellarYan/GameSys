@@ -88,15 +88,12 @@ def Set(request):
                         setattr(tobj,para,request.POST[para])
             elif(request.POST['Type']=='Add'):
                 newobj = target_table()
-                print(hasattr(newobj, "pk"))
                 for para in request.POST:
                     if(hasattr(newobj, para)):
                         setattr(newobj,para,request.POST[para])
                 newobj.save()
-                print("BB")
             elif(request.POST['Type']=='Delete'):
-                print("CC")    
-                
-                
+                tobj=target_table.objects.get(pk=request.POST['ID'])
+                tobj.delete()
         
     return render(request,os.path.join("master","pages","match.html"))
