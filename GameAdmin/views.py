@@ -5,6 +5,7 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields import Field
 from django.db.models import ForeignKey
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 
 
 import json
@@ -60,13 +61,11 @@ def GetTeam(request):
     
 
 def GetJSON(request):
-    
     if request.method == 'GET':
         tableName =request.GET['Table']
         target_table = TableDic[tableName]
         data = serializers.serialize("json", target_table.objects.all())
         jdata = json.loads(data)
-        
         return JsonResponse(jdata, safe=False)
 
 
@@ -96,9 +95,10 @@ def Set(request):
                     print("----")
                     if(hasattr(target_table, para)):
                         print(type(getattr(target_table, para)))
-                        if(isinstance(getattr(target_table, para),ForeignKey)):
-                            print("LLLL")
-                        setattr(newobj,para,request.POST[para])
+                        if(isinstance(getattr(target_table, para),ForwardManyToOneDescriptor)):
+                            setattr(newobj,para+"_id",request.POST[para])#对于外键，django会自动在对象的field的后面加上_id，这里补上即可
+                        else:
+                            setattr(newobj,para,request.POST[para])
                 newobj.save()
             elif(request.POST['Type']=='Delete'):
                 tobj=target_table.objects.get(pk=request.POST['pk'])
