@@ -204,7 +204,7 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
 <script src="{% static "/master/bower_components/inputmask/dist/min/jquery.inputmask.bundle.min.js" %}"></script>
-<script src="{% static "/master/dist/js/custom.js></script>
+<script src="{% static "/master/bower_components/jquery-validate/jquery-validate.min.js" %}"></script>
 <!-- BootstrapTables -->
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
@@ -221,9 +221,6 @@
 
 <!-- page script -->
 <script>
-  $(document).ready(function(){
-    input_mask();
-  })
 
   $(function () {
     $('#judge').bootstrapTable({
@@ -286,28 +283,8 @@
           $("#judge").bootstrapTable('refresh')
           //并且执行向服务器的提交过程
       });
-    });
+  });
 
-  //添加操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-          
-          $.post("Set",{
-            Type:"Add",
-            Table:"Judge",
-            ID:$("#ID").val(),
-            JudgeAccount:$("#JudgeAccount").val(),
-            Name:$("#Name").val(),
-            PhoneNum:$("#PhoneNum").val(),
-            Password:$("#Password").val()
-          })
-        });
-      $("#judge").bootstrapTable('refresh');
-        //执行插入操作，并向服务器提交数据
-        //并且执行向服务器的提交过程
-    });
-
-  //修改操作
 </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -340,12 +317,12 @@
               <label for="Password" class="control-label col-sm-4">密码</label>
               <div class="col-sm-6"><input type="text" class="form-control input-md" id="Password"></div>
           </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right" >确认</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
         </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" id="submit">确认</button>
       </div>
     </div>
   </div>

@@ -271,22 +271,6 @@
           //并且执行向服务器的提交过程
       });
     });
-
-
-    //插入操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-      $.post("Set",{
-            Type:"Add",
-            Table:"Team",
-            TeamName:$("#TeamName").val(),
-            TeamAccount:$("#TeamAccount").val(),
-            Password:$("#Password").val()
-      },
-      $('#team').bootstrapTable('refresh')
-      )
-    });
-  });
 </script>
 </body>
 
@@ -317,7 +301,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary"id="submit">确认</button>
+        <button type="submit" class="btn btn-primary pull-right">确认</button>
       </div>
     </div>
   </div>

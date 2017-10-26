@@ -293,27 +293,6 @@
     });
 
 
-    //插入操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-      $.post("Set",{
-            Type:"Add",
-            Table:"Player",
-            PlayerID:$("#PlayerID").val(),
-            ID:$("#ID").val(),
-            Name:$("#Name").val(),
-            Age:$("#Age").val(),
-            Group:$("#Group").val(),
-            CultureScore:$("#CultureScore").val(),
-            TeamName:$("#TeamName").val()
-      },
-      $("#player").bootstrapTable('refresh')
-      )
-      
-        //执行插入操作，并向服务器提交数据
-        //并且执行向服务器的提交过程
-    });
-  });
 </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -359,7 +338,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" id="submit">确认</button>
+        <button type="submit" class="btn btn-primary pull-right" >确认</button>
       </div>
     </div>
   </div>

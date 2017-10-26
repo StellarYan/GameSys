@@ -283,25 +283,6 @@
     });
 
 
-     //插入操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-      //向服务器提交数据
-      $.post("Set",{
-            Type:"Add",
-            Table:"TeamCoach",
-            ID:$("#ID").val(),
-            Name:$("#Name").val(),
-            PhoneNum:$("#PhoneNum").val(),
-            Gender:$("#Gender").val(),
-            TeamName:$("#TeamName").val()
-      },
-      $("#teamcoach").bootstrapTable('refresh')
-      )
-      
-      //执行插入操作
-    });
-  });
 </script>
 </body>
 
@@ -340,7 +321,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary"id="submit">确认</button>
+        <button type="submit" class="btn btn-primary pull-right">确认</button>
       </div>
     </div>
   </div>
