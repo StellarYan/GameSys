@@ -203,7 +203,8 @@
 <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-<script src="{% static "/master/bower_components/jquery-validate/jquery-validate.min.js" %}"></script>
+<script src="{% static "/master/bower_components/inputmask/dist/min/jquery.inputmask.bundle.min.js" %}"></script>
+<script src="{% static "/master/dist/js/custom.js></script>
 <!-- BootstrapTables -->
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
@@ -220,6 +221,10 @@
 
 <!-- page script -->
 <script>
+  $(document).ready(function(){
+    input_mask();
+  })
+
   $(function () {
     $('#judge').bootstrapTable({
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Judge",
