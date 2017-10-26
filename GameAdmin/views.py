@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields import Field
+from django.db.models import ForeignKey
+
 
 import json
 import os.path
@@ -42,14 +44,14 @@ def GetTeamCoach(request):
     
 def GetJudge(request):
 
-    print("-------------")
-    f = Judge._meta.get_fields()[3]
-    t = Judge.objects.all()[0]
-    if(isinstance(f, Field)):
-        print(f.name)
-        print(hasattr(t, "ID"))
+    # print("-------------")
+    # f = Judge._meta.get_fields()[3]
+    # t = Judge.objects.all()[0]
+    # if(isinstance(f, Field)):
+        # print(f.name)
+        # print(hasattr(t, "ID"))
         
-    print("-------------")
+    # print("-------------")
     
     return render(request,os.path.join("master","pages","judge.html"))
     
@@ -58,6 +60,7 @@ def GetTeam(request):
     
 
 def GetJSON(request):
+    
     if request.method == 'GET':
         tableName =request.GET['Table']
         target_table = TableDic[tableName]
@@ -76,7 +79,7 @@ def MatchJSON(request):
     return 0
     
 def Set(request):
-    print('-----------')
+    print('-------Start Set--------')
     if request.method == 'POST':
         tableName =request.POST['Table']
         target_table = TableDic[tableName]
@@ -88,12 +91,19 @@ def Set(request):
                         setattr(tobj,para,request.POST[para])
             elif(request.POST['Type']=='Add'):
                 newobj = target_table()
+                print(hasattr(target_table, "TeamName"))
                 for para in request.POST:
-                    if(hasattr(newobj, para)):
+                    print("----")
+                    if(hasattr(target_table, para)):
+                        print(type(getattr(target_table, para)))
+                        if(isinstance(getattr(target_table, para),ForeignKey)):
+                            print("LLLL")
                         setattr(newobj,para,request.POST[para])
                 newobj.save()
             elif(request.POST['Type']=='Delete'):
                 tobj=target_table.objects.get(pk=request.POST['pk'])
+                print('Delte')
+                print(tobj)
                 tobj.delete()
         
     return render(request,os.path.join("master","pages","match.html"))

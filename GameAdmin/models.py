@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 
+
 class PlayMatch(models.Model):
     class Meta:
         unique_together = (('MatchID', 'PlayerID'),)
