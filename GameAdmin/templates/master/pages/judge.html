@@ -286,22 +286,7 @@
   //添加操作
   $(function () {
     $('.modal-footer > #submit').click(function () {
-      $('#testform').validate({
-        rules: {
-          ID:"required",
-          JudgeAccount:"required",
-          Name:"required",
-          PhoneNum:"required",
-          Password:"required"
-        },
-        messages: {
-        ID: "请输入身份证号",
-        JudgeAccount:"请输入裁判账号",
-        Name:"请输入姓名",
-        PhoneNum:"请输入电话号码",
-        Password:"请输入密码"
-        },
-        submitHandler:function(){
+          
           $.post("Set",{
             Type:"Add",
             Table:"Judge",
@@ -311,15 +296,11 @@
             PhoneNum:$("#PhoneNum").val(),
             Password:$("#Password").val()
           })
-        }
-      });
+        });
       $("#judge").bootstrapTable('refresh');
         //执行插入操作，并向服务器提交数据
         //并且执行向服务器的提交过程
-    }
-      
-    );
-  });
+    });
 
   //修改操作
 </script>

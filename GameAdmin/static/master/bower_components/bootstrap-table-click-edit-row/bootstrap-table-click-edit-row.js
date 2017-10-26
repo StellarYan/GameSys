@@ -28,11 +28,13 @@
         var txt = [], table = evt,
             submit = '<button type="button" class="btn btn-primary btn-sm editable-submit">确认</button>',
             cancel = '<button type="button" class="btn btn-default btn-sm editable-cancel">取消</button>';
-
+        if (table.options.uniqueId=="Match") {
+            $('#score').bootstrapTable({clickEdit: false});
+        }
         var replaceData = function(){
             $.post(window.location.hostname+"/GameAdmin/Set",{
                 Type:"Upgrade",
-                Table: table.bootstrapTable('getOptions').uniqueId,
+                Table: table.options.uniqueId,
                 TeamName: getValue('TeamName',table.$data.thId+1),
                 TeamAccount: getValue('TeamAccount',table.$data.thId+1),
                 Password: getValue('Password',table.$data.thId+1),
@@ -52,11 +54,15 @@
                 JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
 				MatchType:getValue('MatchType',table.$data.thId+1)
             },function () {
-                $(".table").bootstrapTable('refresh')
-            })
-
+                $(".table").bootstrapTable('refresh');
+            }); 
+            $('.table').bootstrapTable('updateRow', {
+                index: table.$data.thId,
+                row: {},
+            });
             $('#tooling').remove();
             table.editing = true;
+            $('#score').bootstrapTable({clickEdit: false});
             return false;
         };
 
@@ -67,6 +73,7 @@
             });
           $('#tooling').remove();
           table.editing = true;
+          $('#score').bootstrapTable({clickEdit: false});
           return false;
         };
 
