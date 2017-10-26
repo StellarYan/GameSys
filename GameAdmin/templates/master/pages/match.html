@@ -488,42 +488,42 @@
         </div>
         <div class="modal-body">
           <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal" id="lalala">
+          <form class="form-horizontal" method="post" action="Set" id="lalala" method="post">
             <div class="form-group" style="display:none">
               <label for="Type" class="control-label col-sm-4">操作类型</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" value="Add"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
             </div>
             <div class="form-group" style="display:none">
                 <label for="Table" class="control-label col-sm-4">操作表</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" value="Match"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="Table" value="Match"></div>
             </div>
             <div class="form-group">
               <label for="MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchID" required minlength="5"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchID" name="MatchID" required minlength="5"></div>
             </div>
             <div class="form-group">
                 <label for="Group" class="control-label col-sm-4">比赛年龄组</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Group" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Group" name="Group" required></div>
             </div>
             <div class="form-group">
                 <label for="Event" class="control-label col-sm-4">项目</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Event" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Event" name="Event" required></div>
             </div>
             <div class="form-group">
                 <label for="ChiefID" class="control-label col-sm-4">主裁判身份证</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID" name="ChiefID" required></div>
             </div>
             <div class="form-group">
                 <label for="StartTime" class="control-label col-sm-4">预期开始时间</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="StartTime" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="StartTime" name="StartTime" required></div>
             </div>
             <div class="form-group">
                 <label for="EndTime" class="control-label col-sm-4">预期结束时间</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="EndTime" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="EndTime" name="EndTime" required></div>
             </div>
             <div class="form-group">
                 <label for="MatchType" class="control-label col-sm-4">比赛类型</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchType" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchType" name="MatchType" required></div>
             </div>		  
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
@@ -545,34 +545,34 @@
           </div>
           <div class="modal-body">
             <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post" action="Set">
               <div class="form-group" style="display:none">
                 <label for="Type" class="control-label col-sm-4">操作类型</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" value="Add"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
               </div>
               <div class="form-group" style="display:none">
                   <label for="Table" class="control-label col-sm-4">操作表</label>
-                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" value="Score"></div>
+                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="Table" value="Score"></div>
               </div>
               <div class="form-group">
                 <label for="Score-MatchID" class="control-label col-sm-4">比赛号</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-MatchID"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-MatchID" name="Score-MatchID"></div>
               </div>
               <div class="form-group">
                   <label for="Score-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-JudgeID"></div>
+                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-JudgeID" name="Score-JudgeID"></div>
               </div>
               <div class="form-group">
                   <label for="Score-PlayerID" class="control-label col-sm-4">运动员号</label>
-                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-PlayerID"></div>
+                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="Score-PlayerID" name="Score-PlayerID"></div>
               </div>
               <div class="form-group">
                   <label for="Score-Score" class="control-label col-sm-4">成绩</label>
-                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID"></div>
+                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID" name="ChiefID"></div>
               </div> 
               <div class="form-group">
                   <label for="Score-Score" class="control-label col-sm-4">成绩</label>
-                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID"></div>
+                  <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID" name="ChiefID"></div>
               </div> 
               <div class="form-group">
                 <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
@@ -594,26 +594,26 @@
         </div>
         <div class="modal-body">
           <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal">
+          <form class="form-horizontal" method="post" action="Set">
             <div class="form-group" style="display:none">
               <label for="Type" class="control-label col-sm-4">操作类型</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" value="Add"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
             </div>
             <div class="form-group" style="display:none">
                 <label for="Table" class="control-label col-sm-4">操作表</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" value="MatchJudge"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="Table" value="MatchJudge"></div>
             </div>
             <div class="form-group">
               <label for="MatchJudge-MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-MatchID"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-MatchID" name="MatchJudge-MatchID"></div>
             </div>
             <div class="form-group">
                 <label for="MatchJudge-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-JudgeID"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-JudgeID" name="MatchJudge-JudgeID"></div>
             </div>
             <div class="form-group">
                 <label for="MatchJudge-IsChief" class="control-label col-sm-4">是否为主裁判</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-IsChief"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchJudge-IsChief" name="MatchJudge-IsChief"></div>
             </div>
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
@@ -635,34 +635,34 @@
         </div>
         <div class="modal-body">
           <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal">
+          <form class="form-horizontal" method="post" action="Set">
             <div class="form-group" style="display:none">
               <label for="Type" class="control-label col-sm-4">操作类型</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" value="Add"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
             </div>
             <div class="form-group" style="display:none">
                 <label for="Table" class="control-label col-sm-4">操作表</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" value="PlayMatch"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="Table" value="PlayMatch"></div>
             </div>
             <div class="form-group">
               <label for="PlayMatch-MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-MatchID"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-MatchID" name="PlayMatch-MatchID"></div>
             </div>
             <div class="form-group">
                 <label for="PlayMatch-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-JudgeID"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-JudgeID" name="PlayMatch-JudgeID"></div>
             </div>
             <div class="form-group">
                 <label for="PlayMatch-PlayerID" class="control-label col-sm-4">运动员号</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-PlayerID"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-PlayerID" name="PlayMatch-PlayerID"></div>
             </div>
             <div class="form-group">
                 <label for="PlayMatch-DScore" class="control-label col-sm-4">D分</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-DScore"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-DScore" name="PlayMatch-DScore"></div>
             </div>
             <div class="form-group">
                 <label for="PlayMatch-DScore" class="control-label col-sm-4">P分</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-DScore"></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="PlayMatch-DScore" name="PlayMatch-DScore"></div>
             </div>
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
