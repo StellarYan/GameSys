@@ -172,7 +172,7 @@
               <!-- small box -->
               <div class="small-box bg-light-blue">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3 id="PlayerCount">-</h3>
                   <p>参赛人数</p>
                 </div>
                 <div class="icon">
@@ -186,7 +186,7 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>7</h3>
+                  <h3 id="TodayMatchCount">-</h3>
                   <p>今日赛事</p>
                 </div>
                 <div class="icon">
@@ -250,7 +250,7 @@
 {% load static %}   <script src="{% static "/master/bower_components/jquery-ui/jquery-ui.min.js" %}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button);
+  $.widget.bridge('uibutton', $.ui.button);  
 </script>
 <!-- Bootstrap 3.3.7 -->
 {% load static %}   <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
@@ -281,6 +281,12 @@
 {% load static %}   <script src="{% static "/master/dist/js/pages/dashboard.js" %}"></script>
 <!-- AdminLTE for demo purposes -->
 {% load static %}   <script src="{% static "/master/dist/js/demo.js" %}"></script>
+<script>  
+  //试着给界面上的参赛人数提供功能
+  $.get("Get",function(data,status){
+    $('#PlayerCount')[0].innerText = data;
+  });
+</script>
 </body>
 </html>
 
