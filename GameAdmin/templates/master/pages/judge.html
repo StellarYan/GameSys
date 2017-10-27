@@ -65,7 +65,6 @@
               <!-- User image -->
               <li class="user-header">
                 <img src="{% static "/master/dist/img/user2-160x160.jpg" %}"  class="img-circle" alt="User Image">
-
                 <p>
                   CodeofJackie - Web Developer
                   <small>Member since Nov. 2012</small>
@@ -203,6 +202,7 @@
 <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<script src="{% static "/master/bower_components/inputmask/dist/min/jquery.inputmask.bundle.min.js" %}"></script>
 <script src="{% static "/master/bower_components/jquery-validate/jquery-validate.min.js" %}"></script>
 <!-- BootstrapTables -->
 <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
@@ -220,6 +220,7 @@
 
 <!-- page script -->
 <script>
+
   $(function () {
     $('#judge').bootstrapTable({
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Judge",
@@ -281,47 +282,8 @@
           $("#judge").bootstrapTable('refresh')
           //并且执行向服务器的提交过程
       });
-    });
-
-  //添加操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-      $('#testform').validate({
-        rules: {
-          ID:"required",
-          JudgeAccount:"required",
-          Name:"required",
-          PhoneNum:"required",
-          Password:"required"
-        },
-        messages: {
-        ID: "请输入身份证号",
-        JudgeAccount:"请输入裁判账号",
-        Name:"请输入姓名",
-        PhoneNum:"请输入电话号码",
-        Password:"请输入密码"
-        },
-        submitHandler:function(){
-          $.post("Set",{
-            Type:"Add",
-            Table:"Judge",
-            ID:$("#ID").val(),
-            JudgeAccount:$("#JudgeAccount").val(),
-            Name:$("#Name").val(),
-            PhoneNum:$("#PhoneNum").val(),
-            Password:$("#Password").val()
-          })
-        }
-      });
-      $("#judge").bootstrapTable('refresh');
-        //执行插入操作，并向服务器提交数据
-        //并且执行向服务器的提交过程
-    }
-      
-    );
   });
 
-  //修改操作
 </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -333,33 +295,41 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-        <form class="form-horizontal" id="testform">
+        <form class="form-horizontal" method="post" action="Set">
+          <div class="form-group" style="display:none">
+            <label for="Type" class="control-label col-sm-4">操作类型</label>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
+          </div>
+          <div class="form-group" style="display:none">
+              <label for="Table" class="control-label col-sm-4">操作表</label>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Table" name="Table" value="Judge"></div>
+          </div>
           <div class="form-group">
             <label for="ID" class="control-label col-sm-4">身份证</label>
-            <div class="col-sm-6"><input type="text" class="form-control input-md" id="ID"></div>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="ID" name="ID"></div>
           </div>
           <div class="form-group">
             <label for="JudgeAccount" class="control-label col-sm-4">裁判账号</label>
-            <div class="col-sm-6"><input type="text" class="form-control input-md" id="JudgeAccount"></div>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="JudgeAccount" name="JudgeAccount"></div>
           </div>
           <div class="form-group">
               <label for="Name" class="control-label col-sm-4">姓名</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Name"></div>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Name" name="Name"></div>
           </div>
           <div class="form-group">
               <label for="PhoneNum" class="control-label col-sm-4">电话</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="PhoneNum"></div>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PhoneNum" name="PhoneNum"></div>
           </div>
           <div class="form-group">
               <label for="Password" class="control-label col-sm-4">密码</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Password"></div>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Password" name="Password"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
+            <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
           </div>
         </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" id="submit">确认</button>
       </div>
     </div>
   </div>

@@ -271,22 +271,6 @@
           //并且执行向服务器的提交过程
       });
     });
-
-
-    //插入操作
-  $(function () {
-    $('.modal-footer > #submit').click(function () {
-      $.post("Set",{
-            Type:"Add",
-            Table:"Team",
-            TeamName:$("#TeamName").val(),
-            TeamAccount:$("#TeamAccount").val(),
-            Password:$("#Password").val()
-      },
-      $('#team').bootstrapTable('refresh')
-      )
-    });
-  });
 </script>
 </body>
 
@@ -299,25 +283,33 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="post" action="Set">
+          <div class="form-group" style="display:none">
+            <label for="Type" class="control-label col-sm-4">操作类型</label>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
+          </div>
+          <div class="form-group" style="display:none">
+              <label for="Table" class="control-label col-sm-4">操作表</label>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Table" name="Table" value="Team"></div>
+          </div>
           <div class="form-group">
             <label for="TeamName" class="control-label col-sm-4">小队名称</label>
-            <div class="col-sm-6"><input type="text" class="form-control input-md" id="TeamName"></div>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="TeamName" name="TeamName"></div>
           </div>
           <div class="form-group">
             <label for="TeamAccount" class="control-label col-sm-4">账号</label>
-            <div class="col-sm-6"><input type="text" class="form-control input-md" id="TeamAccount"></div>
+            <div class="col-sm-6"><input required type="text" class="form-control input-md" id="TeamAccount" name="TeamAccount"></div>
           </div>
           <div class="form-group">
               <label for="Password" class="control-label col-sm-4">密码</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="Password"></div>
+              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Password" name="Password"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
+            <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
           </div>
         </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary"id="submit">确认</button>
       </div>
     </div>
   </div>
