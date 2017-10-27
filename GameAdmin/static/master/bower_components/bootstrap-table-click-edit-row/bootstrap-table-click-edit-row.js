@@ -35,24 +35,24 @@
             $.post(window.location.hostname+"/GameAdmin/Set",{
                 Type:"Upgrade",
                 Table: table.options.uniqueId,
-                TeamName: getValue('TeamName',table.$data.thId+1),
-                TeamAccount: getValue('TeamAccount',table.$data.thId+1),
-                Password: getValue('Password',table.$data.thId+1),
-                ID:getValue('ID',table.$data.thId+1),
-                Name:getValue('Name',table.$data.thId+1),
-                PhoneNum:getValue('PhoneNum',table.$data.thId+1),
-                Gender:getValue('Gender',table.$data.thId+1),
-                PlayerID:getValue('PlayerID',table.$data.thId+1),
-                Age:getValue('Age',table.$data.thId+1),
-                Group:getValue('Group',table.$data.thId+1),
-                CultureScore:getValue('CultureScore',table.$data.thId+1),
-                MatchID:getValue('MatchID',table.$data.thId+1),
-                Event:getValue('Event',table.$data.thId+1),
-                ChiefID:getValue('ChiefID',table.$data.thId+1),
-                StartTime:getValue('StartTime',table.$data.thId+1),
-                EndTime:getValue('EndTime',table.$data.thId+1),
-                JudgeAccount:getValue('JudgeAccount',table.$data.thId+1),
-				MatchType:getValue('MatchType',table.$data.thId+1)
+                TeamName: getValue('TeamName',table.$data.thId+1,table.options.uniqueId),
+                TeamAccount: getValue('TeamAccount',table.$data.thId+1,table.options.uniqueId),
+                Password: getValue('Password',table.$data.thId+1,table.options.uniqueId),
+                ID:getValue('ID',table.$data.thId+1,table.options.uniqueId),
+                Name:getValue('Name',table.$data.thId+1,table.options.uniqueId),
+                PhoneNum:getValue('PhoneNum',table.$data.thId+1,table.options.uniqueId),
+                Gender:getValue('Gender',table.$data.thId+1,table.options.uniqueId),
+                PlayerID:getValue('PlayerID',table.$data.thId+1,table.options.uniqueId),
+                Age:getValue('Age',table.$data.thId+1,table.options.uniqueId),
+                Group:getValue('Group',table.$data.thId+1,table.options.uniqueId),
+                CultureScore:getValue('CultureScore',table.$data.thId+1,table.options.uniqueId),
+                MatchID:getValue('MatchID',table.$data.thId+1,table.options.uniqueId),
+                Event:getValue('Event',table.$data.thId+1,table.options.uniqueId),
+                ChiefID:getValue('ChiefID',table.$data.thId+1,table.options.uniqueId),
+                StartTime:getValue('StartTime',table.$data.thId+1,table.options.uniqueId),
+                EndTime:getValue('EndTime',table.$data.thId+1,table.options.uniqueId),
+                JudgeAccount:getValue('JudgeAccount',table.$data.thId+1,table.options.uniqueId),
+				MatchType:getValue('MatchType',table.$data.thId+1,table.options.uniqueId)
             },function () {
                 $(".table").bootstrapTable('refresh');
             }); 
@@ -112,8 +112,21 @@
         }
     }
 
-    function getValue(property,rowindex) {
+    function getValue(property,rowindex,tablename) {
         var tableTotal = 1;
+        switch (tablename) {
+            case "Score":
+                tableTotal = 2;
+                break;
+            case "MatchJudge":
+                tableTotal = 3;
+                break;
+            case "PlayMatch":
+                tableTotal = 4;
+                break;
+            default:
+                break;
+        }
         //为当前页面表格的数量
         var colindex = $('.table').eq(tableTotal-1).find("[data-field='"+ property +"']").index();
         var cells = document.getElementsByClassName('table')[tableTotal-1].rows[rowindex].cells
