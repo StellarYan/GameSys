@@ -16,7 +16,7 @@
         var $option = $('<option />');
         if(options){
             $(options).each(function(i, v){
-                $option.clone().text(v.idxNum + ' ' +v.name).val(v.idxNum).appendTo(node);
+                $option.clone().text(v.idxNum + ' ' +v.name).val(v.name).appendTo(node);
             })
         }
         else{
@@ -90,9 +90,9 @@
                         tarNode.find('td').eq(column.fieldIndex).text('').append(div);
                         break;
                     case 'select':
-                        var select=$('<select id="'+column.field+'" class="form-control input-sm">'), options = $.selectArray[column.field];
+                        var select=$('<select id="'+column.title+'" class="form-control input-sm">'), options = $.selectArray[column.field];
                         tarNode.find('td').eq(column.fieldIndex).text('').append(select);
-                        setDivision($('#'+column.field), options);
+                        setDivision($('#'+column.title), options);
                         break;
                     case 'textarea':
                         break;
@@ -131,10 +131,13 @@
         var cells = document.getElementsByClassName('table')[tableTotal-1].rows[rowindex].cells
         
         if (colindex == -1) {
-            var cellcontent = "";
+            var cellcontent = "";//当页面上不存在这个内容时
         }
         else if ($(cells[colindex]).find('input').length!=0) {
             var cellcontent = $(cells[colindex]).find('input').first().val();//当单元格为输入框时;
+        }
+        else if($(cells[colindex]).find('select').length!=0) {
+            var cellcontent = $(cells[colindex]).find('select').first().val();//当单元格为下拉框时；
         }
         else {
             var cellcontent = cells[colindex].innerHTML//当单元格不可编辑时
