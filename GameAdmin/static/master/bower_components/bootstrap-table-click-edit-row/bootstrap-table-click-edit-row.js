@@ -32,7 +32,7 @@
             $('#score').bootstrapTable({clickEdit: false});
         }
         var replaceData = function(){
-            $.post(window.location.hostname+"/GameAdmin/Set",{
+            $.post("Set",{
                 Type:"Upgrade",
                 Table: table.options.uniqueId,
                 TeamName: getValue('小队名称',table.$data.thId+1,table.options.uniqueId),
@@ -53,9 +53,7 @@
                 EndTime:getValue('预期结束时间',table.$data.thId+1,table.options.uniqueId),
                 JudgeAccount:getValue('裁判账号',table.$data.thId+1,table.options.uniqueId),
 				MatchType:getValue('比赛类型',table.$data.thId+1,table.options.uniqueId)
-            },function () {
-                $(".table").bootstrapTable('refresh');
-            }); 
+            });
             $('.table').bootstrapTable('updateRow', {
                 index: table.$data.thId,
                 row: {},
@@ -63,6 +61,7 @@
             $('#tooling').remove();
             table.editing = true;
             $('#score').bootstrapTable({clickEdit: false});
+            $(".table").bootstrapTable('refresh');
             return false;
         };
 

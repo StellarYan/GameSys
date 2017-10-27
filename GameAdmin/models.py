@@ -38,9 +38,9 @@ class Player(models.Model):
     PlayerID = models.CharField(max_length=20,primary_key=True)
     ID = models.CharField(max_length=20)
     Name = models.CharField(max_length=20)
-    age = models.IntegerField()
+    Age = models.IntegerField()
     Group = models.CharField(max_length=20)
-    CultrueScore = models.IntegerField()
+    CultureScore = models.IntegerField()
     TeamName = models.ForeignKey('Team',on_delete=models.CASCADE,)
     
     
