@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -96,7 +97,7 @@ def Set(request):
                     if(hasattr(target_table, para)):
                         print(type(getattr(target_table, para)))
                         if(isinstance(getattr(target_table, para),ForwardManyToOneDescriptor)):
-                            setattr(newobj,para+"_id",request.POST[para])#对于外键，django会自动在对象的field的后面加上_id，这里补上即可
+                            setattr(newobj,para+"_id",request.POST[para])#对于外键，django 会自动在对象的field的后面加上_id，这里补上即可
                         else:
                             setattr(newobj,para,request.POST[para])
                 newobj.save()

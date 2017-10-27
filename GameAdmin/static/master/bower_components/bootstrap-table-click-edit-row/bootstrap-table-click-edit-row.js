@@ -35,24 +35,24 @@
             $.post(window.location.hostname+"/GameAdmin/Set",{
                 Type:"Upgrade",
                 Table: table.options.uniqueId,
-                TeamName: getValue('TeamName',table.$data.thId+1,table.options.uniqueId),
-                TeamAccount: getValue('TeamAccount',table.$data.thId+1,table.options.uniqueId),
-                Password: getValue('Password',table.$data.thId+1,table.options.uniqueId),
-                ID:getValue('ID',table.$data.thId+1,table.options.uniqueId),
-                Name:getValue('Name',table.$data.thId+1,table.options.uniqueId),
-                PhoneNum:getValue('PhoneNum',table.$data.thId+1,table.options.uniqueId),
-                Gender:getValue('Gender',table.$data.thId+1,table.options.uniqueId),
-                PlayerID:getValue('PlayerID',table.$data.thId+1,table.options.uniqueId),
-                Age:getValue('Age',table.$data.thId+1,table.options.uniqueId),
-                Group:getValue('Group',table.$data.thId+1,table.options.uniqueId),
-                CultureScore:getValue('CultureScore',table.$data.thId+1,table.options.uniqueId),
-                MatchID:getValue('MatchID',table.$data.thId+1,table.options.uniqueId),
-                Event:getValue('Event',table.$data.thId+1,table.options.uniqueId),
-                ChiefID:getValue('ChiefID',table.$data.thId+1,table.options.uniqueId),
-                StartTime:getValue('StartTime',table.$data.thId+1,table.options.uniqueId),
-                EndTime:getValue('EndTime',table.$data.thId+1,table.options.uniqueId),
-                JudgeAccount:getValue('JudgeAccount',table.$data.thId+1,table.options.uniqueId),
-				MatchType:getValue('MatchType',table.$data.thId+1,table.options.uniqueId)
+                TeamName: getValue('小队名称',table.$data.thId+1,table.options.uniqueId),
+                TeamAccount: getValue('小队账号',table.$data.thId+1,table.options.uniqueId),
+                Password: getValue('密码',table.$data.thId+1,table.options.uniqueId),
+                ID:getValue('身份证号',table.$data.thId+1,table.options.uniqueId),
+                Name:getValue('姓名',table.$data.thId+1,table.options.uniqueId),
+                PhoneNum:getValue('电话',table.$data.thId+1,table.options.uniqueId),
+                Gender:getValue('性别',table.$data.thId+1,table.options.uniqueId),
+                PlayerID:getValue('运动员号',table.$data.thId+1,table.options.uniqueId),
+                Age:getValue('年龄',table.$data.thId+1,table.options.uniqueId),
+                Group:getValue('比赛年龄组',table.$data.thId+1,table.options.uniqueId),
+                CultureScore:getValue('文化成绩',table.$data.thId+1,table.options.uniqueId),
+                MatchID:getValue('比赛号',table.$data.thId+1,table.options.uniqueId),
+                Event:getValue('项目',table.$data.thId+1,table.options.uniqueId),
+                ChiefID:getValue('主裁判身份证',table.$data.thId+1,table.options.uniqueId),
+                StartTime:getValue('预期开始时间',table.$data.thId+1,table.options.uniqueId),
+                EndTime:getValue('预期结束时间',table.$data.thId+1,table.options.uniqueId),
+                JudgeAccount:getValue('裁判账号',table.$data.thId+1,table.options.uniqueId),
+				MatchType:getValue('比赛类型',table.$data.thId+1,table.options.uniqueId)
             },function () {
                 $(".table").bootstrapTable('refresh');
             }); 
@@ -128,10 +128,13 @@
                 break;
         }
         //为当前页面表格的数量
-        var colindex = $('.table').eq(tableTotal-1).find("[data-field='"+ property +"']").index();
+        var colindex = $('.table').eq(tableTotal-1).find("[data-field]:contains('"+property+"')").index();
         var cells = document.getElementsByClassName('table')[tableTotal-1].rows[rowindex].cells
         
-        if ($(cells[colindex]).find('input')) {
+        if (colindex == -1) {
+            var cellcontent = "";
+        }
+        else if ($(cells[colindex]).find('input').length!=0) {
             var cellcontent = $(cells[colindex]).find('input').first().val();//当单元格为输入框时;
         }
         else {
