@@ -12,6 +12,10 @@ urlpatterns = [
    url(r'^Team$', views.GetTeam, name='GetTeam'),
    url(r'^GetJSON$', views.GetJSON, name='GetJSON'),
    url(r'^Match$', views.GetMatch, name='GetMatch'),
+   url(r'^MatchJudge$', views.GetMatch, name='GetMatch'),
+   url(r'^PlayMatch$', views.GetMatch, name='GetMatch'),
+   url(r'^Score$', views.GetMatch, name='GetMatch'),
+   
    url(r'^MatchJSON$', views.MatchJSON, name='MatchJSON'),
    url(r'^Set$', views.Set, name='Set'),
 ]

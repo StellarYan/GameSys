@@ -7,6 +7,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.fields import Field
 from django.db.models import ForeignKey
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
+from django.http import HttpResponseRedirect  
+from django.core.urlresolvers import reverse
 
 
 import json
@@ -106,5 +108,5 @@ def Set(request):
                 print('Delte')
                 print(tobj)
                 tobj.delete()
-        
-    return render(request,os.path.join("master","pages","match.html"))
+        print(tableName)
+        return HttpResponseRedirect(tableName)
