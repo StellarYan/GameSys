@@ -9,6 +9,7 @@ from django.db.models import ForeignKey
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.http import HttpResponseRedirect  
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 
 
 import json
@@ -87,10 +88,17 @@ def Set(request):
         target_table = TableDic[tableName]
         if(target_table!=PlayMatch and target_table!=Score and target_table!=MatchJudge and target_table!=Match):
             if(request.POST['Type']=='Upgrade'):
-                tobj=target_table.objects.get(pk=request.GET['pk'])
+                print('--------------')
+                print(target_table._meta.pk.name)
+                tobj=target_table.objects.get(pk=request.POST[target_table._meta.pk.name])
                 for para in request.POST:
                     if(hasattr(tobj, para)):
-                        setattr(tobj,para,request.POST[para])
+                        print(type(getattr(target_table, para)))
+                        if(isinstance(getattr(target_table, para),ForwardManyToOneDescriptor)):
+                            setattr(tobj,para+"_id",request.POST[para])#对于外键，django 会自动在对象的field的后面加上_id，这里补上即可
+                        else:
+                            setattr(tobj,para,request.POST[para])
+                tobj.save()
             elif(request.POST['Type']=='Add'):
                 newobj = target_table()
                 print(hasattr(target_table, "TeamName"))
@@ -109,4 +117,4 @@ def Set(request):
                 print(tobj)
                 tobj.delete()
         print(tableName)
-        return HttpResponseRedirect(tableName)
+        return HttpResponse('OK')
