@@ -319,7 +319,7 @@
       }
     });
     $('#score').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score",
       clickEdit: true,
       uniqueId:"Score",
       toolbar:"#toolbar-score",
@@ -330,7 +330,7 @@
           field: 'fields.MatchID',
           title: '比赛号'
       }, {
-          field: 'fields.JudgeID',
+          field: 'fields.ID',
           title: '裁判身份证'
       }, {
           field: 'fields.PlayerID',
@@ -345,7 +345,7 @@
       }
     });
     $('#matchjudge').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge",
       clickEdit: true,
       uniqueId:"MatchJudge",
       toolbar:"#toolbar-matchjudge",
@@ -356,7 +356,7 @@
           field: 'fields.MatchID',
           title: '比赛号'
       }, {
-          field: 'fields.JudgeID',
+          field: 'fields.ID',
           title: '裁判身份证',
       }, {
           field: 'fields.IsChief',
@@ -368,7 +368,7 @@
       }
     });
     $('#playmatch').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch",
       clickEdit: true,
       uniqueId:"PlayMatch",
       toolbar:"#toolbar-playmatch",
@@ -416,16 +416,16 @@
 
   //Score表删除操作
   $(function () {
-      $('#deletescore').click(function () {
+      $('#delete-score').click(function () {
           var ids = new Array();
           $.map($("#score").bootstrapTable('getSelections'), function (row) {
-            ids.push(row.fields.MatchID,row.fields.JudgeID,row.fields.PlayerID);
+            ids.push(row.fields.MatchID,row.fields.ID,row.fields.PlayerID);
           });
           $.post("Set",{
             Type:"Delete",
             Table:"Score",
             MatchID:ids[0],
-            JudgeID:ids[1],
+            ID:ids[1],
             PlayerID:ids[2]
           },
           $("#score").bootstrapTable('refresh')
@@ -438,16 +438,16 @@
 
   //MatchJudge表删除操作
   $(function () {
-      $('#deletematchjudge').click(function () {
+      $('#delete-matchjudge').click(function () {
           var ids = new Array();
           $.map($("#matchjudge").bootstrapTable('getSelections'), function (row) {
-            ids.push(row.fields.MatchID,row.fields.JudgeID);
+            ids.push(row.fields.MatchID,row.fields.ID);
           });
           $.post("Set",{
             Type:"Delete",
             Table:"MatchJudge",
             MatchID:ids[0],
-            JudgeID:ids[1]
+            ID:ids[1]
           },
           $("#matchjudge").bootstrapTable('refresh')
           )
@@ -459,7 +459,7 @@
 
   //PlayMatch表删除操作
   $(function () {
-      $('#deleteplaymatch').click(function () {
+      $('#delete-playmatch').click(function () {
           var ids = new Array();
           $.map($("#playmatch").bootstrapTable('getSelections'), function (row) {
             ids.push(row.fields.MatchID,row.fields.PlayerID);
@@ -558,8 +558,8 @@
                 <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-MatchID" name="MatchID"></div>
               </div>
               <div class="form-group">
-                  <label for="Score-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-JudgeID" name="JudgeID"></div>
+                  <label for="Score-ID" class="control-label col-sm-4">裁判身份证</label>
+                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-ID" name="ID"></div>
               </div>
               <div class="form-group">
                   <label for="Score-PlayerID" class="control-label col-sm-4">运动员号</label>
@@ -567,11 +567,7 @@
               </div>
               <div class="form-group">
                   <label for="Score-Score" class="control-label col-sm-4">成绩</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="ChiefID" name="ChiefID"></div>
-              </div> 
-              <div class="form-group">
-                  <label for="Score-Score" class="control-label col-sm-4">成绩</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="ChiefID" name="ChiefID"></div>
+                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-Score" name="Score"></div>
               </div> 
               <div class="form-group">
                 <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
@@ -607,8 +603,8 @@
               <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-MatchID" name="MatchID"></div>
             </div>
             <div class="form-group">
-                <label for="MatchJudge-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-JudgeID" name="JudgeID"></div>
+                <label for="MatchJudge-ID" class="control-label col-sm-4">裁判身份证</label>
+                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-ID" name="ID"></div>
             </div>
             <div class="form-group">
                 <label for="MatchJudge-IsChief" class="control-label col-sm-4">是否为主裁判</label>
@@ -648,8 +644,8 @@
               <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-MatchID" name="MatchID"></div>
             </div>
             <div class="form-group">
-                <label for="PlayMatch-JudgeID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-JudgeID" name="JudgeID"></div>
+                <label for="PlayMatch-ID" class="control-label col-sm-4">裁判身份证</label>
+                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-ID" name="ID"></div>
             </div>
             <div class="form-group">
                 <label for="PlayMatch-PlayerID" class="control-label col-sm-4">运动员号</label>
