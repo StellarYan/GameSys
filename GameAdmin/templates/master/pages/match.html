@@ -175,6 +175,8 @@
                   data-target="#Modal-Match">
                   添加
                   </button>
+                  <button id="details" class="btn btn-info">详细</button>
+                  <button id="startgame" class="btn btn-primary">开始比赛</button>
               </div>
               <table id="match" class="table table-bordered table-striped">
               </table>
@@ -412,7 +414,29 @@
       });
     });
   
+  //请求比赛详细信息
+  $(function () {
+    $('#startgame').click(function () {
+      var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+            return row.pk;
+        });
+      $.post("一个用来刷新页面的url",{
+        //用于请求详细的比赛信息
+      });
+      $("#score").bootstrapTable('refresh');
+      $("#playmatch").bootstrapTable('refresh');
+    });
+  });
 
+  //通知比赛开始
+  $(function () {
+    $('#startgame').click(function () {
+      var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+            return row.pk;
+        });
+      //用于通知比赛开始
+    });
+  });
 
   //Score表删除操作
   $(function () {
@@ -455,8 +479,6 @@
       });
     });
   
-
-
   //PlayMatch表删除操作
   $(function () {
       $('#delete-playmatch').click(function () {
