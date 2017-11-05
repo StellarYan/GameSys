@@ -102,7 +102,7 @@ def SetColumn(tobj,fieldName,fieldValue):
     target_table =TableDic[type(tobj).__name__]
     if(hasattr(target_table, fieldName)):
         if(isinstance(getattr(target_table, fieldName),ForwardManyToOneDescriptor)):
-            setattr(tobj,fieldName+"_id",fieldValue)#对于外键，django 会自动在对象的field的后面加上_id，这里补上即可
+            setattr(tobj,fieldName+"_id",fieldValue)
         else:
             setattr(tobj,fieldName,fieldValue)
     
