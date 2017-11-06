@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 # Create your models here.
 
 
@@ -15,17 +15,17 @@ class PlayMatch(models.Model):
 
 class Score(models.Model):
     class Meta:
-        unique_together = (('MatchID','JudgeID', 'PlayerID'),)
+        unique_together = (('MatchID','ID', 'PlayerID'),)
     MatchID = models.ForeignKey('Match',on_delete=models.CASCADE,)
-    JudgeID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
+    ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     Score = models.IntegerField()
  
 class MatchJudge(models.Model):
     class Meta:
-        unique_together = (('MatchID','JudgeID'),)
+        unique_together = (('MatchID','ID'),)
     MatchID = models.ForeignKey('Match',on_delete=models.CASCADE,)
-    JudgeID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
+    ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     IsChief = models.BooleanField(default=0)
 
 class Match(models.Model):
@@ -76,6 +76,38 @@ class Team(models.Model):
     TeamAccount = models.CharField(max_length=20)
     Password = models.CharField(max_length=20)
     File =models.FileField(upload_to='uploads/', max_length=100)
+    
+TableDic = {"Player":Player,"TeamLeader":TeamLeader,"TeamMedic":TeamMedic,
+"TeamCoach":TeamCoach,"Judge":Judge,"Team":Team,
+"PlayMatch":PlayMatch,"Score":Score,"MatchJudge":MatchJudge,"Match":Match}
+    
+def GetTargetTable(request):
+    tableName = request.POST['Table']
+    return TableDic[tableName]
+    
+    
+def GetTargetObj(request,target_table):
+    if(target_table!=PlayMatch and target_table!=Score and target_table!=MatchJudge):
+        if(request.POST['Type']=='Upgrade'):
+            print(target_table._meta.pk.name)
+            print(request.POST['ID'])
+            print(request.POST[target_table._meta.pk.name]) 
+            return target_table.objects.get(pk=request.POST[target_table._meta.pk.name])
+        if(request.POST['Type']=='Delete'):
+            return target_table.objects.get(pk=request.POST['pk'])
+            
+            
+          
+def SetColumn(tobj,fieldName,fieldValue):
+    target_table =TableDic[type(tobj).__name__]
+    if(hasattr(target_table, fieldName)):
+        if(isinstance(getattr(target_table, fieldName),ForwardManyToOneDescriptor)):
+            setattr(tobj,fieldName+"_id",fieldValue)
+        else:
+            setattr(tobj,fieldName,fieldValue)
+    
+    
+
 
 
 

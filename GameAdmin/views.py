@@ -9,6 +9,7 @@ from django.db.models import ForeignKey
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.http import HttpResponseRedirect  
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 
 
 import json
@@ -16,20 +17,10 @@ import os.path
 
 
 
-from .models import PlayMatch
-from .models import Score
-from .models import MatchJudge
-from .models import Match
-from .models import Player
-from .models import TeamLeader
-from .models import TeamMedic
-from .models import TeamCoach
-from .models import Judge
-from .models import Team
 
-TableDic = {"Player":Player,"TeamLeader":TeamLeader,"TeamMedic":TeamMedic,
-"TeamCoach":TeamCoach,"Judge":Judge,"Team":Team,
-"PlayMatch":PlayMatch,"Score":Score,"MatchJudge":MatchJudge,"Match":Match}
+from .models import *
+
+
 
 def index(request):
     return render(request,os.path.join("master","index.html"))
@@ -47,16 +38,6 @@ def GetTeamCoach(request):
     return render(request,os.path.join("master","pages","teamcoach.html"))
     
 def GetJudge(request):
-
-    # print("-------------")
-    # f = Judge._meta.get_fields()[3]
-    # t = Judge.objects.all()[0]
-    # if(isinstance(f, Field)):
-        # print(f.name)
-        # print(hasattr(t, "ID"))
-        
-    # print("-------------")
-    
     return render(request,os.path.join("master","pages","judge.html"))
     
 def GetTeam(request):
@@ -77,36 +58,23 @@ def GetMatch(request):
     return render(request,os.path.join("master","pages","match.html"))
     
 def MatchJSON(request):
-
     return 0
     
 def Set(request):
     print('-------Start Set--------')
     if request.method == 'POST':
-        tableName =request.POST['Table']
-        target_table = TableDic[tableName]
-        if(target_table!=PlayMatch and target_table!=Score and target_table!=MatchJudge and target_table!=Match):
-            if(request.POST['Type']=='Upgrade'):
-                tobj=target_table.objects.get(pk=request.GET['pk'])
-                for para in request.POST:
-                    if(hasattr(tobj, para)):
-                        setattr(tobj,para,request.POST[para])
-            elif(request.POST['Type']=='Add'):
-                newobj = target_table()
-                print(hasattr(target_table, "TeamName"))
-                for para in request.POST:
-                    print("----")
-                    if(hasattr(target_table, para)):
-                        print(type(getattr(target_table, para)))
-                        if(isinstance(getattr(target_table, para),ForwardManyToOneDescriptor)):
-                            setattr(newobj,para+"_id",request.POST[para])#对于外键，django 会自动在对象的field的后面加上_id，这里补上即可
-                        else:
-                            setattr(newobj,para,request.POST[para])
-                newobj.save()
-            elif(request.POST['Type']=='Delete'):
-                tobj=target_table.objects.get(pk=request.POST['pk'])
-                print('Delte')
-                print(tobj)
-                tobj.delete()
-        print(tableName)
-        return HttpResponseRedirect(tableName)
+        target_table = GetTargetTable(request)
+        if(request.POST['Type']=='Upgrade'):
+            tobj=GetTargetObj(request,target_table)
+            for para in request.POST:
+                SetColumn(tobj,para,request.POST[para])
+            tobj.save()
+        elif(request.POST['Type']=='Add'):
+            newobj = target_table()
+            for para in request.POST:
+                SetColumn(newobj,para,request.POST[para])
+            newobj.save()
+        elif(request.POST['Type']=='Delete'):
+            tobj=GetTargetObj(request,target_table)
+            tobj.delete()
+        return HttpResponse('OK')
