@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'GameSys',
 		'USER':'GameSys',
 		'PASSWORD':'123456',
-		'HOST':'104.236.152.67',
+		'HOST':'101.132.188.104',
 		'PORT':'3306'
     }
 }
