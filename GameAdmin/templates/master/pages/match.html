@@ -175,6 +175,8 @@
                   data-target="#Modal-Match">
                   添加
                   </button>
+                  <button id="startgame" class="btn btn-primary">开始比赛</button>
+                  <button id="details" class="btn btn-info">详细</button>
               </div>
               <table id="match" class="table table-bordered table-striped">
               </table>
@@ -474,7 +476,7 @@
           )
           //并且执行向服务器的提交过程
       });
-    });
+  });
 
 </script>
 
@@ -670,5 +672,28 @@
     </div>
   </div>
 
+  <script>
+    //提醒比赛开始
+    $(function () {
+      $('#startgame').click(function () {
+        var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+              return row.pk;
+          });
+        //发送消息
+      });
+    });
+
+    //显示详细信息
+    $(function () {
+      $('#details').click(function () {
+        var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+              return row.pk;
+        });
+        $("#playmatch").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch&MatchID="+pk[0]});
+        $("#score").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score&MatchID="+pk[0]});
+        $("#matchjudge").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID="+pk[0]});
+      });
+    });
+  </script>
 </body>
 </html>
