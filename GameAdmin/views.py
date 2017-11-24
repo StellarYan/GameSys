@@ -24,7 +24,7 @@ from .models import *
 
 def index(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","index.html"))
     
 def GetPlayer(request):
