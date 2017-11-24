@@ -97,7 +97,7 @@ def Set(request):
         
         
 def AdminLoginTest(request):
-    return render(request,os.path.join("master","AdminLoginTest.html"))
+    return render(request,os.path.join("master","login.html"))
 
 def LoginAdmin(request):
     if request.method == 'POST':
