@@ -29,43 +29,43 @@ def index(request):
     
 def GetPlayer(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","player.html"))
     
 def GetTeamLeader(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","teamleader.html"))
     
 def GetTeamMedic(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","teammedic.html"))
     
 def GetTeamCoach(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","teamcoach.html"))
     
 def GetJudge(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","judge.html"))
     
 def GetTeam(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","team.html"))
     
 def GetMatch(request):
     if not IsAdmin(request):
-            return HttpResponse('please login')
+            return HttpResponse('<h1>please login<h1>')
     return render(request,os.path.join("master","pages","match.html"))
     
 
 def GetJSON(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     if request.method == 'GET':
         tableName =request.GET['Table']
         target_table = TableDic[tableName]
@@ -76,7 +76,7 @@ def GetJSON(request):
         
 def Set(request):
     if not IsAdmin(request):
-        return HttpResponse('please login')
+        return HttpResponse('<h1>please login<h1>')
     print('-------Start Set--------')
     if request.method == 'POST':
         target_table = GetTargetTable(request)
@@ -105,7 +105,7 @@ def LoginAdmin(request):
             request.session['isAdmin'] = 'True'
             request.session.set_expiry(3600)
         else:
-            return "login fail!"
+            return "<h1>login fail</h1>!"
     return index(request)
 
     
@@ -118,7 +118,7 @@ def IsAdmin(request):
 def LogoutAdmin(request):
     if request.session.has_key('isAdmin') and request.session['isAdmin'] == 'True':
         request.session['isAdmin'] = 'False'
-        return HttpResponse('logout')
+        return HttpResponse('<h1>logout</h1>')
     else:
         return HttpResponse('not logged in yet')
     
