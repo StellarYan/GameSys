@@ -175,8 +175,13 @@
                   data-target="#Modal-Match">
                   添加
                   </button>
+<<<<<<< HEAD
+                  <button id="details" class="btn btn-info">详细</button>
+                  <button id="startgame" class="btn btn-primary">开始比赛</button>
+=======
                   <button id="startgame" class="btn btn-primary">开始比赛</button>
                   <button id="details" class="btn btn-info">详细</button>
+>>>>>>> 2f8f6a7582db08c6d564e4b5d083778c92284dbc
               </div>
               <table id="match" class="table table-bordered table-striped">
               </table>
@@ -412,9 +417,32 @@
           )
           //并且执行向服务器的提交过程
       });
-    });
-  
+  });
 
+  //请求比赛详细信息
+  $(function () {
+    $('#startgame').click(function () {
+      var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+            return row.pk;
+        });
+      $.post("一个用来刷新页面的url",{
+        //用于请求详细的比赛信息
+      });
+      $("#score").bootstrapTable('refresh',{url: 新的url});
+      $("#matchjudge").bootstrapTable('refresh',{url: 新的url});
+      $("#playmatch").bootstrapTable('refresh',{url: 新的url});
+    });
+  });
+
+  //通知比赛开始
+  $(function () {
+    $('#startgame').click(function () {
+      var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
+            return row.pk;
+        });
+      //用于通知比赛开始
+    });
+  });
 
   //Score表删除操作
   $(function () {
@@ -457,8 +485,6 @@
       });
     });
   
-
-
   //PlayMatch表删除操作
   $(function () {
       $('#delete-playmatch').click(function () {

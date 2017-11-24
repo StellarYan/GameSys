@@ -1,4 +1,4 @@
-from django.conf.urls import url
+﻿from django.conf.urls import url
 
 from . import views
 
@@ -16,6 +16,10 @@ urlpatterns = [
    url(r'^PlayMatch$', views.GetMatch, name='GetMatch'),
    url(r'^Score$', views.GetMatch, name='GetMatch'),
    
-   url(r'^MatchJSON$', views.MatchJSON, name='MatchJSON'),
+   url(r'^AdminLoginTest',views.AdminLoginTest,name='AdminLoginTest'),
+   url(r'^LoginAdmin',views.LoginAdmin,name='LoginAdmin'),
+   url(r'^LogoutAdmin',views.LogoutAdmin,name='LogoutAdmin'),
+   
+   #url(r'^MatchJSON$', views.MatchJSON, name='MatchJSON'),
    url(r'^Set$', views.Set, name='Set'),
 ]
