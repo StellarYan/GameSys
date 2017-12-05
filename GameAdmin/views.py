@@ -122,8 +122,17 @@ def LogoutAdmin(request):
     else:
         return HttpResponse('not logged in yet')
     
-    
-    
+
+def  search_post(request):
+    if request.method=="POST":
+        leader = TeamLeader()
+        leader.ID = request.POST["LeaderID"]
+        leader.Name = request.POST['LeaderName']
+        leader.PhoneNum = request.POST['LeaderPhoneNum']
+        leader.save()
+        return HttpResponse('OK')
+    else:
+	    return HttpResponse('Error!')
 
     
     
