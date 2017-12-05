@@ -130,13 +130,13 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">主菜单</li>        
      
-      <!-----------------------------------------返回主菜单的功能，加不加？？？----------------------------------------------------------->
+      <!-----------------------------------------返回主菜单的功能，加不加？？？不管了，先不加--------------------------------------------
      
         <li class="treeview">
             <i class="fa fa-dashboard"></i> <span><a href="index.html">仪表盘</a></span>
         </li>
 
-      <!----------------------------------------------------------------------------------------------------------------------------------> 
+      ----------------------------------------------------------------------------------------------------------------------------------> 
 
          <li class="treeview active">         
               <a href="#">
@@ -419,10 +419,11 @@
 <!-- AdminLTE for demo purposes -->
 {% load static %}   <script src="{% static "/master/dist/js/demo.js" %}"></script>
 
-<!----------------------------------------------------------------------------------------------------------------------------------->
-<script type="text/javascript" src="bootstrap/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="bootstrap/bootstrapValidator.js"></script>
+<!-------表单验证---------------------------->
+{% load static %}   <script src="{% static "/master/dist/js/bootstrap/jquery-1.10.2.min.js" %}"></script>
+{% load static %}   <script src="{% static "/master/dist/js/bootstrap/bootstrap.min.js" %}"></script>
+{% load static %}   <script src="{% static "/master/dist/js/bootstrap/bootstrapValidator.js" %}"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
     $('#Form').bootstrapValidator({
