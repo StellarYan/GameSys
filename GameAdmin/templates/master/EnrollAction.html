@@ -1,6 +1,12 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
+   <script>
+       //警告框---拒绝用户进入报名界面
+       function disp_alert() {
+           alert("您已提交报名信息，不能重复报名！")
+       }
+   </script>
    <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>及讯</title>
@@ -117,7 +123,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>填写报名表</a></li>
+                <li><a href="#" onclick="disp_alert()"><i class="fa fa-circle-o"></i>填写报名表</a></li>
                 <li class="active"><a href="#"><i class="fa fa-circle-o"></i> 查看报名信息</a></li>
               </ul>
         </li>

@@ -36,7 +36,11 @@
 		    couchCnt +=1;
 		    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名"  name="couchName'+couchCnt+'"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">性别</label><input type="text" class="form-control" placeholder="性别" name="couchSex'+couchCnt+'"></div><div class="col-xs-4" style="width:200px"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="couchTel'+couchCnt+'"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="couchID'+couchCnt+'"></div></div></div>';
 			document.getElementById("couch").innerHTML+=insertText;
-		}
+        }
+        //警告框---拒绝用户进入查看报名信息界面
+        function disp_alert() {
+            alert("您尚未提交报名信息！")
+        }
    </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -153,7 +157,7 @@
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="#"><i class="fa fa-circle-o"></i> 填写报名表</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>查看报名信息</a></li>
+                <li><a href="#"  onclick="disp_alert()"><i class="fa fa-circle-o"></i>查看报名信息</a></li>
               </ul>
         </li>
       </ul>
