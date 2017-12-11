@@ -134,6 +134,9 @@ def  search_post(request):
     else:
 	    return HttpResponse('Error!')
 
-    
+
+def Enroll(request):
+    #if request.method == 'POST':
+    return render(request,os.path.join("master","Enroll.html"))
     
 

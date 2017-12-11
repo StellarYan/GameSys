@@ -1,4 +1,4 @@
-﻿from django.conf.urls import url
+from django.conf.urls import url
 
 from . import views
 
@@ -22,4 +22,5 @@ urlpatterns = [
    
    #url(r'^MatchJSON$', views.MatchJSON, name='MatchJSON'),
    url(r'^Set$', views.Set, name='Set'),
+   url(r'^Enroll$', views.Enroll, name='Set'),
 ]

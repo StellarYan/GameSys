@@ -1,32 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
    <script>
-    var checkcnt=1;
+       var playerCnt = 1;
+       var judgeCnt = 1;
+       var couchCnt = 1;
+       var checkcnt = 1;
 		function loadFemale(check){
-			var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox">跳马</label><label></label><label><input type="checkbox">高低杠</label><label></label><label><input type="checkbox">平衡木</label><label></label><label><input type="checkbox">自由体操</label><label></label><label><input type="checkbox">蹦床</label><label></label></div>';
-			var checktxt='checkbo'+check;
-      document.getElementById(checktxt).innerHTML=insertText;
+			var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + check + 'Option1">跳马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option2">高低杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option3">平衡木</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option4">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option5">蹦床</label><label></label></div>';
+		    var checktxt='checkbo'+check;
+            document.getElementById(checktxt).innerHTML=insertText;
 		}
 		function loadMale(check){
-			var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox">单杠</label><label></label><label><input type="checkbox">双杠</label><label></label><label><input type="checkbox">吊环</label><label></label><label><input type="checkbox">跳马</label><label></label><label><input type="checkbox">自由体操</label><label></label><label><input type="checkbox">鞍马</label><label></label><label><input type="checkbox">蹦床</label><label></label></div>';
+			var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + check + 'Option1">单杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option2">双杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option3">吊环</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option4">跳马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option5">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option6">鞍马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option7">蹦床</label><label></label></div>';
 			var checktxt='checkbo'+check;
-      document.getElementById(checktxt).innerHTML=insertText;
-		}
+            document.getElementById(checktxt).innerHTML=insertText;
+        }
+        //运动员表单插入
 		function insRow()
 		{
-    checkcnt+=1;
-		var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">年龄</label><input type="text" class="form-control" placeholder="年龄"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">组别</label><select class="form-control"><option value ="7-8岁">7-8岁</option><option value ="9-10岁">9-10岁</option><option value="10-11岁">11-12岁</option></select></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">文化成绩</label><input type="text" class="form-control" placeholder="不填" disabled="disabled"></div><div class="col-xs-3"><label for="exampleInputEmail1">身份证</label><input  type="text" class="form-control" placeholder="身份证"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><div class="form-group"><div class="radio"><label><input type="radio" name="optionsRadios'+checkcnt+'" id="optionsRadios1" value="option'+checkcnt+'" onClick="loadMale('+checkcnt+')" checked>男</label><label><input type="radio" name="optionsRadios'+checkcnt+'" id="optionsRadios2" value="option'+checkcnt+'" onClick="loadFemale('+checkcnt+')">女</label></div></div></div><div class="col-xs-3"><label for="exampleInputEmail1">比赛项目（多选）</label><div  class="form-group" id="checkbo'+checkcnt+'"><div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox">单杠</label><label></label><label><input type="checkbox">双杠</label><label></label><label><input type="checkbox">吊环</label><label></label><label><input type="checkbox">跳马</label><label></label><label><input type="checkbox">自由体操</label><label></label><label><input type="checkbox">鞍马</label><label></label><label><input type="checkbox">蹦床</label><label></label></div></div></div></div>';
-			document.getElementById("sporter").innerHTML+=insertText;
+		    playerCnt += 1;
+		    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名" name="playerName'+playerCnt+'"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">年龄</label><input type="text" class="form-control" placeholder="年龄" name="playerAge'+playerCnt+'"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">组别</label><select class="form-control"><option value ="7-8岁" name="group'+playerCnt+'Option1">7-8岁</option><option value ="9-10岁" name="group'+playerCnt+'Option2">9-10岁</option><option value="10-11岁" name="group'+playerCnt+'Option1">11-12岁</option></select></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">文化成绩</label><input type="text" class="form-control" placeholder="不填" disabled="disabled"></div><div class="col-xs-3"><label for="exampleInputEmail1">身份证</label><input  type="text" class="form-control" placeholder="身份证" name="playerID'+playerCnt+'"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><div class="form-group"><div class="radio"><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios1" value="option' + playerCnt + '" onClick="loadMale(' + playerCnt + ')" checked>男</label><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios2" value="option' + playerCnt + '" onClick="loadFemale(' + playerCnt + ')">女</label></div></div></div><div class="col-xs-3"><label for="exampleInputEmail1">比赛项目（多选）</label><div  class="form-group" id="checkbo' + playerCnt + '"><div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option1">单杠</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option2">双杠</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option3">吊环</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option4">跳马</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option5">自由体操</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option6">鞍马</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option7">蹦床</label><label></label></div></div></div></div>';
+		    document.getElementById("sporter").innerHTML += insertText;
 		}
-    function insRow3()
+		//裁判员表单插入
+        function insRow3()
 		{
-		var insertText = '<hr><div class="row"><div class="col-xs-3"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名" name="username"></div><div class="col-xs-4"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="phone"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="id_card"></div></div></div>';
-			document.getElementById("judge").innerHTML+=insertText;
-		}
-    function insRow2()
+		    judgeCnt +=1;
+		    var insertText = '<hr><div class="row"><div class="col-xs-3"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名" name="judgeName'+judgeCnt+'"></div><div class="col-xs-4"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式"  name="judgeTel'+judgeCnt+'"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号"  name="judgeID'+judgeCnt+'"></div></div></div>';
+		    document.getElementById("judge").innerHTML += insertText;
+        }
+        //教练员表单插入
+        function insRow2()
 		{
-		var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名" name="username"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">性别</label><input type="text" class="form-control" placeholder="性别" name="sex"></div><div class="col-xs-4" style="width:200px"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="phone"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="id_card"></div></div></div>';
+		    couchCnt +=1;
+		    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名"  name="couchName'+couchCnt+'"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">性别</label><input type="text" class="form-control" placeholder="性别" name="couchSex'+couchCnt+'"></div><div class="col-xs-4" style="width:200px"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="couchTel'+couchCnt+'"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="couchID'+couchCnt+'"></div></div></div>';
 			document.getElementById("couch").innerHTML+=insertText;
 		}
    </script>
@@ -41,11 +49,14 @@
   {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/font-awesome/css/font-awesome.min.css" %}">
   <!-- Ionicons -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/Ionicons/css/ionicons.min.css" %}">
+ <!-- BootstrapTables -->
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.css" %}">
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-table-click-edit-row/bootstrap-table-click-edit-row.css" %}">
   <!-- Theme style -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/AdminLTE.min.css" %}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/skins/_all-skins.min.css">
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/skins/skin-blue.css" %}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,46 +66,49 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
-
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="." class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>及讯</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>及讯</b><small>赛事管理系统</small></span>
     </a>
-
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </a>
-      <!-- Navbar Right Menu -->
+
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{% static "/master/dist/img/user2-160x160.jpg" %}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">CodeofJackie</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- User image -->
-                  <li class="user-header">
-                    <img src="{% static "/master/dist/img/user2-160x160.jpg" %}" class="img-circle" alt="User Image">
-    
-                    <p>
-                      CodeofJackie - Web Developer
-                      <small>Member since Nov. 2012</small>
-                    </p>
-                  </li>
+              <img src="{% static "/master/dist/img/user2-160x160.jpg" %}"  class="user-image" alt="User Image">
+              <span class="hidden-xs">CodeofJackie</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="{% static "/master/dist/img/user2-160x160.jpg" %}"  class="img-circle" alt="User Image">
+
+                <p>
+                  CodeofJackie - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -129,15 +143,7 @@
       <!-- 侧边栏菜单: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">主菜单</li>        
-     
-      <!-----------------------------------------返回主菜单的功能，加不加？？？不管了，先不加--------------------------------------------
-     
-        <li class="treeview">
-            <i class="fa fa-dashboard"></i> <span><a href="index.html">仪表盘</a></span>
-        </li>
-
-      ----------------------------------------------------------------------------------------------------------------------------------> 
-
+   
          <li class="treeview active">         
               <a href="#">
                 <i class="fa fa-edit"></i> <span>报名</span>
@@ -146,7 +152,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="index3.html"><i class="fa fa-circle-o"></i> 填写报名表</a></li>
+                <li class="active"><a href="Enroll"><i class="fa fa-circle-o"></i> 填写报名表</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i>查看报名信息</a></li>
               </ul>
         </li>
@@ -172,7 +178,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-	   <form id="Form" method="post" action="#" class="form-horizontal">
+	   <form id="Form" method="post" action="Enroll" class="form-horizontal">
 	   <div class="box box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">领队信息</h3>
@@ -181,15 +187,15 @@
               <div class="row">
                 <div class="col-xs-3">
 				<label for="exampleInputEmail1">姓名</label>
-                  <input type="text" name="ldName" class="form-control" placeholder="姓名" name="username">
+                  <input type="text" name="leaderName" class="form-control" placeholder="姓名" name="leaderName">
                 </div>
                 <div class="col-xs-4">
 				<label for="exampleInputEmail1">联系方式</label>
-                  <input type="text" name="ldTel" class="form-control" placeholder="联系方式" name="phone">
+                  <input type="text" name="leaderTel" class="form-control" placeholder="联系方式" >
                 </div>
                 <div class="col-xs-5">
 				<label for="exampleInputEmail1">身份证号</label>
-                  <input type="text" name="ldTel" class="form-control" placeholder="身份证号" name="id_card">
+                  <input type="text" name="leaderID" class="form-control" placeholder="身份证号" >
                 </div>
               </div>
             </div>
@@ -205,15 +211,15 @@
               <div class="row">
                 <div class="col-xs-3">
 				<label for="exampleInputEmail1">姓名</label>
-                  <input type="text" name="dyName" class="form-control" placeholder="姓名" name="username">
+                  <input type="text" class="form-control" placeholder="姓名" name="DocName">
                 </div>
                 <div class="col-xs-4">
 				<label for="exampleInputEmail1">联系方式</label>
-                  <input type="text" name="dyTel" class="form-control" placeholder="联系方式" name="phone">
+                  <input type="text" class="form-control" placeholder="联系方式" name="DocTel">
                 </div>
                 <div class="col-xs-5">
 				<label for="exampleInputEmail1">身份证号</label
-                  <input type="text" name="dyID" class="form-control" placeholder="身份证号" name="id_card">
+                  <input type="text" class="form-control" placeholder="身份证号" name="DocID">
                 </div>
               </div>
             </div>
@@ -231,18 +237,18 @@
               <div class="row">
                 <div class="col-xs-3" style="width:150px">
 				<label for="exampleInputEmail1">姓名</label>
-                  <input type="text" class="form-control" placeholder="姓名">
+                  <input type="text" class="form-control" placeholder="姓名" name="playerName1">
                 </div>
 				<div class="col-xs-3" style="width:100px">
 				<label for="exampleInputEmail1">年龄</label>
-                  <input type="text" class="form-control" placeholder="年龄">
+                  <input type="text" class="form-control" placeholder="年龄" name="playerAge1">
                 </div>
 				<div class="col-xs-3" style="width:150px">
 				<label for="exampleInputEmail1">组别</label>
 				<select class="form-control">
-  					  <option value ="7-8岁">7-8岁</option>
-					  <option value ="9-10岁">9-10岁</option>
-					  <option value="10-11岁">11-12岁</option>
+  					  <option value ="7-8岁" name="group1Option1">7-8岁</option>
+					  <option value ="9-10岁" name="group1Option2">9-10岁</option>
+					  <option value="10-11岁" name="group1Option3">11-12岁</option>
 				</select>
                 </div>
 				<div class="col-xs-3" style="width:100px">
@@ -251,7 +257,7 @@
                 </div>
 				<div class="col-xs-3">
 				<label for="exampleInputEmail1">身份证</label>
-                  <input type="text" class="form-control" placeholder="身份证" name="id_card">
+                  <input type="text" class="form-control" placeholder="身份证" name="playerID1">
                 </div>
 				<div class="col-xs-3" style="width:150px">
 				<label for="exampleInputEmail1">性别</label>
@@ -259,10 +265,10 @@
 					<div class="form-group">
 					  <div class="radio">
 						<label>
-						  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" onClick="loadMale(1)" checked>男
+						  <input type="radio" name="sex1Option1" id="optionsRadios1" value="option1" onClick="loadMale(1)" checked >男
 						 </label>
 						 <label>
-						  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" onClick="loadFemale(1)">女
+						  <input type="radio" name="sex1Option1" id="optionsRadios2" value="option2" onClick="loadFemale(1)" >女
 						</label>
 					  </div>
 					</div>
@@ -272,13 +278,13 @@
 					<!-- checkbox -->
 					<div  class="form-group" id="checkbo1">
 						  <div class="checkbox" style="width:1000px"><label></label>
-							<label><input type="checkbox">单杠</label><label></label>
-							<label><input type="checkbox">双杠</label><label></label>
-							<label><input type="checkbox">吊环</label><label></label>
-							<label><input type="checkbox">跳马</label><label></label>
-							<label><input type="checkbox">自由体操</label><label></label>
-							<label><input type="checkbox">鞍马</label><label></label>
-							<label><input type="checkbox">蹦床</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option1">单杠</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option2">双杠</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option3">吊环</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option4">跳马</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option5">自由体操</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option6">鞍马</label><label></label>
+							<label><input type="checkbox" name="checkbox1Option7">蹦床</label><label></label>
 						  </div>
 					</div>
                 </div>
@@ -298,19 +304,19 @@
               <div class="row">
                 <div class="col-xs-3" style="width:100px">
 				<label for="exampleInputEmail1">姓名</label>
-                  <input type="text" name="jlName" class="form-control" placeholder="姓名" name="username">
+                  <input type="text" class="form-control" placeholder="姓名" name="couchName1">
                 </div>
 				 <div class="col-xs-3" style="width:100px">
 				<label for="exampleInputEmail1">性别</label>
-                  <input type="text" name="jlSex" class="form-control" placeholder="性别" name="sex">
+                  <input type="text" class="form-control" placeholder="性别" name="couchSex1">
                 </div>
                 <div class="col-xs-4" style="width:200px">
 				<label for="exampleInputEmail1">联系方式</label>
-                  <input type="text" name="jlTel" class="form-control" placeholder="联系方式" name="phone">
+                  <input type="text" class="form-control" placeholder="联系方式" name="couchTel1">
                 </div>
                 <div class="col-xs-5">
 				<label for="exampleInputEmail1">身份证号</label>
-                  <input type="text" name="jlID" class="form-control" placeholder="身份证号" name="id_card">
+                  <input type="text" class="form-control" placeholder="身份证号" name="couchID1">
                 </div>
               </div>
             </div>
@@ -327,15 +333,15 @@
               <div class="row">
                 <div class="col-xs-3">
 				<label for="exampleInputEmail1">姓名</label>
-                  <input type="text" name="cpName" class="form-control" placeholder="姓名" name="username">
+                  <input type="text" name="cpName" class="form-control" placeholder="姓名" name="judgeNameN">
                 </div>
                 <div class="col-xs-4">
 				<label for="exampleInputEmail1">联系方式</label>
-                  <input type="text" name="cpTel" class="form-control" placeholder="联系方式" name="phone">
+                  <input type="text" name="cpTel" class="form-control" placeholder="联系方式" name="judgeTelN">
                 </div>
                 <div class="col-xs-5">
 				<label for="exampleInputEmail1">身份证号</label>
-                  <input type="text" name="cpID" class="form-control" placeholder="身份证号" name="id_card">
+                  <input type="text" name="cpID" class="form-control" placeholder="身份证号" name="judgeIDN">
                 </div>
               </div>
             </div>
@@ -351,10 +357,10 @@
             <!-- /.box-header -->
             <!-- form start -->
             <div class="container">
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="col-lg-4 control-label">上传附件：</label>
                         <div class="col-lg-3">
-                            <input type="file" class="form-control" name="File" />
+                            <input type="file" class="form-control"  style=" width:200px; height:40px" name="File" />
                             <span class="help-block">请选择文件（大小200K~1M）</span>
                         </div>
                     </div>
@@ -382,42 +388,23 @@
 
 
 <!-- jQuery 3 -->
-{% load static %}   <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
-<!-- jQuery UI 1.11.4 -->
-{% load static %}   <script src="{% static "/master/bower_components/jquery-ui/jquery-ui.min.js" %}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);  
-</script>
+<script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
 <!-- Bootstrap 3.3.7 -->
-{% load static %}   <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-<!-- Morris.js charts -->
-{% load static %}   <script src="{% static "/master/bower_components/raphael/raphael.min.js" %}"></script>
-{% load static %}   <script src="{% static "/master/bower_components/morris.js/morris.min.js" %}"></script>
-<!-- Sparkline -->
-{% load static %}   <script src="{% static "/master/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js" %}"></script>
-<!-- jvectormap -->
-{% load static %}   <script src="{% static "/master/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" %}"></script>
-{% load static %}   <script src="{% static "/master/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}"></script>
-<!-- jQuery Knob Chart -->
-{% load static %}   <script src="{% static "/master/bower_components/jquery-knob/dist/jquery.knob.min.js" %}"></script>
-<!-- daterangepicker -->
-{% load static %}   <script src="{% static "/master/bower_components/moment/min/moment.min.js" %}"></script>
-{% load static %}   <script src="{% static "/master/bower_components/bootstrap-daterangepicker/daterangepicker.js" %}"></script>
-<!-- datepicker -->
-{% load static %}   <script src="{% static "/master/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-{% load static %}   <script src="{% static "/master/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" %}"></script>
-<!-- Slimscroll -->
-{% load static %}   <script src="{% static "/master/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- BootstrapTables -->
+<script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-click-edit-row/bootstrap-table-click-edit-row.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-toolbar/bootstrap-table-toolbar.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "/master/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
 <!-- FastClick -->
-{% load static %}   <script src="{% static "/master/bower_components/fastclick/lib/fastclick.js" %}"></script>
+<script src="{% static "/master/bower_components/fastclick/lib/fastclick.js" %}"></script>
 <!-- AdminLTE App -->
-{% load static %}   <script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{% load static %}   <script src="{% static "/master/dist/js/pages/dashboard.js" %}"></script>
+<script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
 <!-- AdminLTE for demo purposes -->
-{% load static %}   <script src="{% static "/master/dist/js/demo.js" %}"></script>
+<script src="{% static "/master/dist/js/demo.js" %}"></script>
+<!-- page script -->
 
 <!-------表单验证---------------------------->
 {% load static %}   <script src="{% static "/master/dist/js/bootstrap/jquery-1.10.2.min.js" %}"></script>
@@ -433,20 +420,19 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-       		File: {
+            File: {
                 validators: {
-					notEmpty: {
-                        //message: '请选择文件！'
-                    },
-                    file: {
-                        //extension: 'pdf',
-                        //type: 'application/pdf',
-                        minSize: 200*1024,
-                        maxSize: 1024*1024,
-                        message: '文件大小在200K到1M之间！.'
-                    	}
-               				 }
-           			},
+                    notEmpty: {
+                },
+                file: {
+                    //extension: 'pdf',
+                    //type: 'application/pdf',
+                    minSize: 200 * 1024,
+                    maxSize: 1024 * 1024,
+                    message: '文件大小在200K到1M之间！.'
+                }
+            }
+        },
 			username: {
                 validators: {
                     notEmpty: {
