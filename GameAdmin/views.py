@@ -126,22 +126,64 @@ def LogoutAdmin(request):
         return HttpResponse('<h1>logout</h1>')
     else:
         return HttpResponse('not logged in yet')
-    
 
-def  search_post(request):
-    if request.method=="POST":
-        leader = TeamLeader()
-        leader.ID = request.POST["LeaderID"]
-        leader.Name = request.POST['LeaderName']
-        leader.PhoneNum = request.POST['LeaderPhoneNum']
-        leader.save()
-        return HttpResponse('OK')
-    else:
-            return HttpResponse('Error!')
 
 #处理报名表单信息--插入+查询
 def Enroll(request):
-    #if request.method=="POST":   
+    if request.method=="POST":
+        team = Team()
+        team.File = request.POST['File']
+        team.save()
+
+        leader = TeamLeader()
+        leader.ID = request.POST["leaderID"]
+        leader.Name = request.POST['leaderName']
+        leader.PhoneNum = request.POST['leaderTel']
+        leader.save()
+
+        medic = TeamMedic()
+        medic.Name = request.POST['DocName']
+        medic.ID = request.POST['DocID']
+        medic.PhoneNum = request.POST['DocTel']
+        medic.save()
+
+        player = Player()
+        player.Name = request.POST['playerName']
+        player.Age = request.POST['playerAge']
+        player.ID = request.POST['playerID']
+        #生成运动员ID
+        ID = Player.objects.filter()
+        #获取比赛项目
+        event_list = request.POST.getlist['checkbox1Option']
+
+        #if  player.Age >= 7 :
+            #根据event和age得到MatchID
+        #elif player.Age >=9 :
+
+        #elif player.Age >= 11:
+
+        player.save()
+
+        coach = TeamCoach()
+        coach.ID = request.POST['couchID']
+        coach.PhoneNum = request.POST['couchTel']
+        coach.Name = request.POST['couchName']
+        coach.Gender = request.POST['']
+        coach.save()
+
+        judge = Judge()
+        judge.ID = request.POST['judgeID']
+        judge.Name = request.POST['judgeName']
+        judge.PhoneNum = request.POST['judgeNameTel']
+        judge.save()
+
+        #传给前端数据
+        return render(request, 'EnrollAction.html', {'leaderName': leader.Name,'leaderTel':leader.PhoneNum,'leaderID':leader.ID,
+                                                     'DocName':medic.Name,'DocTel':medic.PhoneNum,'DocID':medic.ID,
+                                                     'playerName':player.Name,'playerAge':player.Age,'playerID':player.Name,
+                                                     })
+
+
     return render(request,os.path.join("master","EnrollAction.html"))
 
     
