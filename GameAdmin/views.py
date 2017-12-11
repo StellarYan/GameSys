@@ -139,14 +139,10 @@ def  search_post(request):
     else:
             return HttpResponse('Error!')
 
-#处理报名表单信息
+#处理报名表单信息--插入+查询
 def Enroll(request):
     #if request.method=="POST":   
-    return render(request,os.path.join("master","Enroll.html"))
-
-#返回代表队报名信息
-def EnrollAction(request):
-    #if request.method == 'POST':
     return render(request,os.path.join("master","EnrollAction.html"))
+
     
 
