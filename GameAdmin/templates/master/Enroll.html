@@ -5,7 +5,7 @@
        var playerCnt = 1;
        var judgeCnt = 1;
        var couchCnt = 1;
-       var checkcnt = 1;
+
 		function loadFemale(check){
 			var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + check + 'Option1">跳马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option2">高低杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option3">平衡木</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option4">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option5">蹦床</label><label></label></div>';
 		    var checktxt='checkbo'+check;
@@ -265,10 +265,10 @@
 					<div class="form-group">
 					  <div class="radio">
 						<label>
-						  <input type="radio" name="sex1Option1" id="optionsRadios1" value="option1" onClick="loadMale(1)" checked >男
+						  <input type="radio" name="sex1Option" id="optionsRadios1" value="option1" onClick="loadMale(1)" checked >男
 						 </label>
 						 <label>
-						  <input type="radio" name="sex1Option1" id="optionsRadios2" value="option2" onClick="loadFemale(1)" >女
+						  <input type="radio" name="sex1Option" id="optionsRadios2" value="option2" onClick="loadFemale(1)" >女
 						</label>
 					  </div>
 					</div>
