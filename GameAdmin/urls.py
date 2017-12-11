@@ -22,5 +22,6 @@ urlpatterns = [
    
    #url(r'^MatchJSON$', views.MatchJSON, name='MatchJSON'),
    url(r'^Set$', views.Set, name='Set'),
-   url(r'^Enroll$', views.Enroll, name='Set'),
+   url(r'^Enroll$', views.Enroll, name='Enroll'),
+   url(r'^EnrollAction$', views.EnrollAction, name='EnrollAction'),
 ]

@@ -101,12 +101,17 @@ def AdminLoginTest(request):
 
 def LoginAdmin(request):
     if request.method == 'POST':
+        #管理员登录管理界面
         if request.POST['AdminName']=='Admin' and request.POST['password']=='123456':
             request.session['isAdmin'] = 'True'
             request.session.set_expiry(3600)
+            return render(request,os.path.join("master","index.html"))
+        #代表队登录报名界面
+        elif request.POST['AdminName']=='admin' and request.POST['password']=='123456':
+            return render(request,os.path.join("master","Enroll.html"))
+        #登陆失败
         else:
             return "<h1>login fail</h1>!"
-    return index(request)
 
     
 def IsAdmin(request):
@@ -132,11 +137,16 @@ def  search_post(request):
         leader.save()
         return HttpResponse('OK')
     else:
-	    return HttpResponse('Error!')
+            return HttpResponse('Error!')
 
-
+#处理报名表单信息
 def Enroll(request):
-    #if request.method == 'POST':
+    #if request.method=="POST":   
     return render(request,os.path.join("master","Enroll.html"))
+
+#返回代表队报名信息
+def EnrollAction(request):
+    #if request.method == 'POST':
+    return render(request,os.path.join("master","EnrollAction.html"))
     
 
