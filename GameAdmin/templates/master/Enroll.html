@@ -16,12 +16,23 @@
 			var checktxt='checkbo'+check;
             document.getElementById(checktxt).innerHTML=insertText;
         }
+        //设置cookies
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date();
+            exdate.setDate(exdate.getDate() + expiredays);
+            document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+        }
+        function setCookies() {
+            setCookie('playerCnt', playerCnt, 1);
+            setCookie('judgeCnt', judgeCnt, 1);
+            setCookie('couchCnt', couchCnt, 1);
+        }
         //运动员表单插入
 		function insRow()
 		{
 		    playerCnt += 1;
 		    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名" name="playerName'+playerCnt+'"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">年龄</label><input type="text" class="form-control" placeholder="年龄" name="playerAge'+playerCnt+'"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">组别</label><select class="form-control"><option value ="7-8岁" name="group'+playerCnt+'Option1">7-8岁</option><option value ="9-10岁" name="group'+playerCnt+'Option2">9-10岁</option><option value="10-11岁" name="group'+playerCnt+'Option1">11-12岁</option></select></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">文化成绩</label><input type="text" class="form-control" placeholder="不填" disabled="disabled"></div><div class="col-xs-3"><label for="exampleInputEmail1">身份证</label><input  type="text" class="form-control" placeholder="身份证" name="playerID'+playerCnt+'"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><div class="form-group"><div class="radio"><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios1" value="option' + playerCnt + '" onClick="loadMale(' + playerCnt + ')" checked>男</label><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios2" value="option' + playerCnt + '" onClick="loadFemale(' + playerCnt + ')">女</label></div></div></div><div class="col-xs-3"><label for="exampleInputEmail1">比赛项目（多选）</label><div  class="form-group" id="checkbo' + playerCnt + '"><div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">单杠</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">双杠</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">吊环</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">跳马</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">自由体操</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">鞍马</label><label></label><label><input type="checkbox" name="checkbox'+playerCnt+'Option">蹦床</label><label></label></div></div></div></div>';
-		    document.getElementById("sporter").innerHTML += insertText;
+            document.getElementById("sporter").innerHTML += insertText;
 		}
 		//裁判员表单插入
         function insRow3()
@@ -352,8 +363,7 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-	  
-	  
+
      <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -371,7 +381,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-4">
-                            <button type="submit" class="btn btn-primary" style="padding-left:20px;padding-right:20px;position:center" name="filevalidate" value="Validate">提交</button>
+                            <button type="submit" class="btn btn-primary" style="padding-left:20px;padding-right:20px;position:center" name="filevalidate" value="Validate" onclick="setCookies()">提交</button>
                         </div>
                     </div>
                 </form>

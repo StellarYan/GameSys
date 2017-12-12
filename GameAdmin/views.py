@@ -186,5 +186,13 @@ def Enroll(request):
 
     return render(request,os.path.join("master","EnrollAction.html"))
 
-    
+
+def EnrollA(request):
+        #获取运动员数目的cookie
+        value1 = request.COOKIES["playerCnt"]
+        value2 = request.COOKIES["judgeCnt"]
+        value3 = request.COOKIES["couchCnt"]
+        #返回收到的cookies值
+        #return HttpResponse(str(value1) )
+        return render(request,os.path.join("master","Enroll.html"))
 
