@@ -436,6 +436,11 @@
             return row.pk;
         });
       //用于通知比赛开始
+      $.post("Set",{
+          Type:"Upgrade",
+          Table:"Match",
+          MatchStatus:"Running"
+      });
     });
   });
 
