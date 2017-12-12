@@ -11,6 +11,7 @@ class PlayMatch(models.Model):
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     DScore = models.IntegerField()
     PScore = models.IntegerField()
+    AllScore = models.IntegerField()
 
 
 class Score(models.Model):
@@ -20,6 +21,7 @@ class Score(models.Model):
     ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     Score = models.IntegerField()
+    IsScored = models.BooleanField(default=0)
  
 class MatchJudge(models.Model):
     class Meta:
@@ -73,14 +75,14 @@ class Judge(models.Model):
     
     
 class Team(models.Model):
-    TeamName = models.CharField(max_length=20,primary_key=True)
+    TeamName = models.CharField(max_length=20, primary_key=True)
     TeamAccount = models.CharField(max_length=20)
     Password = models.CharField(max_length=20)
-    File =models.FileField(upload_to='uploads/', max_length=100)
+    File = models.FileField(upload_to='uploads/', max_length=100)
     
-TableDic = {"Player":Player,"TeamLeader":TeamLeader,"TeamMedic":TeamMedic,
-"TeamCoach":TeamCoach,"Judge":Judge,"Team":Team,
-"PlayMatch":PlayMatch,"Score":Score,"MatchJudge":MatchJudge,"Match":Match}
+TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
+"TeamCoach": TeamCoach, "Judge": Judge, "Team": Team,
+"PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match}
     
 def GetTargetTable(request):
     tableName = request.POST['Table']

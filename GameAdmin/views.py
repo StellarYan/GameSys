@@ -101,13 +101,15 @@ def AdminLoginTest(request):
 
 def LoginAdmin(request):
     if request.method == 'POST':
+        name = request.POST['AdminName']
+        password = request.POST['password']
         #管理员登录管理界面
-        if request.POST['AdminName']=='Admin' and request.POST['password']=='123456':
+        if name == 'Admin' and password =='123456':
             request.session['isAdmin'] = 'True'
             request.session.set_expiry(3600)
             return render(request,os.path.join("master","index.html"))
-        #代表队登录报名界面
-        elif request.POST['AdminName']=='admin' and request.POST['password']=='123456':
+        #代表队登录报名界面（查询数据库内是否存在该帐号且密码是否正确）
+        elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team)
             return render(request,os.path.join("master","Enroll.html"))
         #登陆失败
         else:
@@ -130,10 +132,10 @@ def LogoutAdmin(request):
 
 #处理报名表单信息--插入+查询
 def Enroll(request):
-    if request.method=="POST":
-        team = Team()
-        team.File = request.POST['File']
-        team.save()
+    if request.method == "POST":
+        #team = Team()
+        #team.File = request.POST['File']
+        #team.save()
 
         leader = TeamLeader()
         leader.ID = request.POST["leaderID"]
@@ -147,44 +149,94 @@ def Enroll(request):
         medic.PhoneNum = request.POST['DocTel']
         medic.save()
 
-        player = Player()
-        player.Name = request.POST['playerName']
-        player.Age = request.POST['playerAge']
-        player.ID = request.POST['playerID']
-        #生成运动员ID
-        ID = Player.objects.filter()
-        #获取比赛项目
-        event_list = request.POST.getlist['checkbox1Option']
+        #多个运动员使用列表/数组
+        playerCount = request.POST['']
+        j = 1
+        while j <= playeraccount:
+            player= Player()
+            player.Name = request.POST['playerName' + str(j)]
+            player.Age = request.POST['playerAge' + str(j)]
+            player.ID = request.POST['playerID' + str(j)]
+            gender = request.POST.get['sex1Option' + str(j)]
+            #根据年龄性别分组
+            if 7 <= player.Age <= 8:
+                if gender == 'option1':
+                    player.Group = 'Male1'
+                else:
+                    player.Group = 'Female1'
+            elif 9 <= player.Age <= 10:
+                if gender == 'option1':
+                    player.Group = 'Male2'
+                else:
+                    player.Group = 'Female2'
+            else:
+                if gender == 'option1':
+                    player.Group = 'Male3'
+                else:
+                    player.Group = 'Female3'
+            #生成运动员player.playerID
+            id = Player.objects.values("playerID").filter(max('playerID'))
+            player.playerID = id + 1
+            #获取比赛项目列表
+            item_list = request.POST.getlist['checkbox1Option']
+            #根据比赛项目Event和Group获得Match中的MatchID
+            item_len = len(item_list)
+            match = Match()
+            match.Group = player.Group
+            i = 0
+            while item_len > i:
+                match.Event = item_list[i]
+                matchID = Match.objects.values('MatchID').filter('Event' == match.Event and 'Group' == match.Group)
+                match.MatchID = matchID
+                match.save()
+                i = i + 1
+            player.save()
+            j = j+1
 
-        #if  player.Age >= 7 :
-            #根据event和age得到MatchID
-        #elif player.Age >=9 :
+        #多个教练
+        coachCount = request.POST['']
+        i = 1
+        while i <= coachCount:
+            coach = TeamCoach()
+            coach.ID = request.POST['couchID' + str(i)]
+            coach.PhoneNum = request.POST['couchTel' + str(i)]
+            coach.Name = request.POST['couchName' + str(i)]
+            coach.Gender = request.POST['couchSex' + str(i)]
+            coach.save()
 
-        #elif player.Age >= 11:
+        #多个裁判
+        judgeCount = request.POST['']
+        i = 1
+        while i <= judgeCount:
+            judge = Judge()
+            judge.ID = request.POST['judgeID' + str(i)]
+            judge.Name = request.POST['judgeName' + str(i)]
+            judge.PhoneNum = request.POST['judgeNameTel' + str(i)]
+            judge.save()
 
-        player.save()
+        #测试
+    return HttpResponse('报名成功！')
 
-        coach = TeamCoach()
-        coach.ID = request.POST['couchID']
-        coach.PhoneNum = request.POST['couchTel']
-        coach.Name = request.POST['couchName']
-        coach.Gender = request.POST['']
-        coach.save()
-
-        judge = Judge()
-        judge.ID = request.POST['judgeID']
-        judge.Name = request.POST['judgeName']
-        judge.PhoneNum = request.POST['judgeNameTel']
-        judge.save()
-
-        #传给前端数据
-        return render(request, 'EnrollAction.html', {'leaderName': leader.Name,'leaderTel':leader.PhoneNum,'leaderID':leader.ID,
-                                                     'DocName':medic.Name,'DocTel':medic.PhoneNum,'DocID':medic.ID,
-                                                     'playerName':player.Name,'playerAge':player.Age,'playerID':player.Name,
-                                                     })
+def EnorllAction(request):
 
 
-    return render(request,os.path.join("master","EnrollAction.html"))
 
-    
+
+
+'''return render(request, 'EnrollAction.html', {'leaderName': leader.Name, 'leaderTel': leader.PhoneNum, 'leaderID': leader.ID,
+                                                     'DocName': medic.Name, 'DocTel': medic.PhoneNum, 'DocID': medic.ID,
+                                                     'playerName': player.Name, 'playerAge': player.Age , 'playerID': player.Name,
+                                                     })'''
+    #else:
+        #return render(request,os.path.join("master","EnrollAction.html"))
+
+
+def EnrollA(request):
+        #获取运动员数目的cookie
+        value1 = request.COOKIES["playerCnt"]
+        value2 = request.COOKIES["judgeCnt"]
+        value3 = request.COOKIES["couchCnt"]
+        #返回收到的cookies值
+        #return HttpResponse(str(value1) )
+        return render(request,os.path.join("master","Enroll.html"))
 
