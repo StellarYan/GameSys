@@ -109,7 +109,7 @@ def LoginAdmin(request):
             request.session.set_expiry(3600)
             return render(request,os.path.join("master","index.html"))
         #代表队登录报名界面（查询数据库内是否存在该帐号且密码是否正确）
-        elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team)
+        elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team):
             return render(request,os.path.join("master","Enroll.html"))
         #登陆失败
         else:
@@ -218,15 +218,13 @@ def Enroll(request):
     return HttpResponse('报名成功！')
 
 def EnorllAction(request):
+    return 
 
+#return render(request, 'EnrollAction.html', {'leaderName': leader.Name, 'leaderTel': leader.PhoneNum, 'leaderID': leader.ID,
+#                                                     'DocName': medic.Name, 'DocTel': medic.PhoneNum, 'DocID': medic.ID,
+#                                                     'playerName': player.Name, 'playerAge': player.Age , 'playerID': player.Name,
+#})
 
-
-
-
-'''return render(request, 'EnrollAction.html', {'leaderName': leader.Name, 'leaderTel': leader.PhoneNum, 'leaderID': leader.ID,
-                                                     'DocName': medic.Name, 'DocTel': medic.PhoneNum, 'DocID': medic.ID,
-                                                     'playerName': player.Name, 'playerAge': player.Age , 'playerID': player.Name,
-                                                     })'''
     #else:
         #return render(request,os.path.join("master","EnrollAction.html"))
 
