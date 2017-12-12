@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-# -*- coding : utf-8 -*-
+# -*- coding:utf-8 -*-
 import os
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+#测试
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GameSys.settings")
     try:
