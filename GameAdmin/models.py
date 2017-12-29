@@ -80,6 +80,11 @@ class Team(models.Model):
     Password = models.CharField(max_length=20)
     File = models.FileField(upload_to='uploads/', max_length=100)
     
+class GlobeMatchRule(models.Model):
+    TeamPlayerPerGroup = models.IntegerField()
+    PlayerPerMatch = models.IntegerField()
+    PlayerCountInGroupScore = models.IntegerField()
+    
 TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "TeamCoach": TeamCoach, "Judge": Judge, "Team": Team,
 "PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match}
