@@ -109,12 +109,12 @@ def LoginAdmin(request):
             request.session.set_expiry(3600)
             return render(request,os.path.join("master","index.html"))
         #代表队登录报名界面（查询数据库内是否存在该帐号且密码是否正确）
-        #elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team):
-        #    return render(request,os.path.join("master","Enroll.html"))
+        elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team):
+            return render(request,os.path.join("master","Enroll.html"))
         #登陆失败
         else:
-            #return "<h1>login fail</h1>!"
-            return render(request,os.path.join("master","Enroll.html"))
+            return "<h1>login fail</h1>!"
+            
 
 
     
