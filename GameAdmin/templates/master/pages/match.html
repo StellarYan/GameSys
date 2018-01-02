@@ -180,42 +180,19 @@
               </div>
               <table id="match" class="table table-bordered table-striped">
               </table>
+              </br>
               <div class="col-xs-6">
-                <div id="toolbar-score">
-                    <button id="delete-score" class="btn btn-danger">删除</button>
-                    <button id="create-score" 
-                    class="btn btn-default"
-                    data-toggle="modal" 
-                    data-target="#Modal-Score">
-                    添加
-                    </button>
-                </div>
                 <table id="score" class="table table-bordered table-striped">
                 </table>
+                </br>
               </div>
               <div class="col-xs-6">
-                <div id="toolbar-matchjudge">
-                    <button id="delete-matchjudge" class="btn btn-danger">删除</button>
-                    <button id="create-matchjudge" 
-                    class="btn btn-default"
-                    data-toggle="modal" 
-                    data-target="#Modal-MatchJudge">
-                    添加
-                    </button>
-                </div>
                 <table id="matchjudge" class="table table-bordered table-striped">
                 </table>
+                </br>
               </div>
+              </br>
               <div class="col-xs-12">
-                  <div id="toolbar-playmatch">
-                      <button id="delete-playmatch" class="btn btn-danger">删除</button>
-                      <button id="create-playmatch" 
-                      class="btn btn-default"
-                      data-toggle="modal" 
-                      data-target="#Modal-PlayMatch">
-                      添加
-                      </button>
-                  </div>
                   <table id="playmatch" class="table table-bordered table-striped">
                   </table>
               </div>
@@ -327,7 +304,6 @@
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score",
       clickEdit: true,
       uniqueId:"Score",
-      toolbar:"#toolbar-score",
       columns: [{
           field: 'state',
           checkbox:true,
@@ -353,7 +329,6 @@
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge",
       clickEdit: true,
       uniqueId:"MatchJudge",
-      toolbar:"#toolbar-matchjudge",
       columns: [{
           field: 'state',
           checkbox:true,
@@ -376,7 +351,6 @@
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch",
       clickEdit: true,
       uniqueId:"PlayMatch",
-      toolbar:"#toolbar-playmatch",
       columns: [{
           field: 'state',
           checkbox:true,
