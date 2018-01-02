@@ -20,6 +20,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/skins/skin-blue.css" %}">
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" %}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -236,6 +237,9 @@
 <script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static "/master/dist/js/demo.js" %}"></script>
+
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
 <!-- page script -->
 <script>
   
@@ -528,142 +532,22 @@
             <div class="form-group">
                 <label for="MatchType" class="control-label col-sm-4">比赛类型</label>
                 <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchType" name="MatchType" required></div>
+            </div>
+            <div class="form-group">
+                <label for="ParticipatePlayer" class="control-label col-sm-4">参赛选手</label>
+                <div class="col-sm-6">
+                  <select class="selectpicker show-tick form-control" multiple id="ParticipatePlayer">
+                    <option value="sdaf">路人甲</option>
+                    <option value="sdafs">路人乙</option>
+                    <option value="sdaf">路人甲</option>
+                    <option value="sdafs">路人乙</option>
+                    <option value="sdaf">路人甲</option>
+                    <option value="sdafs">路人乙</option>
+                    <option value="sdaf">路人甲</option>
+                    <option value="sdafs">路人乙</option>
+                  </select>
+                </div>
             </div>		  
-            <div class="form-group">
-              <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
-              <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="Modal-Score" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="exampleModalLabel">添加记录</h4>
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-            <form class="form-horizontal" method="post" action="Set">
-              <div class="form-group" style="display:none">
-                <label for="Type" class="control-label col-sm-4">操作类型</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
-              </div>
-              <div class="form-group" style="display:none">
-                  <label for="Table" class="control-label col-sm-4">操作表</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Table" name="Table" value="Score"></div>
-              </div>
-              <div class="form-group">
-                <label for="Score-MatchID" class="control-label col-sm-4">比赛号</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-MatchID" name="MatchID"></div>
-              </div>
-              <div class="form-group">
-                  <label for="Score-ID" class="control-label col-sm-4">裁判身份证</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-ID" name="ID"></div>
-              </div>
-              <div class="form-group">
-                  <label for="Score-PlayerID" class="control-label col-sm-4">运动员号</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-PlayerID" name="PlayerID"></div>
-              </div>
-              <div class="form-group">
-                  <label for="Score-Score" class="control-label col-sm-4">成绩</label>
-                  <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Score-Score" name="Score"></div>
-              </div> 
-              <div class="form-group">
-                <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
-                <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
-              </div>
-            </form>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <div class="modal fade" id="Modal-MatchJudge" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="exampleModalLabel">添加记录</h4>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal" method="post" action="Set">
-            <div class="form-group" style="display:none">
-              <label for="Type" class="control-label col-sm-4">操作类型</label>
-              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
-            </div>
-            <div class="form-group" style="display:none">
-                <label for="Table" class="control-label col-sm-4">操作表</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Table" name="Table" value="MatchJudge"></div>
-            </div>
-            <div class="form-group">
-              <label for="MatchJudge-MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-MatchID" name="MatchID"></div>
-            </div>
-            <div class="form-group">
-                <label for="MatchJudge-ID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-ID" name="ID"></div>
-            </div>
-            <div class="form-group">
-                <label for="MatchJudge-IsChief" class="control-label col-sm-4">是否为主裁判</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="MatchJudge-IsChief" name="IsChief"></div>
-            </div>
-            <div class="form-group">
-              <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
-              <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="Modal-PlayMatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="exampleModalLabel">添加记录</h4>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal" method="post" action="Set">
-            <div class="form-group" style="display:none">
-              <label for="Type" class="control-label col-sm-4">操作类型</label>
-              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
-            </div>
-            <div class="form-group" style="display:none">
-                <label for="Table" class="control-label col-sm-4">操作表</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="Table" name="Table" value="PlayMatch"></div>
-            </div>
-            <div class="form-group">
-              <label for="PlayMatch-MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-MatchID" name="MatchID"></div>
-            </div>
-            <div class="form-group">
-                <label for="PlayMatch-ID" class="control-label col-sm-4">裁判身份证</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-ID" name="ID"></div>
-            </div>
-            <div class="form-group">
-                <label for="PlayMatch-PlayerID" class="control-label col-sm-4">运动员号</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-PlayerID" name="PlayerID"></div>
-            </div>
-            <div class="form-group">
-                <label for="PlayMatch-DScore" class="control-label col-sm-4">D分</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-DScore" name="DScore"></div>
-            </div>
-            <div class="form-group">
-                <label for="PlayMatch-DScore" class="control-label col-sm-4">P分</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="PlayMatch-DScore" name="DScore"></div>
-            </div>
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
               <div class="col-xs-6"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div>
@@ -697,6 +581,8 @@
         $("#matchjudge").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID="+pk[0]});
       });
     });
+
+
   </script>
 </body>
 </html>
