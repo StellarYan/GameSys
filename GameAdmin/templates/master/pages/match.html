@@ -536,15 +536,7 @@
             <div class="form-group">
                 <label for="ParticipatePlayer" class="control-label col-sm-4">参赛选手</label>
                 <div class="col-sm-6">
-                  <select class="selectpicker show-tick form-control" multiple id="ParticipatePlayer">
-                    <option value="sdaf">路人甲</option>
-                    <option value="sdafs">路人乙</option>
-                    <option value="sdaf">路人甲</option>
-                    <option value="sdafs">路人乙</option>
-                    <option value="sdaf">路人甲</option>
-                    <option value="sdafs">路人乙</option>
-                    <option value="sdaf">路人甲</option>
-                    <option value="sdafs">路人乙</option>
+                  <select class="form-control selectpicker show-tick" multiple id="ParticipatePlayer">
                   </select>
                 </div>
             </div>		  
@@ -581,8 +573,22 @@
         $("#matchjudge").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID="+pk[0]});
       });
     });
-
-
+    
+    $.ajax({  
+        // get请求地址  
+        url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Player',  
+        dataType: "json",  
+        success: function (data) {  
+        var optArr = [];  
+        for (var i = 0; i < data.length; i++) {
+          $('#ParticipatePlayer').append('<option value="' + data[i].PlayerID + '">'+
+          data[i].Name +'</option>');
+        }
+        // 缺一不可  
+        $('#ParticipatePlayer').selectpicker('refresh');  
+        $('#ParticipatePlayer').selectpicker('render');
+    }  
+  });  
   </script>
 </body>
 </html>
