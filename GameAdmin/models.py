@@ -47,6 +47,7 @@ class Player(models.Model):
     Group = models.CharField(max_length=20)
     CultureScore = models.IntegerField()
     TeamName = models.ForeignKey('Team',on_delete=models.CASCADE,)
+    Event = models.CharField(max_length=60)
     
     
 class TeamLeader(models.Model):
