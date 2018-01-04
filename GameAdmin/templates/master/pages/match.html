@@ -371,6 +371,12 @@
           field: 'fields.PScore',
           title: 'P分',
           editable:"input"
+      },{
+          field: 'fields.AllScore',
+          title: '总分',
+      },{
+          field: 'fields.ScoreState',
+          title: '打分状态'
       }],
       responseHandler: function (res) {
           return res;
@@ -446,7 +452,10 @@
             </div>
             <div class="form-group">
                 <label for="ChiefID" class="control-label col-sm-4">主裁判身份证</label>
-                <div class="col-sm-6"><input type="text" class="form-control input-md" id="ChiefID" name="ChiefID" required></div>
+                <div class="col-sm-6">
+                  <select class="form-control selectpicker show-tick" id="ChiefID" required>
+                  </select>
+                </div>
             </div>
             <div class="form-group">
                 <label for="StartTime" class="control-label col-sm-4">预期开始时间</label>
@@ -497,14 +506,31 @@
         url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Player',  
         dataType: "json",  
         success: function (data) {  
-        var optArr = [];  
+        var optArr = [];
         for (var i = 0; i < data.length; i++) {
-          $('#ParticipatePlayer').append('<option value="' + data[i].PlayerID + '">'+
-          data[i].Name +'</option>');
+          $('#ParticipatePlayer').append('<option value="' + data[i].fields.ID + '">'+
+          data[i].fields.Name +'</option>');
         }
         // 缺一不可  
         $('#ParticipatePlayer').selectpicker('refresh');  
         $('#ParticipatePlayer').selectpicker('render');
+        }
+    });
+
+    $.ajax({  
+        // get请求地址  
+        url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Judge',  
+        dataType: "json",  
+        success: function (data) {  
+        var optArr = [];  
+        console.log(data[3].pk);
+        for (var i = 0; i < data.length; i++) {
+          $('#ChiefID').append('<option value="' + data[i].pk + '">'+
+          data[i].pk +'</option>');
+        }
+        // 缺一不可  
+        $('#ChiefID').selectpicker('refresh');  
+        $('#ChiefID').selectpicker('render');
         }
     });
   </script>

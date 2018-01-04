@@ -252,3 +252,6 @@ def EnrollA(request):
         #return HttpResponse(str(value1) )
         return render(request,os.path.join("master","Enroll.html"))
 
+def ShowScore(request):
+    #显示成绩页面
+    return render(request,os.path.join("master","Score.html"))
