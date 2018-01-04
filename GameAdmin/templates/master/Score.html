@@ -152,13 +152,11 @@
 <script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
 <!-- page script -->
 <script>
-  var icon = 3;
-  console.log(icon);
 
   //初始化表格
   $(function () {
     $('#rank').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Rank",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetSingleScore",
       clickEdit: false,
       pagination:true,
       search:true,
@@ -169,34 +167,20 @@
       uniqueId:"rank",
       sortable:true,
       idTable:"advancedTable",
-      columns: [{
-          field: 'state',
-          checkbox:true,
-      }, 
-        {
-          field: 'pk',
-          title: '比赛号'
-      }, {
-          field: 'fields.Group',
-          title: '比赛年龄组',
-          sortable: true,
-          editable:"input"
-      }, {
-          field: 'fields.Event',
-          title: '项目',
-          sortable: true,
-          editable:"input"
+      columns: [ {
+          field: 'fields.Name',
+          title: '运动员姓名'
+      },{
+          field: 'field.ID',
+          title: '运动员号'
+      },{
+          field: 'fields.Score',
+          title: '成绩',
+          sortable: true
       }, {
           field: 'fields.MatchType',
           title: '比赛类型（初赛/决赛）',
-          sortable: true,
-          editable:"input"
-      }, {
-          field: '',
-          title: '运动员姓名'
-      },{
-          field: '',
-          title: '运动员号'
+          sortable: true
       }],
       responseHandler: function (res) {
           return res;
@@ -204,7 +188,7 @@
     });
 
     $('#teamrank').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=TeamRank",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetTeamScore",
       clickEdit: false,
       pagination:true,
       search:true,

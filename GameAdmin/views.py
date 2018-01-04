@@ -82,7 +82,19 @@ def GetJSON(request):
         data = serializers.serialize("json",queryset )
         jdata = json.loads(data)
         return JsonResponse(jdata, safe=False)
-        
+
+def GetSingleScore(request):
+    pass
+#返回的json属性包含姓名,运动员ID和个人参加的所有项目的成绩总和
+#PlayMatch 表根据运动员号查总分
+#Player 表根据运动员号查姓名
+def GetTeamScore(request):
+    pass
+#返回的json属性包括团队名称，对应的项目，以及该项目下团队的总成绩。
+#查询某一特定项目中，团体单项成绩=ABC赛制，如果这个单项派出的人少于C则为0，否则为分数较高的C个人成绩之和
+
+#另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
+
         
 def Set(request):
     if not IsAdmin(request):
