@@ -12,6 +12,7 @@ class PlayMatch(models.Model):
     DScore = models.IntegerField()
     PScore = models.IntegerField()
     AllScore = models.IntegerField()
+    ScoreState = models.IntegerField()
 
 
 class Score(models.Model):
@@ -37,6 +38,7 @@ class Match(models.Model):
     ChiefID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     MatchStatus = models.CharField(max_length=20)
     MatchType = models.CharField(max_length=10)
+    SubGroup = models.CharField(max_length=10)
     
 class Player(models.Model):
     PlayerID = models.CharField(max_length=20,primary_key=True)
