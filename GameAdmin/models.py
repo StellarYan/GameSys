@@ -22,7 +22,6 @@ class Score(models.Model):
     ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     Score = models.IntegerField()
-    IsScored = models.BooleanField(default=0)
  
 class MatchJudge(models.Model):
     class Meta:
