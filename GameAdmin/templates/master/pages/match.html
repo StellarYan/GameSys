@@ -352,7 +352,7 @@
       }
     });
     $('#playmatch').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch",
+      url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch",
       clickEdit: true,
       uniqueId:"PlayMatch",
       columns: [{
@@ -373,7 +373,7 @@
           editable:"input"
       }],
       responseHandler: function (res) {
-          return res.Score;
+          return res;
       }
     });
   })
@@ -395,21 +395,6 @@
       });
   });
 
-  //请求比赛详细信息
-  $(function () {
-    $('#startgame').click(function () {
-      var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
-            return row.pk;
-        });
-      $.post("一个用来刷新页面的url",{
-        //用于请求详细的比赛信息
-      });
-      $("#score").bootstrapTable('refresh',{url: 新的url});
-      $("#matchjudge").bootstrapTable('refresh',{url: 新的url});
-      $("#playmatch").bootstrapTable('refresh',{url: 新的url});
-    });
-  });
-
   //通知比赛开始
   $(function () {
     $('#startgame').click(function () {
@@ -420,71 +405,13 @@
       $.post("Set",{
           Type:"Upgrade",
           Table:"Match",
+          MatchID:pk[0],
           MatchStatus:"Running"
-      });
+      },
+      $("#match").bootstrapTable('refresh')
+      );
     });
   });
-
-  //Score表删除操作
-  $(function () {
-      $('#delete-score').click(function () {
-          var ids = new Array();
-          $.map($("#score").bootstrapTable('getSelections'), function (row) {
-            ids.push(row.fields.MatchID,row.fields.ID,row.fields.PlayerID);
-          });
-          $.post("Set",{
-            Type:"Delete",
-            Table:"Score",
-            MatchID:ids[0],
-            ID:ids[1],
-            PlayerID:ids[2]
-          },
-          $("#score").bootstrapTable('refresh')
-          )
-          //并且执行向服务器的提交过程
-      });
-    });
-  
-
-
-  //MatchJudge表删除操作
-  $(function () {
-      $('#delete-matchjudge').click(function () {
-          var ids = new Array();
-          $.map($("#matchjudge").bootstrapTable('getSelections'), function (row) {
-            ids.push(row.fields.MatchID,row.fields.ID);
-          });
-          $.post("Set",{
-            Type:"Delete",
-            Table:"MatchJudge",
-            MatchID:ids[0],
-            ID:ids[1]
-          },
-          $("#matchjudge").bootstrapTable('refresh')
-          )
-          //并且执行向服务器的提交过程
-      });
-    });
-  
-  //PlayMatch表删除操作
-  $(function () {
-      $('#delete-playmatch').click(function () {
-          var ids = new Array();
-          $.map($("#playmatch").bootstrapTable('getSelections'), function (row) {
-            ids.push(row.fields.MatchID,row.fields.PlayerID);
-          });
-          $.post("Set",{
-            Type:"Delete",
-            Table:"PlayMatch",
-            MatchID:ids[0],
-            PlayerID:ids[1]
-          },
-          $("#playmatch").bootstrapTable('refresh')
-          )
-          //并且执行向服务器的提交过程
-      });
-  });
-
 </script>
 
   <div class="modal fade" id="Modal-Match" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -552,15 +479,6 @@
   </div>
 
   <script>
-    //提醒比赛开始
-    $(function () {
-      $('#startgame').click(function () {
-        var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
-              return row.pk;
-          });
-        //发送消息
-      });
-    });
 
     //显示详细信息
     $(function () {
@@ -587,8 +505,8 @@
         // 缺一不可  
         $('#ParticipatePlayer').selectpicker('refresh');  
         $('#ParticipatePlayer').selectpicker('render');
-    }  
-  });  
+        }
+    });
   </script>
 </body>
 </html>

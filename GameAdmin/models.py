@@ -101,7 +101,7 @@ def GetTargetObj(request,target_table):
     if(target_table!=PlayMatch and target_table!=Score and target_table!=MatchJudge):
         if(request.POST['Type']=='Upgrade'):
             print(target_table._meta.pk.name)
-            print(request.POST['ID'])
+            
             print(request.POST[target_table._meta.pk.name]) 
             return target_table.objects.get(pk=request.POST[target_table._meta.pk.name])
         if(request.POST['Type']=='Delete'):

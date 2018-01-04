@@ -68,8 +68,18 @@ def GetJSON(request):
         return HttpResponse('<h1>please login<h1>')
     if request.method == 'GET':
         tableName =request.GET['Table']
+        
         target_table = TableDic[tableName]
-        data = serializers.serialize("json", target_table.objects.all())
+        queryset = target_table.objects.all()
+        try: 
+            matchid = request.GET['MatchID']
+            queryset = target_table.objects.filter(MatchID__exact=matchid)
+        except:
+            pass
+        finally:
+            pass
+        
+        data = serializers.serialize("json",queryset )
         jdata = json.loads(data)
         return JsonResponse(jdata, safe=False)
         
