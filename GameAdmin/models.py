@@ -36,6 +36,7 @@ class Match(models.Model):
     Event = models.CharField(max_length=20)
     ChiefID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     MatchStatus = models.CharField(max_length=20)
+    MatchType = models.CharField(max_length=10)
     
 class Player(models.Model):
     PlayerID = models.CharField(max_length=20,primary_key=True)
