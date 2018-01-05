@@ -168,6 +168,26 @@
 
           <div class="box">
             <div class="box-body">
+              <h5>规则</h5>
+              <br/>
+                  <table id="rule" class="table table-bordered table-striped">
+                  </table>
+              <br/>
+              <form class="row" action="Set" method="post">
+                  <div class="form-group" style="display:none">
+                      <input required type="text" class="form-control input-md" name="Type" value="Add"/>
+                      <input required type="text" class="form-control input-md" name="Table" value="GlobeMatchRule"/>
+                      <input required type="text" class="form-control input-md" name="id" value="1"/>
+                  </div>
+                  <label for="Event" class="control-label col-sm-2">TeamPlayerPerGroup</label>
+                  <div class="col-sm-1"><input class="form-control" name="TeamPlayerPerGroup"/></div>
+                  <label for="Event" class="control-label col-sm-2">PlayerPerMatch</label>
+                  <div class="col-sm-1"><input class="form-control" name="PlayerPerMatch"/></div>
+                  <label for="Event" class="control-label col-sm-2">PlayerCountInGroupScore</label>
+                  <div class="col-sm-1"><input class="form-control" name="PlayerCountInGroupScore"/></div>
+                  <input type="submit" class="btn btn-primary col-sm-1" value="提交"/>
+              </form>
+              </br>
               <div id="toolbar">
                   <button id="delete" class="btn btn-danger">删除</button>
                   <button id="create" 
@@ -211,7 +231,7 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0.0
+      <b>Version</b> 2.0.0
     </div>
     <strong>Copyright &copy; 2017 codeofjackie.</strong> All rights
     reserved.Support by <a href="https://adminlte.io">Almsaeed Studio</a>
@@ -246,6 +266,24 @@
   //初始化表格
   var $table = $('#match');
   $(function () {
+      $('#rule').bootstrapTable({
+        url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=GlobeMatchRule",
+        uniqueId:"GlobeMatchRule",
+        columns: [ {
+          field: 'fields.TeamPlayerPerGroup',
+          title: 'TeamPlayerPerGroup'
+        }, {
+          field: 'fields.PlayerPerMatch',
+          title: 'PlayerPerMatch'
+        }, {
+          field: 'fields.PlayerCountInGroupScore',
+          title: 'PlayerCountInGroupScore'
+        }],
+        responseHandler: function (res) {
+          return res;
+        }
+    });
+
     $('#match').bootstrapTable({
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Match",
       clickEdit: true,
@@ -438,6 +476,10 @@
                 <label for="Table" class="control-label col-sm-4">操作表</label>
                 <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="Table" value="Match"></div>
             </div>
+            <div class="form-group" style="display:none">
+                <label for="MatchStatus" class="control-label col-sm-4">操作表</label>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="Table" name="MatchStatus" value="Waiting"></div>
+            </div>
             <div class="form-group">
               <label for="MatchID" class="control-label col-sm-4">比赛号</label>
               <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchID" name="MatchID" required minlength="5"></div>
@@ -453,7 +495,7 @@
             <div class="form-group">
                 <label for="ChiefID" class="control-label col-sm-4">主裁判身份证</label>
                 <div class="col-sm-6">
-                  <select class="form-control selectpicker show-tick" id="ChiefID" required>
+                  <select class="form-control selectpicker show-tick" id="ChiefID" name="ChiefID_id" required>
                   </select>
                 </div>
             </div>
@@ -472,7 +514,7 @@
             <div class="form-group">
                 <label for="ParticipatePlayer" class="control-label col-sm-4">参赛选手</label>
                 <div class="col-sm-6">
-                  <select class="form-control selectpicker show-tick" multiple id="ParticipatePlayer">
+                  <select class="form-control selectpicker show-tick" multiple id="ParticipatePlayer" name="ParticipatePlayer">
                   </select>
                 </div>
             </div>		  

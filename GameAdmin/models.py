@@ -90,8 +90,9 @@ class GlobeMatchRule(models.Model):
     
 TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "TeamCoach": TeamCoach, "Judge": Judge, "Team": Team,
-"PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match}
-    
+"PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match,
+"GlobeMatchRule":GlobeMatchRule}
+
 def GetTargetTable(request):
     tableName = request.POST['Table']
     return TableDic[tableName]

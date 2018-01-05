@@ -172,7 +172,7 @@
               <!-- small box -->
               <div class="small-box bg-light-blue">
                 <div class="inner">
-                  <h3 id="PlayerCount">-</h3>
+                  <h3 id="PlayerCount"></h3>
                   <p>参赛人数</p>
                 </div>
                 <div class="icon">
@@ -186,16 +186,30 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3 id="TodayMatchCount">-</h3>
-                  <p>今日赛事</p>
+                  <h3 id="TeamJoined"></h3>
+                  <p>参赛队伍</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-trophy"></i>
+                  <i class="ion ion-flag"></i>
                 </div>
                 <a href="/GameAdmin/Match" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                  <div class="inner">
+                    <h3 id="MatchRank">?</h3>
+                    <p>比赛结果</p>
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-trophy"></i>
+                  </div>
+                  <a href="/GameAdmin/ShowScore" class="small-box-footer">更多信息 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <!-- ./col -->
           </div>
           <!-- /.row -->
           <!-- Main row -->
@@ -236,7 +250,7 @@
       <!-- /.content-wrapper -->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 1.0.0
+          <b>Version</b> 2.0.0
         </div>
         <strong>Copyright &copy; 2017 codeofjackie.</strong> All rights
         reserved.Support by <a href="https://adminlte.io">Almsaeed Studio</a>
@@ -283,9 +297,13 @@
 {% load static %}   <script src="{% static "/master/dist/js/demo.js" %}"></script>
 <script>  
   //试着给界面上的参赛人数提供功能
-  $.get("Get",function(data,status){
-    $('#PlayerCount')[0].innerText = data;
+  $.getJSON("http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Player",function(data){
+    $('#PlayerCount').append(data.length);
   });
+  $.getJSON("http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Team",function(data){
+    $('#TeamJoined').append(data.length);
+  });
+  
 </script>
 </body>
 </html>
