@@ -95,6 +95,11 @@ TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match,
 "GlobeMatchRule":GlobeMatchRule}
 
+EventTup = ('DG','SG','DG','TN','TC','AM','BC','GD','PH')
+#单杠 双杠 吊环 跳马 体操 鞍马 蹦床 高低杠 平衡木 
+
+
+
 def GetTargetTable(request):
     tableName = request.POST['Table']
     return TableDic[tableName]
@@ -119,6 +124,10 @@ def SetColumn(tobj,fieldName,fieldValue):
             setattr(tobj,fieldName+"_id",fieldValue)
         else:
             setattr(tobj,fieldName,fieldValue)
+            
+            
+
+    
     
     
 
