@@ -28,5 +28,6 @@ urlpatterns = [
    
    url(r'^GetSingleScore$', views.GetSingleScore, name='GetSingleScore'),
    url(r'^GetTeamScore$', views.GetTeamScore, name='GetTeamScore'),
+   url(r'^GenerateFinal$',views.GenerateFinal,name='GenerateFinal'),
    
 ]

@@ -93,37 +93,40 @@ def GetJSON(request):
 #PlayMatch 表根据运动员号查总分
 #Player 表根据运动员号查姓名
 def GetSingleScore(request):
-    pID=request.GET['PlayerID']
-    pName = Player.objects.filter(PlayerID=pID).values('Name')[0]
-    ScoreSum = PlayMatch.objects.filter(PlayerID=pID).aggregate(Sum('AllScore'))
-    dic = {'PlayerID':pID,'Name':pName['Name'],'ScoreSum':ScoreSum['AllScore__sum']}
-    jdata = json.dumps(dic)
+    players = Player.objects.all()
+    ScoreList = []
+    for p in players:
+        for mType in range(1,3):
+            pID=p.PlayerID
+            pName = Player.objects.filter(PlayerID=pID).values('Name')[0]
+            ScoreSum = PlayMatch.objects.filter(PlayerID=pID).aggregate(Sum('AllScore'))
+            dic = {'PlayerID':pID,'Name':pName['Name'],'MatchType':mType,'ScoreSum':ScoreSum['AllScore__sum']}
+            ScoreList.append(dic)
+    jdata = json.dumps(ScoreList)
     return HttpResponse(jdata) #用HttpResponse来返回非django查询生成的json
     
     
 #返回的json属性包括团队名称，对应的项目，以及该项目下团队的总成绩。
 #查询某一特定项目中，团体单项成绩=ABC赛制，如果这个单项派出的人少于C则为0，否则为分数较高的C个人成绩之和
 def GetTeamScore(request):
-    tName = request.GET['TeamName']
-    Rule_PlayerCountInGroupScore = GlobeMatchRule.objects.all().values('PlayerCountInGroupScore')[0]['PlayerCountInGroupScore']
-    TeamPlayers = Player.objects.filter(TeamName=tName)
-    EventScore = {}
-    for eve in EventTup:
-        EventMatchs = Match.objects.filter(Event=eve)
-        queryPlayMatch = PlayMatch.objects.filter(PlayerID__in=TeamPlayers,MatchID__in=EventMatchs)
-        EventPlayercount = queryPlayMatch.count()
-        if EventPlayercount<Rule_PlayerCountInGroupScore:
-            EventScore[eve] = 0
-        else:
-            EventPlayerScores = queryPlayMatch.order_by('-AllScore').values('AllScore')
-            EventScore[eve]=0
-            for j in range(0,Rule_PlayerCountInGroupScore):
-                EventScore[eve] += EventPlayerScores[j]['AllScore']
-    jdata = json.dumps(EventScore)
+    ScoreList=[]
+    teams = Team.objects.all()
+    for t in teams:
+        for mType in range(1,3):
+            ScoreList.append(GetTeamScoreByMatchType(t.TeamName,mType))
+    jdata = json.dumps(ScoreList)
     return HttpResponse(jdata)  
 
     
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
+#X=5
+def GenerateFinal(request):
+    # X=5
+    # for eve in EventTup:
+        # for grp in GroupTup:
+            # NewMatchID = Match.objects.aggregate(Max('MatchID'))
+            # FinalMatch = Match();
+    
 
         
 def Set(request):

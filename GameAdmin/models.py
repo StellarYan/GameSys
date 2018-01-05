@@ -88,6 +88,7 @@ class GlobeMatchRule(models.Model):
     PlayerPerMatch = models.IntegerField()
     PlayerCountInGroupScore = models.IntegerField()
     
+    
 TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "TeamCoach": TeamCoach, "Judge": Judge, "Team": Team,
 "PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match,
@@ -95,6 +96,8 @@ TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 
 EventTup = ('DG','SG','DG','TN','TC','AM','BC','GD','PH')
 #单杠 双杠 吊环 跳马 体操 鞍马 蹦床 高低杠 平衡木 
+
+GroupTup = ('Female1','Female2','Female3','Male1','Male2','Male3')
 
 
 
@@ -124,7 +127,29 @@ def SetColumn(tobj,fieldName,fieldValue):
             setattr(tobj,fieldName,fieldValue)
             
             
-
+def GetTeamScoreByMatchType(teamName,matchType):
+    EvegrpScoreList = []
+    Rule_PlayerCountInGroupScore = GlobeMatchRule.objects.all().values('PlayerCountInGroupScore')[0]['PlayerCountInGroupScore']
+    TeamPlayers = Player.objects.filter(TeamName=teamName)
+    for eve in EventTup:
+        for grp in GroupTup:
+            TeamScoreList={}
+            TeamScoreList['TeamName']=teamName
+            TeamScoreList['Event']=eve
+            TeamScoreList['Group']=grp
+            TeamScoreList['MatchType']=matchType
+            EventMatchs = Match.objects.filter(Event=eve).filter(Group=grp).filter(MatchType=matchType)
+            queryPlayMatch = PlayMatch.objects.filter(PlayerID__in=TeamPlayers,MatchID__in=EventMatchs)
+            EventPlayercount = queryPlayMatch.count()
+            if EventPlayercount<Rule_PlayerCountInGroupScore:
+                TeamScoreList['GroupScore'] = 0
+            else:
+                EventPlayerScores = queryPlayMatch.order_by('-AllScore').values('AllScore')
+                TeamScoreList['GroupScore']=0
+                for j in range(0,Rule_PlayerCountInGroupScore):
+                    TeamScoreList['GroupScore']+=EventPlayerScores[j]['AllScore']
+            EvegrpScoreList.append(TeamScoreList)
+    return EvegrpScoreList
             
             
 
