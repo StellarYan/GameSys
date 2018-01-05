@@ -121,11 +121,12 @@ def GetTeamScore(request):
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
 #X=5
 def GenerateFinal(request):
-    # X=5
-    # for eve in EventTup:
-        # for grp in GroupTup:
-            # NewMatchID = Match.objects.aggregate(Max('MatchID'))
-            # FinalMatch = Match();
+    pass
+    # # X=5
+    # # for eve in EventTup:
+        # # for grp in GroupTup:
+            # # NewMatchID = Match.objects.aggregate(Max('MatchID'))
+            # # FinalMatch = Match();
     
 
         
