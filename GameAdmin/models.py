@@ -22,7 +22,7 @@ class Score(models.Model):
     ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     Score = models.IntegerField()
-
+ 
 class MatchJudge(models.Model):
     class Meta:
         unique_together = (('MatchID','ID'),)
@@ -36,8 +36,6 @@ class Match(models.Model):
     Event = models.CharField(max_length=20)
     ChiefID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     MatchStatus = models.CharField(max_length=20)
-    EndTime = models.CharField(max_length=20)
-    StartTime = models.CharField(max_length=20)
     MatchType = models.CharField(max_length=10)
     SubGroup = models.CharField(max_length=10)
     
@@ -124,6 +122,9 @@ def SetColumn(tobj,fieldName,fieldValue):
             setattr(tobj,fieldName+"_id",fieldValue)
         else:
             setattr(tobj,fieldName,fieldValue)
+            
+            
+
             
             
 

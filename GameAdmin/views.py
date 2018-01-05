@@ -15,6 +15,7 @@ from django.db import connection
 from itertools import chain
 from django.db.models import Sum
 from django.db.models import Count
+from django.db.models import Max
 
 
 import json
@@ -103,7 +104,20 @@ def GetSingleScore(request):
 #返回的json属性包括团队名称，对应的项目，以及该项目下团队的总成绩。
 #查询某一特定项目中，团体单项成绩=ABC赛制，如果这个单项派出的人少于C则为0，否则为分数较高的C个人成绩之和
 def GetTeamScore(request):
-
+    tName = request.GET['TeamName']
+    Rule_PlayerCountInGroupScore = GlobeMatchRule.objects.all().values('PlayerCountInGroupScore')[0]['PlayerCountInGroupScore']
+    TeamPlayers = Player.objects.filter(TeamName=tName)
+    EventScore = {}
+    for eve in EventTup:
+        EventMatchs = Match.objects.filter(Event=eve)
+        queryPlayMatch = PlayMatch.objects.filter(PlayerID__in=TeamPlayers,MatchID__in=EventMatchs)
+        EventPlayercount = queryPlayMatch.count()
+        if EventPlayercount<Rule_PlayerCountInGroupScore:
+            EventScore[eve] = 0
+        else:
+            EventScore[eve] = queryPlayMatch.annotate(EventSum=Sum('AllScore')).aggregate(Max('EventSum'))['EventSum__max']
+    jdata = json.dumps(EventScore)
+    return HttpResponse(jdata)  
 
     
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
@@ -138,27 +152,19 @@ def LoginAdmin(request):
     if request.method == 'POST':
         name = request.POST['AdminName']
         password = request.POST['password']
-        count = Team.objects.filter(TeamName=name, Password=password).count()
         #管理员登录管理界面
         if name == 'Admin' and password =='123456':
             request.session['isAdmin'] = 'True'
             request.session.set_expiry(3600)
-            return render(request, os.path.join("master", "index.html"))
+            return render(request,os.path.join("master","index.html"))
+        elif name == 'admin1' and password =='123456':
+            return render(request,os.path.join("master","Enroll.html"))
         #代表队登录报名界面（查询数据库内是否存在该帐号且密码是否正确）
-        if count > 0:
-            team = Team.objects.get(TeamName=name)
-            if team.Password == password:
-                request.session['TeamName'] = name
-                request.session['Password'] = password
-                request.session.set_expiry(3600)
-                return render(request, os.path.join("master", "Enroll.html"))
-            else:
-                return HttpResponse("<h1>login fail!<h1>")
+        elif Team.objects.filter(TeamName = name) and Team.objects.filter(Team):
+            return render(request,os.path.join("master","Enroll.html"))
         #登陆失败
-        elif name == None or password == None:
-            return HttpResponse("<h1>login fail!<h1>")
-    else:
-        return render(request, os.path.join("master", "login.html"))
+        else:
+            return "<h1>login fail</h1>!"
             
 
 
@@ -180,44 +186,31 @@ def LogoutAdmin(request):
 #处理报名表单信息--插入+查询
 def Enroll(request):
     if request.method == "POST":
-        cursor = connection.cursor()
-
-        team = Team()
-        team.TeamName = request.session.get('TeamName', None)
-        team.Password = request.session.get('Password', None)
-        team.TeamAccount = team.TeamName
-        team.save()
+        #team = Team()
+        #team.File = request.POST['File']
+        #team.save()
 
         leader = TeamLeader()
         leader.ID = request.POST["leaderID"]
         leader.Name = request.POST['leaderName']
         leader.PhoneNum = request.POST['leaderTel']
-        leader.TeamName_id = request.session.get('TeamName', None)
         leader.save()
 
         medic = TeamMedic()
         medic.Name = request.POST['DocName']
         medic.ID = request.POST['DocID']
         medic.PhoneNum = request.POST['DocTel']
-        medic.TeamName_id = request.session.get('TeamName', None)
         medic.save()
 
         #多个运动员使用列表/数组
-        playerCnt = request.COOKIES['playerCnt']
-        playercount = int(playerCnt)
+        playerCount = request.POST['']
         j = 1
-        while j <= playercount:
-            player = Player()
+        while j <= playeraccount:
+            player= Player()
             player.Name = request.POST['playerName' + str(j)]
-            age = request.POST['playerAge' + str(j)]
-            player.Age = int(age)
+            player.Age = request.POST['playerAge' + str(j)]
             player.ID = request.POST['playerID' + str(j)]
-            gender = request.POST['sex'+str(j) + 'Option']
-            request.session['sex'+str(j)] = gender
-            TeamName_id = request.session.get('TeamName', None)
-            player.TeamName_id = TeamName_id
-
-            player.CultureScore = 0
+            gender = request.POST.get['sex1Option' + str(j)]
             #根据年龄性别分组
             if 7 <= player.Age <= 8:
                 if gender == 'option1':
@@ -234,134 +227,69 @@ def Enroll(request):
                     player.Group = 'Male3'
                 else:
                     player.Group = 'Female3'
-
             #生成运动员player.playerID
-            id = Player.objects.all().count()
-            player.PlayerID = id + 1
-
+            id = Player.objects.values("playerID").filter(max('playerID'))
+            player.playerID = id + 1
             #获取比赛项目列表
-            item_list = request.POST.getlist('checkbox'+str(j) + 'Option')
+            item_list = request.POST.getlist['checkbox1Option']
             #根据比赛项目Event和Group获得Match中的MatchID
             item_len = len(item_list)
-            print(item_list)
-            request.session['event'+str(j)] = item_list
-
+            match = Match()
+            match.Group = player.Group
             i = 0
             while item_len > i:
-                match = Match()
-                Group = player.Group
-                Event = item_list[i]
-                print("Event:" + Event)
-                print("Group:" + Group)
-                Match1 = list(Match.objects.all().filter(Event=Event, Group=Group))
-                print("MatchID:" + Match1[0].MatchID)
-                match.MatchID = Match1[0].MatchID
+                match.Event = item_list[i]
+                matchID = Match.objects.values('MatchID').filter('Event' == match.Event and 'Group' == match.Group)
+                match.MatchID = matchID
+                match.save()
                 i = i + 1
             player.save()
             j = j+1
 
         #多个教练
-        coachCnt = request.COOKIES['couchCnt']
-        coachcount = int(coachCnt)
-        a = 1
-        while a <= coachcount:
+        coachCount = request.POST['']
+        i = 1
+        while i <= coachCount:
             coach = TeamCoach()
-            coach.ID = request.POST['couchID' + str(a)]
-            coach.PhoneNum = request.POST['couchTel' + str(a)]
-            coach.Name = request.POST['couchName' + str(a)]
-            coach.Gender = request.POST['couchSex' + str(a)]
-            coach.TeamName_id = TeamName_id
+            coach.ID = request.POST['couchID' + str(i)]
+            coach.PhoneNum = request.POST['couchTel' + str(i)]
+            coach.Name = request.POST['couchName' + str(i)]
+            coach.Gender = request.POST['couchSex' + str(i)]
             coach.save()
-            a = a + 1
 
         #多个裁判
-        judgeCnt = request.COOKIES['judgeCnt']
-        judgecount = int(judgeCnt)
-        z = 1
-        while z <= judgecount:
+        judgeCount = request.POST['']
+        i = 1
+        while i <= judgeCount:
             judge = Judge()
-            judge.ID = request.POST['judgeID' + str(z)]
-            judge.Name = request.POST['judgeName' + str(z)]
-            judge.PhoneNum = request.POST['judgeTel' + str(z)]
-            z = z + 1
+            judge.ID = request.POST['judgeID' + str(i)]
+            judge.Name = request.POST['judgeName' + str(i)]
+            judge.PhoneNum = request.POST['judgeNameTel' + str(i)]
             judge.save()
-        return render(request, os.path.join("master", "EnrollAction.html"))
-    else:
-        return render(request, os.path.join("master", "Enroll.html"))
+
+        #测试
+    return HttpResponse('报名成功！')
+
+def EnorllAction(request):
+    return 
+
+#return render(request, 'EnrollAction.html', {'leaderName': leader.Name, 'leaderTel': leader.PhoneNum, 'leaderID': leader.ID,
+#                                                     'DocName': medic.Name, 'DocTel': medic.PhoneNum, 'DocID': medic.ID,
+#                                                     'playerName': player.Name, 'playerAge': player.Age , 'playerID': player.Name,
+#})
+
+    #else:
+        #return render(request,os.path.join("master","EnrollAction.html"))
+
 
 def EnrollA(request):
-    if request.method == 'POST':
-        response = render(request, os.path.join("master","EnrollAction.html"))
-
-        TeamName = request.session.get('TeamName', None)
-
-        leader = TeamLeader.objects.filter(TeamName=TeamName)
-        leaderName = leader.Name
-        leaderID =leader.ID
-        leaderPhone = leader.PhoneNum
-        response.set_cookie('leaderName', leaderName)
-        response.set_cookie('leaderID', leaderID)
-        response.set_cookie('leaderPhone', leaderPhone)
-
-        medic = TeamMedic.objects.filter(TeamName=TeamName)
-        medicName = medic.Name
-        medicID = medic.ID
-        medicPhone = medic.PhoneNum
-        response.set_cookie('medicName', medicName)
-        response.set_cookie('medicID', medicID)
-        response.set_cookie('medicPhone', medicPhone)
-
-        couchCnt = request.COOKIES["couchCnt"]
-        coachcount = int(couchCnt)
-        coach = TeamCoach.objects.filter(TeamName=TeamName)
-        if coachcount > 0:
-            i = 0
-            for c in coach:
-                coachName = c.Name
-                coachID = c.ID
-                coachPhone = c.PhoneNum
-                coachSex = c.Gender
-                response.set_cookie('coachName'+str(i), coachName)
-                response.set_cookie('coachID'+str(i), coachID)
-                response.set_cookie('coachPhone'+str(i), coachPhone)
-                response.set_cookie('coachSex'+str(i), coachSex)
-                i = i + 1
-
-        judgeCnt = request.COOKIES["judgeCnt"]
-        judgecount = int(judgeCnt)
-        judge = Judge.objects.filter(TeamName=TeamName)
-        if judgecount > 0:
-            j = 0
-            for a in judge:
-                judgeName = a.Name
-                judgeID = a.ID
-                judgePhone = a.PhoneNum
-                response.set_cookie('judgeName'+str(j), judgeName)
-                response.set_cookie('judgeID'+str(j), judgeID)
-                response.set_cookie('judgePhone'+str(j), judgePhone)
-                j = j + 1
-
-        playerCnt = request.COOKIES["judgeCnt"]
-        playercount = int(playerCnt)
-        player = Player.objects.filter(TeamName_id=TeamName)
-        if playercount > 0:
-            z = 0
-            for p in player:
-                playerName = p.Name
-                playerID = p.ID
-                playerAge = p.Age
-                playerGroup = p.Group
-                playerEvent = request.session.get('event'+str(z))
-                playerSex = request.session.get('sex'+str(z))
-                response.set_cookie('playerName'+str(z), playerName)
-                response.set_cookie('playerID'+str(z), playerID)
-                response.set_cookie('playerAge'+str(z), playerAge)
-                response.set_cookie('playerGroup'+str(z), playerGroup)
-                response.set_cookie('playerEvent'+str(z), playerEvent)
-                z = z + 1
-
-    return render(request, os.path.join("master", "EnrollAction.html"))
-
+        #获取运动员数目的cookie
+        value1 = request.COOKIES["playerCnt"]
+        value2 = request.COOKIES["judgeCnt"]
+        value3 = request.COOKIES["couchCnt"]
+        #返回收到的cookies值
+        #return HttpResponse(str(value1) )
+        return render(request,os.path.join("master","Enroll.html"))
 
 def ShowScore(request):
     #显示成绩页面
