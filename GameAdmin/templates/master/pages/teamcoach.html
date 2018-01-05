@@ -20,7 +20,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/skins/skin-blue.css" %}">
-
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" %}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -218,10 +218,13 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{% static "/master/dist/js/demo.js" %}"></script>
 <!-- page script -->
+
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
 <script>
   $.selectArray =
     {
-      "fields.Gender": [{idxNum: '',name: 'm'}, {idxNum: '',name: 'f'}]
+      "fields.Gender": [{idxNum: '',name: 'M'}, {idxNum: '',name: 'F'}]
     };
 
   $(function () {
@@ -322,15 +325,35 @@
             <div class="form-group">
                 <label for="Gender" class="control-label col-sm-4">性别</label>
                 <div class="col-sm-6">
-                  <select class="form-control select-md" id="Gender" name="Gender">
-                    <option value ="m">m</option>
-                    <option value ="f">f</option>
+                  <select class="form-control selectpicker show-tick" id="Gender" name="Gender">
+                    <option value ="M">男</option>
+                    <option value ="F">女</option>
                   </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="TeamName" class="control-label col-sm-4">小队名称</label>
-                <div class="col-sm-6"><input required type="text" class="form-control input-md" id="TeamName" name="TeamName"></div>
+                  <div class="col-sm-6">
+                  <select class="form-control selectpicker show-tick" required id="TeamName" name="TeamName">
+                  </select>
+                  </div>
+                  <script>
+                      $.ajax({  
+                          // get请求地址  
+                          url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Team',  
+                          dataType: "json",  
+                          success: function (data) {  
+                          var optArr = [];  
+                          for (var i = 0; i < data.length; i++) {
+                            $('#TeamName').append('<option value="' + data[i].pk + '">'+
+                            data[i].pk +'</option>');
+                          }
+                          // 缺一不可  
+                          $('#TeamName').selectpicker('refresh');  
+                          $('#TeamName').selectpicker('render');
+                          }
+                      });
+                    </script>
             </div>
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
