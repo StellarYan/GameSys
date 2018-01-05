@@ -99,7 +99,8 @@ def GetSingleScore(request):
         for mType in range(1,3):
             pID=p.PlayerID
             pName = Player.objects.filter(PlayerID=pID).values('Name')[0]
-            ScoreSum = PlayMatch.objects.filter(PlayerID=pID).aggregate(Sum('AllScore'))
+            TypeMatchs = Match.objects.filter(MatchType=mType)
+            ScoreSum = PlayMatch.objects.filter(PlayerID=pID,MatchID__in=TypeMatchs).aggregate(Sum('AllScore'))
             dic = {'PlayerID':pID,'Name':pName['Name'],'MatchType':mType,'ScoreSum':ScoreSum['AllScore__sum']}
             ScoreList.append(dic)
     jdata = json.dumps(ScoreList)
@@ -121,12 +122,12 @@ def GetTeamScore(request):
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
 #X=5
 def GenerateFinal(request):
+    X=5
+    for eve in EventTup:
+        for grp in GroupTup:
+            NewMatchID = Match.objects.aggregate(Max('MatchID')).values()[0]
+            print(NewMatchID)
     pass
-    # # X=5
-    # # for eve in EventTup:
-        # # for grp in GroupTup:
-            # # NewMatchID = Match.objects.aggregate(Max('MatchID'))
-            # # FinalMatch = Match();
     
 
         
