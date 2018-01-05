@@ -122,12 +122,39 @@ def GetTeamScore(request):
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
 #X=5
 def GenerateFinal(request):
-    X=5
+    FinalPlayerCount = 4
+    NewMatchID = int(Match.objects.aggregate(Max('MatchID'))['MatchID__max'])
+    ExistFinalMatch = Match.objects.filter(MatchType=2)
+    if ExistFinalMatch.count()>0:
+        return HttpResponse("决赛已经被安排")
     for eve in EventTup:
         for grp in GroupTup:
-            NewMatchID = Match.objects.aggregate(Max('MatchID')).values()[0]
-            print(NewMatchID)
-    pass
+            FirstMatchesWithEveGrp = Match.objects.filter(MatchType=1,Group = grp,Event = eve)
+            OrderedPlayers = PlayMatch.objects.filter(MatchID__in=FirstMatchesWithEveGrp).order_by('-AllScore')
+            print(FirstMatchesWithEveGrp.count())
+            if OrderedPlayers.count()<FinalPlayerCount:
+                continue
+            NewMatchID+=1
+            newMatch = Match()
+            newMatch.MatchID = str(NewMatchID)
+            newMatch.ChiefID=Judge.objects.get(ID=0)
+            newMatch.Group = grp
+            newMatch.Event = eve
+            newMatch.MatchType=2
+            newMatch.save()
+            for j in range(0,FinalPlayerCount):
+                pm = PlayMatch()
+                pm.MatchID = newMatch
+                pm.PlayerID =OrderedPlayers[j].PlayerID
+                pm.DScore=0
+                pm.PScore=0
+                pm.AllScore=0
+                pm.ScoreState=0
+                pm.save();
+    return HttpResponse("成功生成决赛")
+                
+             
+            
     
 
         

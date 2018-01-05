@@ -94,7 +94,7 @@ TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match,
 "GlobeMatchRule":GlobeMatchRule}
 
-EventTup = ('DG','SG','DG','TN','TC','AM','BC','GD','PH')
+EventTup = ('DG','SG','DH','TN','TC','AM','BC','GD','PH')
 #单杠 双杠 吊环 跳马 体操 鞍马 蹦床 高低杠 平衡木 
 
 GroupTup = ('Female1','Female2','Female3','Male1','Male2','Male3')
