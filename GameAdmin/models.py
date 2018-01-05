@@ -35,6 +35,8 @@ class Match(models.Model):
     Group = models.CharField(max_length=20)
     Event = models.CharField(max_length=20)
     ChiefID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
+    StartTime = models.CharField(max_length=20)
+    EndTime = models.CharField(max_length=20)
     MatchStatus = models.CharField(max_length=20)
     MatchType = models.CharField(max_length=10)
     SubGroup = models.CharField(max_length=10)
