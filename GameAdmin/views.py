@@ -93,6 +93,8 @@ def GetJSON(request):
 #PlayMatch 表根据运动员号查总分
 #Player 表根据运动员号查姓名
 def GetSingleScore(request):
+    if not IsAdmin(request):
+        return HttpResponse('<h1>please login<h1>')
     players = Player.objects.all()
     ScoreList = []
     for p in players:
@@ -110,6 +112,8 @@ def GetSingleScore(request):
 #返回的json属性包括团队名称，对应的项目，以及该项目下团队的总成绩。
 #查询某一特定项目中，团体单项成绩=ABC赛制，如果这个单项派出的人少于C则为0，否则为分数较高的C个人成绩之和
 def GetTeamScore(request):
+    if not IsAdmin(request):
+        return HttpResponse('<h1>please login<h1>')
     ScoreList=[]
     teams = Team.objects.all()
     for t in teams:
@@ -120,8 +124,10 @@ def GetTeamScore(request):
 
     
 #另外，需要根据赛制求出单个项目中的前X名，作为该项目参与决赛的人员。并自动排出比赛表
-#X=5
+#X=4
 def GenerateFinal(request):
+    if not IsAdmin(request):
+        return HttpResponse('<h1>please login<h1>')
     FinalPlayerCount = 4
     NewMatchID = int(Match.objects.aggregate(Max('MatchID'))['MatchID__max'])
     ExistFinalMatch = Match.objects.filter(MatchType=2)
