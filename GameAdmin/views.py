@@ -115,7 +115,10 @@ def GetTeamScore(request):
         if EventPlayercount<Rule_PlayerCountInGroupScore:
             EventScore[eve] = 0
         else:
-            EventScore[eve] = queryPlayMatch.annotate(EventSum=Sum('AllScore')).aggregate(Max('EventSum'))['EventSum__max']
+            EventPlayerScores = queryPlayMatch.order_by('-AllScore').values('AllScore')
+            EventScore[eve]=0
+            for j in range(0,Rule_PlayerCountInGroupScore):
+                EventScore[eve] += EventPlayerScores[j]['AllScore']
     jdata = json.dumps(EventScore)
     return HttpResponse(jdata)  
 
