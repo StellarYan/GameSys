@@ -359,6 +359,9 @@
       }, {
           field: 'fields.MatchStatus',
           title: '比赛状态'
+      },{
+          field: 'fields.SubGroup',
+          title: '子组'
       }],
       responseHandler: function (res) {
           return res;
@@ -558,6 +561,10 @@
                   <option value="2">2. 决赛</option>
                 </select>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="SubGroup" class="control-label col-sm-4">子组</label>
+                <div class="col-sm-6"><input type="number" min="1" class="form-control input-md" id="SubGroup" name="SubGroup" required></div>
             </div>
             <div class="form-group">
                 <label for="ParticipatePlayer" class="control-label col-sm-4">参赛选手</label>
