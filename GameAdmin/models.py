@@ -22,7 +22,7 @@ class Score(models.Model):
     ID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     PlayerID = models.ForeignKey('Player',on_delete=models.CASCADE,)
     Score = models.IntegerField()
- 
+
 class MatchJudge(models.Model):
     class Meta:
         unique_together = (('MatchID','ID'),)
@@ -36,6 +36,8 @@ class Match(models.Model):
     Event = models.CharField(max_length=20)
     ChiefID = models.ForeignKey('Judge',on_delete=models.CASCADE,)
     MatchStatus = models.CharField(max_length=20)
+    EndTime = models.CharField(max_length=20)
+    StartTime = models.CharField(max_length=20)
     MatchType = models.CharField(max_length=10)
     SubGroup = models.CharField(max_length=10)
     
@@ -90,8 +92,9 @@ class GlobeMatchRule(models.Model):
     
 TableDic = {"Player": Player, "TeamLeader": TeamLeader, "TeamMedic": TeamMedic,
 "TeamCoach": TeamCoach, "Judge": Judge, "Team": Team,
-"PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match}
-    
+"PlayMatch": PlayMatch, "Score": Score, "MatchJudge": MatchJudge, "Match":Match,
+"GlobeMatchRule":GlobeMatchRule}
+
 def GetTargetTable(request):
     tableName = request.POST['Table']
     return TableDic[tableName]

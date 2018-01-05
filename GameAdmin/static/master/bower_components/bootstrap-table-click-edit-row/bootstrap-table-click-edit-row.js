@@ -114,14 +114,17 @@
     function getValue(property,rowindex,tablename) {
         var tableTotal = 1;
         switch (tablename) {
-            case "Score":
+            case "Match":
                 tableTotal = 2;
                 break;
-            case "MatchJudge":
+            case "Score":
                 tableTotal = 3;
                 break;
-            case "PlayMatch":
+            case "MatchJudge":
                 tableTotal = 4;
+                break;
+            case "PlayMatch":
+                tableTotal = 5;
                 break;
             default:
                 break;
