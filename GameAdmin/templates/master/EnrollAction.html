@@ -4,7 +4,11 @@
    <script>
        //警告框---拒绝用户进入报名界面
        function disp_alert() {
-           alert("您已提交报名信息，不能重复报名！")
+           alert("您已提交报名信息，不能重复报名！");
+       }
+       function addCouch() {
+           var str = '<td>{{coachName1}}</td><td>{{coachSex1}}</td><td>{{coachPhone1}}</td><td>{{coachID1}}</td></tr><tr class="no-records-found">';
+           document.getElementById("couch").innerHTML += str;
        }
    </script>
    <meta charset="utf-8">
@@ -45,9 +49,9 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini"  onload="addCouch()">
   <div class="wrapper">
-      <header class="main-header">
+      <header  class="main-header">
         <!-- Logo -->
         <a href="." class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -229,16 +233,12 @@
                         </thead>
                     <tbody>
                         <tr class="no-records-found">
-                            <td>{{coachNameN}}</td>
-                            <td>{{coachPhoneN}}</td>
-                            <td>{{couchIDN}}</td>
-                            <td>26357652873647</td>
+                            <td>{{coachName0}}</td>
+                            <td>{{coachSex0}}</td>
+                            <td>{{coachPhone0}}</td>
+                            <td>{{coachID0}}</td>
                         </tr>
-                        <tr class="no-records-found">
-                            <td>杨小毛</td>
-                            <td>男</td>
-                            <td>14642553278</td>
-                            <td>35765226873647</td>
+                        <tr class="no-records-found" id="couch">
                         </tr>
                     </tbody>
                     </table>

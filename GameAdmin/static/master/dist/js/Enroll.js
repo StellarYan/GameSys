@@ -11,15 +11,15 @@ var couchCnt = 1;
 //设置数组存放数目信息
 var array = new Array(42);
 
-function loadFemale(check){
-    var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">跳马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">高低杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">平衡木</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">蹦床</label><label></label></div>';
-    var checktxt='checkbo'+check;
-    document.getElementById(checktxt).innerHTML=insertText;
+function loadFemale(check) {
+    var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" values="TM" name="checkbox' + check + 'Option">跳马</label><label></label><label><input type="checkbox" values="GD" name="checkbox' + check + 'Option">高低杠</label><label></label><label><input type="checkbox" values="PH" name="checkbox' + check + 'Option">平衡木</label><label></label><label><input type="checkbox" values="TC" name="checkbox' + check + 'Option">自由体操</label><label></label><label><input type="checkbox" values="BC" name="checkbox' + check + 'Option">蹦床</label><label></label></div>';
+    var checktxt = 'checkbo' + check;
+    document.getElementById(checktxt).innerHTML = insertText;
 }
-function loadMale(check){
-    var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">单杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">双杠</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">吊环</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">跳马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">鞍马</label><label></label><label><input type="checkbox" name="checkbox' + check + 'Option">蹦床</label><label></label></div>';
-    var checktxt='checkbo'+check;
-    document.getElementById(checktxt).innerHTML=insertText;
+function loadMale(check) {
+    var insertText = '<div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" values="DG" name="checkbox' + check + 'Option">单杠</label><label></label><label><input type="checkbox" values="SG" name="checkbox' + check + 'Option">双杠</label><label></label><label><input type="checkbox" values="DH" name="checkbox' + check + 'Option">吊环</label><label></label><label><input type="checkbox" values="TM" name="checkbox' + check + 'Option">跳马</label><label></label><label><input type="checkbox" values="TC" name="checkbox' + check + 'Option">自由体操</label><label></label><label><input type="checkbox" values="AM" name="checkbox' + check + 'Option">鞍马</label><label></label><label><input type="checkbox" values="BC" name="checkbox' + check + 'Option">蹦床</label><label></label></div>';
+    var checktxt = 'checkbo' + check;
+    document.getElementById(checktxt).innerHTML = insertText;
 }
 //设置cookies
 function setCookie(c_name, value, expiredays) {
@@ -36,17 +36,16 @@ function setCookies() {
 //判断报名信息是否符合要求
 function judge() {
     putmessage();
-    var jud=0;
+    var jud = 0;
     //判断人数是否满足要求，并设置提醒，具体为：array[0-5]<=A，array[6 - 41] <= B
     var i = 0;
     //判断年龄段性别人数
     while (i < 6) {
-        if (array[i] >= A)
-        {
+        if (array[i] >= A) {
             jud = 1;
             if (i == 0)
                 alert("7-8年龄段男生超过人数限制");
-            else if(i==1)
+            else if (i == 1)
                 alert("7-8年龄段女生超过人数限制");
             else if (i == 2)
                 alert("9-10年龄段男生超过人数限制");
@@ -146,7 +145,7 @@ function clear(jud) {
         var radio = document.getElementsByName("sex" + playerCnt + "Option");
         for (nn = 0; nn < radio.length; nn++) {
             if (radio[nn].checked) {
-                radio[nn].checked= false;
+                radio[nn].checked = false;
                 break;
             }
         }
@@ -307,19 +306,17 @@ function delmessage() {
 }
 
 //运动员表单插入
-function insRow()
-{
+function insRow() {
     putmessage();
     playerCnt += 1;
-    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input required type="text" class="form-control" placeholder="姓名" name="playerName' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">年龄</label><input required type="text" class="form-control" placeholder="年龄" name="playerAge' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">组别</label><select class="form-control" id="playergroup' + playerCnt + '"><option value ="7-8岁" name="group' + playerCnt + 'Option1">7-8岁</option><option value ="9-10岁" name="group' + playerCnt + 'Option2">9-10岁</option><option value="11-12岁" name="group' + playerCnt + 'Option1">11-12岁</option></select></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">文化成绩</label><input required type="text" class="form-control" placeholder="不填" disabled="disabled"></div><div class="col-xs-3"><label for="exampleInputEmail1">身份证</label><input  required type="text" class="form-control" placeholder="身份证" name="playerID' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><div class="form-group"><div class="radio"><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios1" value="option' + playerCnt + '" onClick="loadMale(' + playerCnt + ')">男</label><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios2" value="option' + playerCnt + '" onClick="loadFemale(' + playerCnt + ')">女</label></div></div></div><div class="col-xs-3"><label for="exampleInputEmail1">比赛项目（多选）</label><div  class="form-group" id="checkbo' + playerCnt + '" name="checkbo' + playerCnt + '"><div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">单杠</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">双杠</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">吊环</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">跳马</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">自由体操</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">鞍马</label><label></label><label><input type="checkbox" name="checkbox' + playerCnt + 'Option">蹦床</label><label></label></div></div></div></div><div  id="sporter' + playerCnt + '" ></div>';
+    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input required type="text" class="form-control" placeholder="姓名" name="playerName' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">年龄</label><input required type="text" class="form-control" placeholder="年龄" name="playerAge' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">组别</label><select class="form-control" id="playergroup' + playerCnt + '"><option value ="7-8岁" name="group' + playerCnt + 'Option1">7-8岁</option><option value ="9-10岁" name="group' + playerCnt + 'Option2">9-10岁</option><option value="11-12岁" name="group' + playerCnt + 'Option1">11-12岁</option></select></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">文化成绩</label><input required type="text" class="form-control" placeholder="不填" disabled="disabled"></div><div class="col-xs-3"><label for="exampleInputEmail1">身份证</label><input  required type="text" class="form-control" placeholder="身份证" name="playerID' + playerCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><div class="form-group"><div class="radio"><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios1" value="option' + playerCnt + '" onClick="loadMale(' + playerCnt + ')">男</label><label><input type="radio" name="sex' + playerCnt + 'Option" id="optionsRadios2" value="option' + playerCnt + '" onClick="loadFemale(' + playerCnt + ')">女</label></div></div></div><div class="col-xs-3"><label for="exampleInputEmail1">比赛项目（多选）</label><div  class="form-group" id="checkbo' + playerCnt + '" name="checkbo' + playerCnt + '"><div class="checkbox" style="width:1000px"><label></label><label><input type="checkbox" values="DG" name="checkbox' + playerCnt + 'Option">单杠</label><label></label><label><input type="checkbox" values="SG" name="checkbox' + playerCnt + 'Option">双杠</label><label></label><label><input type="checkbox" values="DH" name="checkbox' + playerCnt + 'Option">吊环</label><label></label><label><input type="checkbox" values="TM" name="checkbox' + playerCnt + 'Option">跳马</label><label></label><label><input type="checkbox" values="TC" name="checkbox' + playerCnt + 'Option">自由体操</label><label></label><label><input type="checkbox" values="AM" name="checkbox' + playerCnt + 'Option">鞍马</label><label></label><label><input type="checkbox" values="BC" name="checkbox' + playerCnt + 'Option">蹦床</label><label></label></div></div></div></div><div  id="sporter' + playerCnt + '" ></div>';
     document.getElementById("sporter" + (playerCnt - 1)).innerHTML += insertText;
     document.getElementById("delete").class = "btn btn-danger";
 }
 //教练员表单插入
-function insRow2()
-{
-    couchCnt +=1;
-    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名"  name="couchName' + couchCnt + '"></div><div class="col-xs-3" style="width:100px"><label for="exampleInputEmail1">性别</label><input type="text" class="form-control" placeholder="性别" name="couchSex' + couchCnt + '"></div><div class="col-xs-4" style="width:200px"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="couchTel' + couchCnt + '"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="couchID' + couchCnt + '"></div></div></div><div class="box-body"  id="couch' + couchCnt + '"></div>';
+function insRow2() {
+    couchCnt += 1;
+    var insertText = '<hr><div class="row"><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">姓名</label><input type="text" class="form-control" placeholder="姓名"  name="couchName' + couchCnt + '"></div><div class="col-xs-3" style="width:150px"><label for="exampleInputEmail1">性别</label><input type="text" class="form-control" placeholder="性别" name="couchSex' + couchCnt + '"></div><div class="col-xs-4" style="width:200px"><label for="exampleInputEmail1">联系方式</label><input type="text" class="form-control" placeholder="联系方式" name="couchTel' + couchCnt + '"></div><div class="col-xs-5"><label for="exampleInputEmail1">身份证号</label><input type="text" class="form-control" placeholder="身份证号" name="couchID' + couchCnt + '"></div></div></div><div class="box-body"  id="couch' + couchCnt + '"></div>';
     document.getElementById("couch" + (couchCnt - 1)).innerHTML += insertText;
 }
 //裁判员表单插入
@@ -341,7 +338,7 @@ function delRow() {
 //教练员表单删除
 function delRow2() {
     if (couchCnt > 1) {
-        couchCnt --;
+        couchCnt--;
         document.getElementById("couch" + couchCnt).innerHTML = "";
     }
     else
@@ -350,7 +347,7 @@ function delRow2() {
 //裁判员表单删除
 function delRow3() {
     if (judgeCnt > 1) {
-        judgeCnt --;
+        judgeCnt--;
         document.getElementById("judge" + judgeCnt).innerHTML = "";
     }
     else
