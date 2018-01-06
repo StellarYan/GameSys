@@ -168,17 +168,19 @@
       sortable:true,
       idTable:"advancedTable",
       columns: [ {
-          field: 'fields.Name',
-          title: '运动员姓名'
+          field: 'Name',
+          title: '运动员姓名',
+          sortable: true
       },{
-          field: 'field.ID',
-          title: '运动员号'
+          field: 'PlayerID',
+          title: '运动员号',
+          sortable: true
       },{
-          field: 'fields.Score',
+          field: 'ScoreSum',
           title: '成绩',
           sortable: true
       }, {
-          field: 'fields.MatchType',
+          field: 'MatchType',
           title: '比赛类型（初赛/决赛）',
           sortable: true
       }],
@@ -199,34 +201,30 @@
       uniqueId:"teamrank",
       sortable:true,
       idTable:"advancedTable",
-      columns: [{
-          field: 'state',
-          checkbox:true,
-      }, 
-        {
-          field: 'pk',
-          title: '比赛号'
-      }, {
-          field: 'fields.Group',
+      columns: [ {
+          field: 'Group',
           title: '比赛年龄组',
-          sortable: true,
-          editable:"input"
+          sortable: true
       }, {
-          field: 'fields.Event',
+          field: 'Event',
           title: '项目',
-          sortable: true,
-          editable:"input"
+          sortable: true
       }, {
-          field: 'fields.MatchType',
+          field: 'MatchType',
           title: '比赛类型（初赛/决赛）',
           sortable: true,
           editable:"input"
       }, {
-          field: '',
-          title: '团队名'
+          field: 'TeamName',
+          title: '团队名',
+          sortable: true
+      },{
+          field: 'Score',
+          title: '成绩',
+          sortable: true
       }],
       responseHandler: function (res) {
-          return res;
+          return res[0];
       }
     });
   })

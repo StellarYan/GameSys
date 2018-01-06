@@ -224,7 +224,7 @@
 <script>
   $.selectArray =
     {
-      "fields.Gender": [{idxNum: '',name: 'm'}, {idxNum: '',name: 'f'}]
+      "fields.Gender": [{idxNum: '',name: 'M'}, {idxNum: '',name: 'F'}]
     };
 
   $(function () {
@@ -325,9 +325,9 @@
             <div class="form-group">
                 <label for="Gender" class="control-label col-sm-4">性别</label>
                 <div class="col-sm-6">
-                  <select class="form-control select-md" id="Gender" name="Gender">
-                    <option value ="m">m</option>
-                    <option value ="f">f</option>
+                  <select class="form-control selectpicker show-tick" id="Gender" name="Gender">
+                    <option value ="M">男</option>
+                    <option value ="F">女</option>
                   </select>
                 </div>
             </div>
@@ -344,9 +344,8 @@
                           dataType: "json",  
                           success: function (data) {  
                           var optArr = [];  
-                          console.log(data[3].pk);
                           for (var i = 0; i < data.length; i++) {
-                            $('#TeamName').append('<option value="' + data[i].TeamName + '">'+
+                            $('#TeamName').append('<option value="' + data[i].pk + '">'+
                             data[i].pk +'</option>');
                           }
                           // 缺一不可  
