@@ -362,8 +362,8 @@ def Enroll(request):
             judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
             judge.TeamName_id = TeamName_id
+            judge.save()
             z = z + 1
-            #judge.save()
         return render(request, os.path.join("master", "EnrollAction.html"))
     else:
         return render(request, os.path.join("master", "login.html"))
