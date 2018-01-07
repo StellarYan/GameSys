@@ -229,7 +229,6 @@ def LoginAdmin(request):
         if count > 0:
             team = Team.objects.get(TeamName=name)
             if team.Password == password:
-                ########################################
                 request.session['TeamName'] = name
                 request.session['Password'] = password
                 request.session.set_expiry(3600)
@@ -395,6 +394,7 @@ def Enroll(request):
         #多个裁判
         judgeCnt = request.COOKIES['judgeCnt']
         judgecount = int(judgeCnt)
+        print(judgecount)
         z = 1
         while z <= judgecount:
             judge = Judge()
