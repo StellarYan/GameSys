@@ -1,14 +1,18 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-   <script>
+    <script type="text/javascript">
        //警告框---拒绝用户进入报名界面
        function disp_alert() {
            alert("您已提交报名信息，不能重复报名！");
        }
-       function addCouch() {
-           var str = '<td>{{coachName1}}</td><td>{{coachSex1}}</td><td>{{coachPhone1}}</td><td>{{coachID1}}</td></tr><tr class="no-records-found">';
-           document.getElementById("couch").innerHTML += str;
+
+       function showMessage() {
+           alert("hello!");
+           var leaderDict = {{ leaderDict|safe }};
+            document.getElementById("2").innerHTML="哦";
+            alert(leaderDict.ID);
+            document.getElementById("couch").innerHTML += str;
        }
    </script>
    <meta charset="utf-8">
@@ -50,7 +54,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini"  onload="addCouch()">
-  <div class="wrapper">
+     <div class="wrapper">
       <header  class="main-header">
         <!-- Logo -->
         <a href="." class="logo">
