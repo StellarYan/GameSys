@@ -234,14 +234,49 @@ def LoginAdmin(request):
                 leaderCount = TeamLeader.objects.filter(TeamName=name).count()
                 #如果数据库内有该队的记录，则进入EnrollAction页面
                 if leaderCount > 0:
-                    return render(request, os.path.join("master", "EnrollAction.html"))
+                    leader = list(TeamLeader.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+                    leaderName = leader[0]['Name']
+                    leaderID = leader[0]['ID']
+                    leaderTel = leader[0]['PhoneNum']
+                    
+                    leaderDict = leader[0]
+
+                    medic = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+                    medicName = medic[0]['Name']
+                    medicID = medic[0]['ID']
+                    medicTel = medic[0]['PhoneNum']
+                    
+                    medicDict = medic[0]
+
+                    playerList = list(Player.objects.filter(TeamName=name).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+                    
+
+                    coachList = list(TeamCoach.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum','Gender'))
+                    
+
+                    judgeList = list(Judge.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+                   
+
+                    return render(request, os.path.join("master", "EnrollAction.html"), {
+                        'leaderName': leaderName,
+                        'leaderID': leaderID,
+                        'leaderTel': leaderTel,
+                        'medicName': medicName,
+                        'medicID': medicID,
+                        'medicTel': medicTel,
+                        'LeaderDict': json.dumps(leaderDict),
+                        'MedicDict':  json.dumps(medicDict),
+                        'PlayerList': json.dumps(playerList),
+                        'CoachList':  json.dumps(coachList),
+                        'JudgeList':  json.dumps(judgeList)
+                    })
                 else:
                     return render(request, os.path.join("master", "Enroll.html"))
             else:
-                return HttpResponse("<h1>Login Fail!<h1>")
+                return HttpResponse("<h1>login fail!<h1>")
         #登陆失败
-        else:
-            return HttpResponse("<h1>Login Fail!<h1>")
+        elif name == None or password == None:
+            return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
     
@@ -371,10 +406,56 @@ def Enroll(request):
     else:
         return render(request, os.path.join("master", "login.html"))
 
+#跳转到查看赛事表界面
 def EnrollA(request):
     return render(request, os.path.join("master", "Enroll_Playmatch.html"))
+
+#跳转到查看报名表界面（由查看赛事表界面跳转而来）
 def EnrollAction(request):
-    return render(request, os.path.join("master", "EnrollAction.html"))
+    name = request.COOKIES['TeamName']
+    leaderCount = TeamLeader.objects.filter(TeamName=name).count()
+
+    #如果数据库内有该队的记录，则进入EnrollAction页面
+    if leaderCount > 0:
+        leader = list(TeamLeader.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        leaderName = leader[0]['Name']
+        leaderID = leader[0]['ID']
+        leaderTel = leader[0]['PhoneNum']
+                    
+        leaderDict = leader[0]
+
+        medic = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        medicName = medic[0]['Name']
+        medicID = medic[0]['ID']
+        medicTel = medic[0]['PhoneNum']
+                    
+        medicDict = medic[0]
+
+        playerList = list(Player.objects.filter(TeamName=name).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+                    
+
+        coachList = list(TeamCoach.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum','Gender'))
+                    
+
+        judgeList = list(Judge.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+                   
+
+        return render(request, os.path.join("master", "EnrollAction.html"), {
+            'leaderName': leaderName,
+            'leaderID': leaderID,
+            'leaderTel': leaderTel,
+            'medicName': medicName,
+            'medicID': medicID,
+            'medicTel': medicTel,
+            'LeaderDict': json.dumps(leaderDict),
+            'MedicDict':  json.dumps(medicDict),
+            'PlayerList': json.dumps(playerList),
+            'CoachList':  json.dumps(coachList),
+            'JudgeList':  json.dumps(judgeList)
+        })
+    else:
+        return HttpResponse("<h1>发生错误!请重新登录！<h1>")
+
 
 def ShowScore(request):
     #显示成绩页面

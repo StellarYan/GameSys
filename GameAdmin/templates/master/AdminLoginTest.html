@@ -1,8 +1,21 @@
-<meta charset="utf-8">
+﻿<meta charset="utf-8">
+<script>
+    //设置cookies
+    function setCookie(c_name, value, expiredays) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + expiredays);
+        document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+    }
+    function set_cookie() {
+        var name = document.getElementById("TeamName").value;
+        alert(name);
+        setCookie('TeamName', name, 1);
+    }
+</script>
 <html>
 <p>AdminLogin</p>
 <form action="LoginAdmin" method="post">
-<p>AdminAccount<input type="text" name="AdminName" Value="Admin" /></p>
+<p>AdminAccount<input type="text" name="AdminName" Value="Admin" id="TeamName" onchange="set_cookie()" /></p>
 <p>AdminPassword<input type="text" name="password" Value="123456"/></p>
 <input type="submit" value="Submit" />
 <input type="button" value="logout" onclick="location.href='LogoutAdmin'">

@@ -6,6 +6,45 @@
        function disp_alert() {
            alert("您已提交报名信息，不能重复报名！");
        }
+       function showMessage(){
+           //领队
+           document.getElementById('leadername').innerHTML={{leaderName|safe}};
+           document.getElementById('leaderTel').innerHTML={{leaderTel|safe}};
+           document.getElementById('leaderID').innerHTML={{leaderID|safe}};
+           //队医
+           document.getElementById('medicName').innerHTML={{medicName|safe}};
+           document.getElementById('medicTel').innerHTML={{medicTel|safe}};
+           document.getElementById('medicID').innerHTML={{medicID|safe}};
+           //教练
+           var clist={{CoachList|safe}};
+           for(var i=clist.length-1;i>=0;i--){
+               var coachstr = '<tr><th><div class="th-inner ">'+clist[i].Name+'</div><div class="fht-cell"></div></th>';
+               coachstr += '<th><div class="th-inner ">'+clist[i].PhoneNum+'</div><div class="fht-cell"></div></th>';
+               coachstr += '<th><div class="th-inner ">'+clist[i].Gender+'</div><div class="fht-cell"></div></th>';
+               coachstr += '<th><div class="th-inner ">'+clist[i].ID+'</div><div class="fht-cell"></div></th></tr>';
+               document.getElementById('coach').innerHTML+=coachstr;            
+           }
+           //裁判
+           var jlist={{JudgeList|safe}};
+           for(var i=jlist.length-1;i>=0;i--){
+               var judgestr = '<tr><th><div class="th-inner ">'+jlist[i].Name+'</div><div class="fht-cell"></div></th>';
+               judgestr += '<th><div class="th-inner ">'+jlist[i].PhoneNum+'</div><div class="fht-cell"></div></th>';
+               judgestr += '<th><div class="th-inner ">'+jlist[i].ID+'</div><div class="fht-cell"></div></th></tr>';
+               document.getElementById('judge').innerHTML+=judgestr;            
+           }
+           //运动员
+           var plist={{PlayerList|safe}};
+           for(var i=plist.length-1;i>=0;i--){
+               var pstr = '<tr><th><div class="th-inner ">'+plist[i].PlayerID+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].Name+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].Age+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].Group+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].CultureScore+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].ID+'</div><div class="fht-cell"></div></th>';
+               pstr += '<th><div class="th-inner ">'+plist[i].Event+'</div><div class="fht-cell"></div></th></tr>';
+               document.getElementById('player').innerHTML+=pstr;            
+           }
+       }
    </script>
    <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -181,7 +220,22 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="leader"></tbody>
+                            <tbody id="leader">
+                                <tr>
+                                    <th>
+                                        <div class="th-inner " id="leadername"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both" id="leaderTel"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both" id="leaderID"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -209,7 +263,22 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="medic"></tbody>
+                            <tbody id="medic">
+                                <tr>
+                                    <th>
+                                        <div class="th-inner " id="medicName"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both" id="medicTel"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both" id="medicID"></div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -242,7 +311,8 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody id="coach"></tbody>
+                        <tbody id="coach">
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -257,10 +327,6 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <div class="th-inner ">裁判账号</div>
-                                            <div class="fht-cell"></div>
-                                        </th>
                                         <th>
                                             <div class="th-inner ">姓名</div>
                                             <div class="fht-cell"></div>
@@ -315,6 +381,10 @@
                                         <div class="th-inner sortable both">身份证号</div>
                                         <div class="fht-cell"></div>
                                     </th>
+                                    <th>
+                                        <div class="th-inner ">比赛名称</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
                                    
                                 </tr>
                             </thead>
@@ -347,85 +417,7 @@
 
 <script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
-<script>
-  //领队信息
-  $.ajax({
-      // get请求地址  
-      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamLeader',
-      dataType: "json",
-      success: function (data) {
-          var optArr = [];
-          for (var i = 0; i < data.length; i++) {
-              if (data[i].fields.TeamName == "123")
-                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk+ '</td><td></td></tr>');
-              trtd.appendTo(leader);
-          }
 
-      }
-  });
-  //队医信息
-  $.ajax({
-      // get请求地址  
-      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamMedic',
-      dataType: "json",
-      success: function (data) {
-          var optArr = [];
-          for (var i = 0; i < data.length; i++) {
-              if (data[i].fields.TeamName == "123")
-                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk + '</td><td></td></tr>');
-              trtd.appendTo(medic);
-          }
-
-      }
-  });
-  //运动员
-  $.ajax({
-      // get请求地址  
-      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=Player',
-      dataType: "json",
-      success: function (data) {
-          var optArr = [];
-          for (var i = 0; i < data.length; i++) {
-              if (data[i].fields.TeamName == "123")
-                  var trtd = $('<tr class="no-records-found"><td>' + data[i].pk + '</td><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.Age + '</td><td>'  + data[i].fields.Group + '</td><td>' + data[i].fields.CultureScore + '</td><td>' + data[i].fields.ID + '</td><td></td></tr>');
-              trtd.appendTo(player);
-          }
-
-      }
-  });
-  //教练员
-  $.ajax({
-      // get请求地址  
-      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamCoach',
-      dataType: "json",
-      success: function (data) {
-          var optArr = [];
-          for (var i = 0; i < data.length; i++) {
-              if (data[i].fields.TeamName == "123")
-                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].fields.Gender +'</td><td>' + data[i].pk + '</td><td></td></tr>');
-              trtd.appendTo(coach);
-          }
-
-      }
-  });
-  //裁判
-  $.ajax({
-      // get请求地址  
-      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=Judge',
-      dataType: "json",
-      success: function (data) {
-          var optArr = [];
-          for (var i = 0; i < data.length; i++) {
-              if (data[i].fields.TeamName == "123")
-                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.JudgeAccount + '</td><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk + '</td><td></td></tr>');
-              trtd.appendTo(judge);
-          }
-
-      }
-  });
-  //
-  
-  </script>
 </body>
 
 </html>

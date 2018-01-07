@@ -357,3 +357,7 @@ function delRow3() {
 function disp_alert() {
     alert("您尚未提交报名信息！")
 }
+//警告框---拒绝用户进入查看赛事安排表
+function disp() {
+    alert("您尚未报名！")
+}
