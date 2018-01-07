@@ -180,6 +180,30 @@ def Set(request):
             for para in request.POST:
                 SetColumn(newobj,para,request.POST[para])
             newobj.save()
+            #some special process to Match Table
+            if(request.POST['Table']=='Match'):
+                matchjudge = TableDic['MatchJudge']()
+                playmatch = TableDic['PlayMatch']()
+                for var in request.POST.getlist('ParticipateJudge'):
+                    SetColumn(matchjudge,'ID',var)
+                    SetColumn(matchjudge,'MatchID',request.POST['MatchID'])
+                    SetColumn(matchjudge,'IsChief',0)
+                    matchjudge.save()
+
+                SetColumn(matchjudge,'ID',request.POST['ChiefID_id'])
+                SetColumn(matchjudge,'MatchID',request.POST['MatchID'])
+                SetColumn(matchjudge,'IsChief',1)
+                matchjudge.save()
+                for var in request.POST.getlist('ParticipatePlayer'):
+                    SetColumn(playmatch,'MatchID',request.POST['MatchID'])
+                    SetColumn(playmatch,'PlayerID',var)
+                    SetColumn(playmatch,'ScoreState',0)
+                    SetColumn(playmatch,'AllScore',0)
+                    SetColumn(playmatch,'PScore',0)
+                    SetColumn(playmatch,'DScore',0)
+                    playmatch.save()
+            #end the special process
+
         elif(request.POST['Type']=='Delete'):
             tobj=GetTargetObj(request,target_table)
             tobj.delete()

@@ -220,22 +220,20 @@
               </br>
               <div class="col-xs-6">
                   <h4>打分表</h4>
-                  <br/>
                 <table id="score" class="table table-bordered table-striped">
                 </table>
-                </br>
+              </br>
               </div>
+            
               <div class="col-xs-6">
                   <h4>裁判表</h4>
-                  <br/>
                 <table id="matchjudge" class="table table-bordered table-striped">
                 </table>
                 </br>
               </div>
-              </br>
+            </br>
               <div class="col-xs-12">
                   <h4>得分表</h4>
-                  <br/>
                   <table id="playmatch" class="table table-bordered table-striped">
                   </table>
               </div>
@@ -630,7 +628,7 @@
         success: function (data) {  
         var optArr = [];
         for (var i = 0; i < data.length; i++) {
-          $('#ParticipatePlayer').append('<option value="' + data[i].fields.ID + '">'+
+          $('#ParticipatePlayer').append('<option value="' + data[i].pk + '">'+
           data[i].fields.Name +'</option>');
         }
         // 缺一不可  
