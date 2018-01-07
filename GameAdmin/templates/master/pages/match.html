@@ -248,6 +248,7 @@
             <div class="box-body"> 
               <div class="col-xs-12">
                   <h4 id="title-playmatch">得分表</h4>
+                  <div id="toolbar-playmatch"><button class="btn btn-danger" id="start-score">开始打分</button></div>
                   <table id="playmatch" class="table table-bordered table-striped">
                   </table>
               </div>
@@ -443,7 +444,7 @@
       clickEdit: true,
       showRefresh:true,
       sortable:true,
-      toolbar:"#title-playmatch",
+      toolbar:"#toolbar-playmatch",
       uniqueId:"PlayMatch",
       columns: [{
           field: 'state',
@@ -511,6 +512,25 @@
           MatchStatus:"Running"
       },
       $("#match").bootstrapTable('refresh')
+      );
+    });
+  });
+
+  //通知开始打分
+  $(function () {
+    $('#start-score').click(function () {
+      var pk = $.map($("#playmatch").bootstrapTable('getSelections'), function (row) {
+            return [row.fields.MatchID,row.fields.PlayerID];
+        });
+      //用于通知打分开始
+      $.post("Set",{
+          Type:"Upgrade",
+          Table:"PlayMatch",
+          MatchID:pk[0],
+          PlayerID:pk[1],
+          ScoreState:1
+      },
+      $("#playmatch").bootstrapTable('refresh')
       );
     });
   });
