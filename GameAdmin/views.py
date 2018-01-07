@@ -1,5 +1,4 @@
 # coding=utf-8
-from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -279,6 +278,9 @@ def LoginAdmin(request):
             return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
+            
+
+
     
 def IsAdmin(request):
     if request.session.has_key('isAdmin') and request.session['isAdmin'] == 'True':
@@ -397,6 +399,7 @@ def Enroll(request):
         while z <= judgecount:
             judge = Judge()
             judge.ID = request.POST['judgeID' + str(z)]
+            judge.Name = request.POST['judgeName' + str(z)]
             judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
             judge.TeamName_id = TeamName_id
