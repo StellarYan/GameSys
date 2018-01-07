@@ -1,18 +1,10 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-    <script type="text/javascript">
+   <script type="text/javascript">
        //警告框---拒绝用户进入报名界面
        function disp_alert() {
            alert("您已提交报名信息，不能重复报名！");
-       }
-
-       function showMessage() {
-           alert("hello!");
-           var leaderDict = {{ leaderDict|safe }};
-           document.getElementById("2").innerHTML="哦";
-           alert(leaderDict.ID);
-           document.getElementById("couch").innerHTML += str;
        }
    </script>
    <meta charset="utf-8">
@@ -135,6 +127,17 @@
                 <li class="active"><a href="#"><i class="fa fa-circle-o"></i> 查看报名信息</a></li>
               </ul>
         </li>
+              <li class="treeview">
+                  <a href="#">
+                      <i class="fa fa-table"></i> <span>赛事安排</span>
+                      <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                  </a>
+                  <ul class="treeview-menu">
+                      <li><a href="EnrollA"> 赛事表</a></li>
+                  </ul>
+              </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -155,171 +158,70 @@
     <!-- Main content -->
     <section class="content" >
       <!-- Small boxes (Stat box) -->
-	   <form id="Form" method="post" action="Enroll" class="form-horizontal">
-	   <div class="box box box-primary" >
-            <div class="box-header with-border">
-              <h3 class="box-title">领队信息</h3>
-            </div>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-xs-3">
-				<label for="exampleInputEmail1">姓名：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{leaderName}}</label>
+        <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">领队信息</h3>
                 </div>
-                <div class="col-xs-4">
-				<label for="exampleInputEmail1">联系方式：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{leaderPhone}}</label>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-inner ">姓名</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both">联系方式</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both">身份证号</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="leader"></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-xs-5">
-				<label for="exampleInputEmail1">身份证号：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{leaderID}}</label>
+            </div>
+            <div class="box box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">队医信息</h3>
                 </div>
-              </div>
-            </div>
-           
-            <!-- /.box-body -->
-            <div class="box-header with-border">
-              <h3 class="box-title">队医信息</h3>
-            </div>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-xs-3">
-				    <label for="exampleInputEmail1">姓名：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{medicName}}</label>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-inner ">姓名</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both">联系方式</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both">身份证号</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="medic"></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-xs-4">
-				    <label for="exampleInputEmail1">联系方式：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{medicPhone}}</label>
-                </div>
-                <div class="col-xs-5">
-				    <label for="exampleInputEmail1">身份证号：</label>
-                    <label for="exampleInputEmail1" style="font-weight:normal">{{medicID}}</label>
-                </div>
-              </div>
             </div>
-            <!-- /.box-body -->
-             <!---------------------------------------------------------------------------------------------------------->
-            <div class="box box-info">
-            <div class="box-body">
-              
-              <div class="bootstrap-table">
-                  <div class="fixed-table-toolbar">
-                      <div class="bs-bars pull-left">
-                        <div id="Div2">
-                            <div class="box-header with-border">
-                              <h3 class="box-title">教练员信息</h3>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-              <div class="fixed-table-container" style="padding-bottom: 0px;">
-                <div class="fixed-table-body">
-                    <table class="table table-bordered table-striped table-hover" id="Table2">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="th-inner ">姓名</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                 <th>
-                                    <div class="th-inner ">性别</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">联系方式</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">身份证号</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        <tr class="no-records-found">
-                            <td>{{coachName0}}</td>
-                            <td>{{coachSex0}}</td>
-                            <td>{{coachPhone0}}</td>
-                            <td>{{coachID0}}</td>
-                        </tr>
-                        <tr class="no-records-found" id="couch">
-                        </tr>
-                    </tbody>
-                    </table>
-                 </div>
-            </div>
-            <!-- /.box-body -->
-         </div>
-          <!---------------------------------------------------------------------------------------------------------->
-            <div class="box box-success">
-            <div class="box-body">
-              
-              <div class="bootstrap-table">
-                  <div class="fixed-table-toolbar">
-                      <div class="bs-bars pull-left">
-                        <div id="Div1">
-                            <div class="box-header with-border">
-                              <h3 class="box-title">裁判员信息</h3>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-              <div class="fixed-table-container" style="padding-bottom: 0px;">
-                <div class="fixed-table-body">
-                    <table class="table table-bordered table-striped table-hover" id="Table1">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="th-inner ">姓名</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">联系方式</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">身份证号</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                       <tr class="no-records-found">
-                            <td>李大毛</td>
-                            <td>男</td>
-                            <td>14255346278</td>
-                            <td>26357652873647</td>
-                        </tr>
-                        <tr class="no-records-found">
-                            <td>杨大毛</td>
-                            <td>男</td>
-                            <td>14642553278</td>
-                            <td>35765226873647</td>
-                        </tr>
-                    </tbody>
-                    </table>
-                 </div>
-            </div>
-            <!-- /.box-body -->
-         </div>
 
-       <!---------------------------------------------------------------------------------------------------------->
-       <div class="box box box-primary">
-            <div class="box-body">
-              
-              <div class="bootstrap-table">
-                  <div class="fixed-table-toolbar">
-                      <div class="bs-bars pull-left">
-                        <div id="toolbar">
-                            <div class="box-header with-border">
-                              <h3 class="box-title">运动员信息</h3>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-              <div class="fixed-table-container" style="padding-bottom: 0px;">
+        <div class="box box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">教练员信息</h3>
+            </div>
+            <div class="fixed-table-container" style="padding-bottom: 0px;">
                 <div class="fixed-table-body">
-                    <table class="table table-bordered table-striped table-hover" id="player">
+                    <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>
@@ -327,7 +229,7 @@
                                     <div class="fht-cell"></div>
                                 </th>
                                 <th>
-                                    <div class="th-inner sortable both">年龄</div>
+                                    <div class="th-inner sortable both">联系方式</div>
                                     <div class="fht-cell"></div>
                                 </th>
                                 <th>
@@ -335,48 +237,196 @@
                                     <div class="fht-cell"></div>
                                 </th>
                                 <th>
-                                    <div class="th-inner sortable both">文化成绩</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
                                     <div class="th-inner sortable both">身份证号</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">组别</div>
-                                    <div class="fht-cell"></div>
-                                </th>
-                                <th>
-                                    <div class="th-inner sortable both">比赛项目</div>
                                     <div class="fht-cell"></div>
                                 </th>
                             </tr>
                         </thead>
-                    <tbody>
-                        <tr class="no-records-found">
-                            <td>王小毛</td>
-                            <td>21</td>
-                            <td>男</td>
-                            <td></td>
-                            <td>1426291887665453625</td>
-                            <td>1</td>
-                            <td>单杠</td>
-                        </tr>
-                        <tr class="no-records-found">
-                            <td>郭小燕</td>
-                            <td>20</td>
-                            <td>女</td>
-                            <td></td>
-                            <td>6545361426291887625</td>
-                            <td>2</td>
-                            <td>平衡木，单杠</td>
-                        </tr>
-                    </tbody>
+                        <tbody id="coach"></tbody>
                     </table>
-                 </div>
+                </div>
             </div>
-            <!-- /.box-body -->
-         </div>
-           
+        </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">裁判信息</h3>
+                    </div>
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                        <div class="fixed-table-body">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th-inner ">裁判账号</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th>
+                                            <div class="th-inner ">姓名</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th>
+                                            <div class="th-inner sortable both">联系方式</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th>
+                                            <div class="th-inner sortable both">身份证号</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="judge"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---------------------------------------------------------------------------------------------------------->
+            <div class="box box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">运动员信息</h3>
+                </div>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-inner sortable both">运动员号</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner ">姓名</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner ">年龄</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner ">比赛年龄组</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner ">文化成绩</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th>
+                                        <div class="th-inner sortable both">身份证号</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody id="player"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div></section>
+</div>
+<!-- jQuery 3 -->
+<script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- BootstrapTables -->
+<script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-click-edit-row/bootstrap-table-click-edit-row.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-table-toolbar/bootstrap-table-toolbar.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "/master/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "/master/bower_components/fastclick/lib/fastclick.js" %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static "/master/dist/js/demo.js" %}"></script>
+<!-- page script -->
+
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
+<script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
+<script>
+  //领队信息
+  $.ajax({
+      // get请求地址  
+      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamLeader',
+      dataType: "json",
+      success: function (data) {
+          var optArr = [];
+          for (var i = 0; i < data.length; i++) {
+              if (data[i].fields.TeamName == "123")
+                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk+ '</td><td></td></tr>');
+              trtd.appendTo(leader);
+          }
+
+      }
+  });
+  //队医信息
+  $.ajax({
+      // get请求地址  
+      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamMedic',
+      dataType: "json",
+      success: function (data) {
+          var optArr = [];
+          for (var i = 0; i < data.length; i++) {
+              if (data[i].fields.TeamName == "123")
+                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk + '</td><td></td></tr>');
+              trtd.appendTo(medic);
+          }
+
+      }
+  });
+  //运动员
+  $.ajax({
+      // get请求地址  
+      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=Player',
+      dataType: "json",
+      success: function (data) {
+          var optArr = [];
+          for (var i = 0; i < data.length; i++) {
+              if (data[i].fields.TeamName == "123")
+                  var trtd = $('<tr class="no-records-found"><td>' + data[i].pk + '</td><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.Age + '</td><td>'  + data[i].fields.Group + '</td><td>' + data[i].fields.CultureScore + '</td><td>' + data[i].fields.ID + '</td><td></td></tr>');
+              trtd.appendTo(player);
+          }
+
+      }
+  });
+  //教练员
+  $.ajax({
+      // get请求地址  
+      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=TeamCoach',
+      dataType: "json",
+      success: function (data) {
+          var optArr = [];
+          for (var i = 0; i < data.length; i++) {
+              if (data[i].fields.TeamName == "123")
+                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].fields.Gender +'</td><td>' + data[i].pk + '</td><td></td></tr>');
+              trtd.appendTo(coach);
+          }
+
+      }
+  });
+  //裁判
+  $.ajax({
+      // get请求地址  
+      url: 'http://' + window.location.hostname + '/GameAdmin/GetJSON?Table=Judge',
+      dataType: "json",
+      success: function (data) {
+          var optArr = [];
+          for (var i = 0; i < data.length; i++) {
+              if (data[i].fields.TeamName == "123")
+                  var trtd = $('<tr class="no-records-found"><td>' + data[i].fields.JudgeAccount + '</td><td>' + data[i].fields.Name + '</td><td>' + data[i].fields.PhoneNum + '</td><td>' + data[i].pk + '</td><td></td></tr>');
+              trtd.appendTo(judge);
+          }
+
+      }
+  });
+  //
+  
+  </script>
 </body>
+
 </html>
+     

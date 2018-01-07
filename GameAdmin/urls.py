@@ -24,6 +24,7 @@ urlpatterns = [
    url(r'^Set$', views.Set, name='Set'),
    url(r'^Enroll$', views.Enroll, name='Enroll'),
    url(r'^EnrollA$', views.EnrollA, name='EnrollA'),
+   url(r'^EnrollAction$', views.EnrollAction, name='EnrollAction'),
    url(r'^ShowScore$', views.ShowScore, name='ShowScore'),
    
    url(r'^GetSingleScore$', views.GetSingleScore, name='GetSingleScore'),

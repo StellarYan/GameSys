@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+       //警告框---拒绝用户进入报名界面
+       function disp_alert() {
+           alert("您已提交报名信息，不能重复报名！");
+       }
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>及讯</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap/dist/css/bootstrap.min.css" %}">
+    <!-- Font Awesome -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/font-awesome/css/font-awesome.min.css" %}">
+    <!-- Ionicons -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/Ionicons/css/ionicons.min.css" %}">
+    <!-- Theme style -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/dist/css/AdminLTE.min.css" %}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/dist/css/skins/skin-blue.min.css" %}">
+    <!-- Morris chart -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/morris.js/morris.css" %}">
+    <!-- jvectormap -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/jvectormap/jquery-jvectormap.css" %}">
+    <!-- Date Picker -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" %}">
+    <!-- Daterange picker -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-daterangepicker/daterangepicker.css" %}">
+    <!-- bootstrap wysihtml5 - text editor -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/master/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" %}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- All contributors: StellarYan,codeofjackie-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-blue sidebar-mini" onload="showMessage()">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="." class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>及讯</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>及讯</b><small>赛事管理系统</small></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{% static "/master/dist/img/user2-160x160.jpg" %}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">CodeofJackie</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="{% static "/master/dist/img/user2-160x160.jpg" %}" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        CodeofJackie - Web Developer
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">用户</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="LogoutAdmin" class="btn btn-default btn-flat">登出</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- 侧边栏 用户 面板 -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="{% static "/master/dist/img/user2-160x160.jpg" %}" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>CodeofJackie</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                    </div>
+                </div>
+                <!-- 侧边栏菜单: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">主菜单</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i> <span>报名</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#" onclick="disp_alert()"><i class="fa fa-circle-o"></i>填写报名表</a></li>
+                            <li><a href="EnrollAction"><i class="fa fa-circle-o"></i> 查看报名信息</a></li>
+                        </ul>
+                    </li>
+                    <li class="active treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>赛事安排</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="#match"><i class="fa fa-circle-o"></i> 赛事表</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    赛事
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-table"></i>赛事安排</a></li>
+                    <li class="active">赛事表</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="box box-danger">
+                            <div class="box-body">
+                                <h4>规则</h4>
+                                <table id="rule" class="table table-bordered table-striped"></table>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <h4>赛事表</h4>
+                                <table id="match" class="table table-bordered table-striped"></table>
+                            </div>
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        </section>
+    </div>
+        <!-- jQuery 3 -->
+        <script src="{% static "/master/bower_components/jquery/dist/jquery.min.js" %}"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="{% static "/master/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+        <!-- BootstrapTables -->
+        <script src="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.js" %}"></script>
+        <script src="{% static "/master/bower_components/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js" %}"></script>
+        <script src="{% static "/master/bower_components/bootstrap-table-click-edit-row/bootstrap-table-click-edit-row.js" %}"></script>
+        <script src="{% static "/master/bower_components/bootstrap-table-toolbar/bootstrap-table-toolbar.js" %}"></script>
+        <!-- SlimScroll -->
+        <script src="{% static "/master/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+        <!-- FastClick -->
+        <script src="{% static "/master/bower_components/fastclick/lib/fastclick.js" %}"></script>
+        <!-- AdminLTE App -->
+        <script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="{% static "/master/dist/js/demo.js" %}"></script>
+        <!-- page script -->
+
+        <script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
+        <script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
+    <script>
+
+  //初始化表格
+  var $table = $('#match');
+  $(function () {
+      $('#rule').bootstrapTable({
+          url: "http://" + window.location.hostname + "/GameAdmin/GetJSON?Table=GlobeMatchRule",
+          uniqueId: "GlobeMatchRule",
+          columns: [{
+              field: 'fields.TeamPlayerPerGroup',
+              title: 'TeamPlayerPerGroup'
+          }, {
+              field: 'fields.PlayerPerMatch',
+              title: 'PlayerPerMatch'
+          }, {
+              field: 'fields.PlayerCountInGroupScore',
+              title: 'PlayerCountInGroupScore'
+          }],
+          responseHandler: function (res) {
+              return res;
+          }
+      });
+    $('#match').bootstrapTable({
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Match",
+      pagination:true,
+      search:true,
+      advancedSearch:true,
+      uniqueId:"Match",
+      toolbar:"#toolbar",
+      sortable:true,
+      idTable:"advancedTable",
+      columns: [{
+          field: 'pk',
+          title: '比赛号'
+      }, {
+          field: 'fields.Group',
+          title: '比赛年龄组',
+          sortable: true
+      }, {
+          field: 'fields.Event',
+          title: '项目',
+          sortable: true
+      },  {
+          field: 'fields.StartTime',
+          title: '预期开始时间',
+          sortable: true,
+          editable:"input"
+      }, {
+          field: 'fields.EndTime',
+          title: '预期结束时间',
+          sortable: true,
+          editable:"input"
+      }, {
+          field: 'fields.MatchType',
+          title: '比赛类型',
+          sortable: true
+      }, {
+          field: 'fields.MatchStatus',
+          title: '比赛状态'
+      },{
+          field: 'fields.SubGroup',
+          title: '子组'
+      }],
+      responseHandler: function (res) {
+          return res;
+      }
+  });
+  })
+  </script>
+</body>
+
+</html>
