@@ -370,23 +370,29 @@
     $('#score').bootstrapTable({
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score",
       clickEdit: true,
+      showRefresh:true,
       uniqueId:"Score",
+      sortable:true,
       columns: [{
           field: 'state',
           checkbox:true,
       }, {
           field: 'fields.MatchID',
-          title: '比赛号'
+          title: '比赛号',
+          sortable:true
       }, {
           field: 'fields.ID',
-          title: '裁判身份证'
+          title: '裁判身份证',
+          sortable:true
       }, {
           field: 'fields.PlayerID',
-          title: '运动员号'
+          title: '运动员号',
+          sortable:true
       },{
           field: 'fields.Score',
           title: '成绩',
-          editable:"input"
+          editable:"input",
+          sortable:true
       }],
       responseHandler: function (res) {
           return res;
@@ -395,16 +401,20 @@
     $('#matchjudge').bootstrapTable({
       url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge",
       clickEdit: true,
+      showRefresh:true,
       uniqueId:"MatchJudge",
+      sortable:true,
       columns: [{
           field: 'state',
-          checkbox:true,
+          checkbox:true
       }, {
           field: 'fields.MatchID',
-          title: '比赛号'
+          title: '比赛号',
+          sortable:true
       }, {
           field: 'fields.ID',
           title: '裁判身份证',
+          sortable:true
       }, {
           field: 'fields.IsChief',
           title: '是否为主裁判',
@@ -417,26 +427,34 @@
     $('#playmatch').bootstrapTable({
       url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=PlayMatch",
       clickEdit: true,
+      showRefresh:true,
+      sortable:true,
       uniqueId:"PlayMatch",
       columns: [{
           field: 'state',
           checkbox:true,
       }, {
           field: 'fields.MatchID',
-          title: '比赛号'
+          title: '比赛号',
+          sortable:true
       },{
           field: 'fields.PlayerID',
           title: '运动员号',
+          sortable:true
       },{
           field: 'fields.DScore',
           title: 'D分',
+          editable:"input",
+          sortable:true
       },{
           field: 'fields.PScore',
           title: 'P分',
-          editable:"input"
+          editable:"input",
+          sortable:true,
       },{
           field: 'fields.AllScore',
           title: '总分',
+          sortable:true
       },{
           field: 'fields.ScoreState',
           title: '打分状态'
@@ -492,7 +510,7 @@
         </div>
         <div class="modal-body">
           <div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-          <form class="form-horizontal" method="post" action="Set">
+          <form id ="AddMatch"class="form-horizontal" method="post" action="Set">
             <div class="form-group" style="display:none">
               <label for="Type" class="control-label col-sm-4">操作类型</label>
               <div class="col-sm-6"><input type="text" class="form-control input-md" id="Type" name="Type" value="Add"></div>
@@ -572,6 +590,13 @@
                   <select class="form-control selectpicker show-tick" required multiple id="ParticipatePlayer" name="ParticipatePlayer">
                   </select>
                 </div>
+            </div>
+            <div class="form-group">
+              <label for="ParticipateJudge" class="control-label col-sm-4">裁判</label>
+              <div class="col-sm-6">
+                <select class="form-control selectpicker show-tick" required multiple data-max-options="5" id="ParticipateJudge" name="ParticipateJudge">
+                </select>
+              </div>
             </div>		  
             <div class="form-group">
               <div class="col-xs-6"><button type="submit" class="btn btn-primary pull-right">确认</div>
@@ -597,7 +622,7 @@
         $("#matchjudge").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID="+pk[0]});
       });
     });
-    
+    //参赛选手选项
     $.ajax({  
         // get请求地址  
         url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Player',  
@@ -613,7 +638,7 @@
         $('#ParticipatePlayer').selectpicker('render');
         }
     });
-
+    //主裁判选项
     $.ajax({  
         // get请求地址  
         url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Judge',  
@@ -627,6 +652,23 @@
         // 缺一不可  
         $('#ChiefID').selectpicker('refresh');  
         $('#ChiefID').selectpicker('render');
+        }
+    });
+    //其他裁判选项
+    $.ajax({  
+        // get请求地址  
+        url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Judge',  
+        dataType: "json",  
+        success: function (data) {  
+        for (var i = 0; i < data.length; i++) {
+          if($('#ChiefID').val()!=data[i].pk){
+            $('#ParticipateJudge').append('<option value="' + data[i].pk + '">'+
+            data[i].pk +'</option>');
+          }
+        }
+        // 缺一不可  
+        $('#ParticipateJudge').selectpicker('refresh');  
+        $('#ParticipateJudge').selectpicker('render');
         }
     });
   </script>
