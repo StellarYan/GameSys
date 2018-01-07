@@ -15,6 +15,7 @@
   <!-- BootstrapTables -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-table-master/dist/bootstrap-table.css" %}">
   {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-table-click-edit-row/bootstrap-table-click-edit-row.css" %}">
+  {% load static %}   <link rel="stylesheet" href="{% static "/master/bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
   <!-- Theme style -->
   {% load static %}   <link rel="stylesheet" href="{% static "/master/dist/css/AdminLTE.min.css" %}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -277,6 +278,9 @@
 <script src="{% static "/master/dist/js/adminlte.min.js" %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static "/master/dist/js/demo.js" %}"></script>
+<script src="{% static "/master/bower_components/fastclick/lib/fastclick.js" %}"></script>
+<script src="{% static "master/bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" %}"></script>
+<script src="{% static "master/bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" %}"></script>
 
 <script src="{% static "/master/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" %}"></script>
 <script src="{% static "/master/bower_components/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" %}"></script>
@@ -563,11 +567,11 @@
             </div>
             <div class="form-group">
                 <label for="StartTime" class="control-label col-sm-4">预期开始时间</label>
-                <div class="col-sm-6"><input type="datetime-local" class="form-control input-md" id="StartTime" name="StartTime" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="StartTime" name="StartTime" required data-date-format="yyyy-mm-dd hh:ii"></div>
             </div>
             <div class="form-group">
                 <label for="EndTime" class="control-label col-sm-4">预期结束时间</label>
-                <div class="col-sm-6"><input type="datetime-local" class="form-control input-md" id="EndTime" name="EndTime" required></div>
+                <div class="col-sm-6"><input type="text" class="form-control input-md" id="EndTime" name="EndTime" required data-date-format="yyyy-mm-dd hh:ii"></div>
             </div>
             <div class="form-group">
                 <label for="MatchType" class="control-label col-sm-4">比赛类型</label>
@@ -608,6 +612,8 @@
   </div>
 
   <script>
+    $('#StartTime').datetimepicker();
+    $('#EndTime').datetimepicker();
 
     //显示详细信息
     $(function () {
@@ -620,6 +626,7 @@
         $("#matchjudge").bootstrapTable('refresh',{url:"http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID="+pk[0]});
       });
     });
+
     //参赛选手选项
     $.ajax({  
         // get请求地址  
