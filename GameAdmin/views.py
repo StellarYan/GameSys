@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -278,9 +279,6 @@ def LoginAdmin(request):
             return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
-            
-
-
     
 def IsAdmin(request):
     if request.session.has_key('isAdmin') and request.session['isAdmin'] == 'True':
@@ -400,47 +398,33 @@ def Enroll(request):
             judge = Judge()
             judge.ID = request.POST['judgeID' + str(z)]
             judge.Name = request.POST['judgeName' + str(z)]
-            judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
             judge.TeamName_id = TeamName_id
             judge.save()
             z = z + 1
-        return render(request, os.path.join("master", "EnrollAction.html"))
-    else:
-        return render(request, os.path.join("master", "login.html"))
 
-#跳转到查看赛事表界面
-def EnrollA(request):
-    return render(request, os.path.join("master", "Enroll_Playmatch.html"))
-
-#跳转到查看报名表界面（由查看赛事表界面跳转而来）
-def EnrollAction(request):
-    name = request.COOKIES['TeamName']
-    leaderCount = TeamLeader.objects.filter(TeamName=name).count()
-
-    #如果数据库内有该队的记录，则进入EnrollAction页面
-    if leaderCount > 0:
-        leader = list(TeamLeader.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        #显示报名信息界面
+        leader = list(TeamLeader.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
         leaderName = leader[0]['Name']
         leaderID = leader[0]['ID']
         leaderTel = leader[0]['PhoneNum']
                     
         leaderDict = leader[0]
 
-        medic = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        medic = list(TeamMedic.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
         medicName = medic[0]['Name']
         medicID = medic[0]['ID']
         medicTel = medic[0]['PhoneNum']
                     
         medicDict = medic[0]
 
-        playerList = list(Player.objects.filter(TeamName=name).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+        playerList = list(Player.objects.filter(TeamName=TeamName_id).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
                     
 
-        coachList = list(TeamCoach.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum','Gender'))
+        coachList = list(TeamCoach.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum','Gender'))
                     
 
-        judgeList = list(Judge.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        judgeList = list(Judge.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
                    
 
         return render(request, os.path.join("master", "EnrollAction.html"), {
@@ -456,9 +440,14 @@ def EnrollAction(request):
             'CoachList':  json.dumps(coachList),
             'JudgeList':  json.dumps(judgeList)
         })
+        return render(request, os.path.join("master", "EnrollAction.html"))
     else:
-        return HttpResponse("<h1>发生错误!请重新登录！<h1>")
+        return render(request, os.path.join("master", "login.html"))
 
+def EnrollA(request):
+    return render(request, os.path.join("master", "Enroll_Playmatch.html"))
+def EnrollAction(request):
+    return render(request, os.path.join("master", "EnrollAction.html"))
 
 def ShowScore(request):
     #显示成绩页面
