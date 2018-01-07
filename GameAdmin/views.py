@@ -234,37 +234,14 @@ def LoginAdmin(request):
                 leaderCount = TeamLeader.objects.filter(TeamName=name).count()
                 #如果数据库内有该队的记录，则进入EnrollAction页面
                 if leaderCount > 0:
-                    leader = list(TeamLeader.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
-                    print(leader[0])
-                    leaderDict = leader[0]
-
-                    medic = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
-                    print(medic)
-                    medicDict = medic[0]
-
-                    playerList = list(Player.objects.filter(TeamName=name).values('ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
-                    print(playerList)
-
-                    coachList = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
-                    print(coachList)
-
-                    judgeList = list(Judge.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
-                    print(judgeList)
-
-                    return render(request, os.path.join("master", "EnrollAction.html"),{
-                        'LeaderDict': json.dumps(leaderDict),
-                        'MedicDict':  json.dumps(medicDict),
-                        'PlayerList': json.dumps(playerList),
-                        'CoachList':  json.dumps(coachList),
-                        'JudgeList':  json.dumps(judgeList)
-                    })
+                    return render(request, os.path.join("master", "EnrollAction.html"))
                 else:
                     return render(request, os.path.join("master", "Enroll.html"))
             else:
-                return HttpResponse("<h1>login fail!<h1>")
+                return HttpResponse("<h1>Login Fail!<h1>")
         #登陆失败
         else:
-            return HttpResponse("<h1>login fail!<h1>")
+            return HttpResponse("<h1>Login Fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
     
@@ -395,8 +372,9 @@ def Enroll(request):
         return render(request, os.path.join("master", "login.html"))
 
 def EnrollA(request):
+    return render(request, os.path.join("master", "Enroll_Playmatch.html"))
+def EnrollAction(request):
     return render(request, os.path.join("master", "EnrollAction.html"))
-
 
 def ShowScore(request):
     #显示成绩页面
