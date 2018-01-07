@@ -11,6 +11,7 @@ from django.db.models.fields.related_descriptors import ForwardManyToOneDescript
 from django.http import HttpResponseRedirect  
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.template import loader ,Context
 
 from django.db import connection
 from itertools import chain
@@ -228,6 +229,7 @@ def LoginAdmin(request):
         if count > 0:
             team = Team.objects.get(TeamName=name)
             if team.Password == password:
+                ########################################
                 request.session['TeamName'] = name
                 request.session['Password'] = password
                 request.session.set_expiry(3600)
@@ -447,7 +449,52 @@ def Enroll(request):
 def EnrollA(request):
     return render(request, os.path.join("master", "Enroll_Playmatch.html"))
 def EnrollAction(request):
-    return render(request, os.path.join("master", "EnrollAction.html"))
+    Name = request.session.get("TeamName","")
+    TeamName_id = str(Name)
+    leaderCount = TeamLeader.objects.filter(TeamName=TeamName_id).count()
+    #如果数据库内有该队的记录，则进入EnrollAction页面
+    if leaderCount > 0:
+        #显示报名信息界面
+        leader = list(TeamLeader.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+        leaderName = leader[0]['Name']
+        leaderID = leader[0]['ID']
+        leaderTel = leader[0]['PhoneNum']
+                    
+        leaderDict = leader[0]
+
+        medic = list(TeamMedic.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+        medicName = medic[0]['Name']
+        medicID = medic[0]['ID']
+        medicTel = medic[0]['PhoneNum']
+                    
+        medicDict = medic[0]
+
+        playerList = list(Player.objects.filter(TeamName=TeamName_id).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+                    
+
+        coachList = list(TeamCoach.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum','Gender'))
+                    
+
+        judgeList = list(Judge.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+                   
+
+        return render(request, os.path.join("master", "EnrollAction.html"), {
+            'leaderName': leaderName,
+            'leaderID': leaderID,
+            'leaderTel': leaderTel,
+            'medicName': medicName,
+            'medicID': medicID,
+            'medicTel': medicTel,
+            'LeaderDict': json.dumps(leaderDict),
+            'MedicDict':  json.dumps(medicDict),
+            'PlayerList': json.dumps(playerList),
+            'CoachList':  json.dumps(coachList),
+            'JudgeList':  json.dumps(judgeList)
+        })
+    else:
+        return render(request, os.path.join("master", "login.html"))
+
+    
 
 def ShowScore(request):
     #显示成绩页面
