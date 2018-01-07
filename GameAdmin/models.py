@@ -78,6 +78,7 @@ class Judge(models.Model):
     Password = models.CharField(max_length=20)
     Name = models.CharField(max_length=20)
     PhoneNum = models.CharField(max_length=20)
+    TeamName = models.ForeignKey('Team',on_delete=models.CASCADE,)
     
     
 class Team(models.Model):
