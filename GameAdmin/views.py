@@ -263,7 +263,7 @@ def LoginAdmin(request):
             else:
                 return HttpResponse("<h1>login fail!<h1>")
         #登陆失败
-        elif name == None or password == None:
+        else:
             return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
