@@ -234,8 +234,8 @@ def LoginAdmin(request):
             else:
                 return HttpResponse("<h1>login fail!<h1>")
         #登陆失败
-        elif name == None or password == None:
-            return HttpResponse("<h1>login fail!<h1>")
+        else:
+            return render(request, os.path.join("master", "login.html"))
     else:
         return render(request, os.path.join("master", "login.html"))
             
@@ -361,83 +361,14 @@ def Enroll(request):
             judge.ID = request.POST['judgeID' + str(z)]
             judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
+            judge.TeamName_id = TeamName_id
             z = z + 1
-            judge.save()
+            #judge.save()
         return render(request, os.path.join("master", "EnrollAction.html"))
     else:
-        return render(request, os.path.join("master", "Enroll.html"))
+        return render(request, os.path.join("master", "login.html"))
 
 def EnrollA(request):
-    if request.method == 'POST':
-        response = render(request, os.path.join("master","EnrollAction.html"))
-
-        TeamName = request.session.get('TeamName', None)
-
-        leader = TeamLeader.objects.filter(TeamName=TeamName)
-        leaderName = leader.Name
-        leaderID =leader.ID
-        leaderPhone = leader.PhoneNum
-        response.set_cookie('leaderName', leaderName)
-        response.set_cookie('leaderID', leaderID)
-        response.set_cookie('leaderPhone', leaderPhone)
-
-        medic = TeamMedic.objects.filter(TeamName=TeamName)
-        medicName = medic.Name
-        medicID = medic.ID
-        medicPhone = medic.PhoneNum
-        response.set_cookie('medicName', medicName)
-        response.set_cookie('medicID', medicID)
-        response.set_cookie('medicPhone', medicPhone)
-
-        couchCnt = request.COOKIES["couchCnt"]
-        coachcount = int(couchCnt)
-        coach = TeamCoach.objects.filter(TeamName=TeamName)
-        if coachcount > 0:
-            i = 0
-            for c in coach:
-                coachName = c.Name
-                coachID = c.ID
-                coachPhone = c.PhoneNum
-                coachSex = c.Gender
-                response.set_cookie('coachName'+str(i), coachName)
-                response.set_cookie('coachID'+str(i), coachID)
-                response.set_cookie('coachPhone'+str(i), coachPhone)
-                response.set_cookie('coachSex'+str(i), coachSex)
-                i = i + 1
-
-        judgeCnt = request.COOKIES["judgeCnt"]
-        judgecount = int(judgeCnt)
-        judge = Judge.objects.filter(TeamName=TeamName)
-        if judgecount > 0:
-            j = 0
-            for a in judge:
-                judgeName = a.Name
-                judgeID = a.ID
-                judgePhone = a.PhoneNum
-                response.set_cookie('judgeName'+str(j), judgeName)
-                response.set_cookie('judgeID'+str(j), judgeID)
-                response.set_cookie('judgePhone'+str(j), judgePhone)
-                j = j + 1
-
-        playerCnt = request.COOKIES["judgeCnt"]
-        playercount = int(playerCnt)
-        player = Player.objects.filter(TeamName_id=TeamName)
-        if playercount > 0:
-            z = 0
-            for p in player:
-                playerName = p.Name
-                playerID = p.ID
-                playerAge = p.Age
-                playerGroup = p.Group
-                playerEvent = request.session.get('event'+str(z))
-                playerSex = request.session.get('sex'+str(z))
-                response.set_cookie('playerName'+str(z), playerName)
-                response.set_cookie('playerID'+str(z), playerID)
-                response.set_cookie('playerAge'+str(z), playerAge)
-                response.set_cookie('playerGroup'+str(z), playerGroup)
-                response.set_cookie('playerEvent'+str(z), playerEvent)
-                z = z + 1
-
     return render(request, os.path.join("master", "EnrollAction.html"))
 
 
