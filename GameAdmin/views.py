@@ -1,4 +1,5 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -10,6 +11,7 @@ from django.db.models.fields.related_descriptors import ForwardManyToOneDescript
 from django.http import HttpResponseRedirect  
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.template import loader ,Context
 
 from django.db import connection
 from itertools import chain
@@ -280,9 +282,6 @@ def LoginAdmin(request):
             return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
-            
-
-
     
 def IsAdmin(request):
     if request.session.has_key('isAdmin') and request.session['isAdmin'] == 'True':
@@ -397,52 +396,88 @@ def Enroll(request):
         #多个裁判
         judgeCnt = request.COOKIES['judgeCnt']
         judgecount = int(judgeCnt)
+        print(judgecount)
         z = 1
         while z <= judgecount:
             judge = Judge()
             judge.ID = request.POST['judgeID' + str(z)]
             judge.Name = request.POST['judgeName' + str(z)]
-            judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
             judge.TeamName_id = TeamName_id
             judge.save()
             z = z + 1
-        return render(request, os.path.join("master", "EnrollAction.html"))
-    else:
-        return render(request, os.path.join("master", "login.html"))
 
-#跳转到查看赛事表界面
-def EnrollA(request):
-    return render(request, os.path.join("master", "Enroll_Playmatch.html"))
-
-#跳转到查看报名表界面（由查看赛事表界面跳转而来）
-def EnrollAction(request):
-    name = request.COOKIES['TeamName']
-    leaderCount = TeamLeader.objects.filter(TeamName=name).count()
-
-    #如果数据库内有该队的记录，则进入EnrollAction页面
-    if leaderCount > 0:
-        leader = list(TeamLeader.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        #显示报名信息界面
+        leader = list(TeamLeader.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
         leaderName = leader[0]['Name']
         leaderID = leader[0]['ID']
         leaderTel = leader[0]['PhoneNum']
                     
         leaderDict = leader[0]
 
-        medic = list(TeamMedic.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        medic = list(TeamMedic.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
         medicName = medic[0]['Name']
         medicID = medic[0]['ID']
         medicTel = medic[0]['PhoneNum']
                     
         medicDict = medic[0]
 
-        playerList = list(Player.objects.filter(TeamName=name).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+        playerList = list(Player.objects.filter(TeamName=TeamName_id).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
                     
 
-        coachList = list(TeamCoach.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum','Gender'))
+        coachList = list(TeamCoach.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum','Gender'))
                     
 
-        judgeList = list(Judge.objects.filter(TeamName=name).values('ID', 'Name', 'PhoneNum'))
+        judgeList = list(Judge.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+                   
+
+        return render(request, os.path.join("master", "EnrollAction.html"), {
+            'leaderName': leaderName,
+            'leaderID': leaderID,
+            'leaderTel': leaderTel,
+            'medicName': medicName,
+            'medicID': medicID,
+            'medicTel': medicTel,
+            'LeaderDict': json.dumps(leaderDict),
+            'MedicDict':  json.dumps(medicDict),
+            'PlayerList': json.dumps(playerList),
+            'CoachList':  json.dumps(coachList),
+            'JudgeList':  json.dumps(judgeList)
+        })
+        return render(request, os.path.join("master", "EnrollAction.html"))
+    else:
+        return render(request, os.path.join("master", "login.html"))
+
+def EnrollA(request):
+    return render(request, os.path.join("master", "Enroll_Playmatch.html"))
+def EnrollAction(request):
+    Name = request.session.get("TeamName","")
+    TeamName_id = str(Name)
+    leaderCount = TeamLeader.objects.filter(TeamName=TeamName_id).count()
+    #如果数据库内有该队的记录，则进入EnrollAction页面
+    if leaderCount > 0:
+        #显示报名信息界面
+        leader = list(TeamLeader.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+        leaderName = leader[0]['Name']
+        leaderID = leader[0]['ID']
+        leaderTel = leader[0]['PhoneNum']
+                    
+        leaderDict = leader[0]
+
+        medic = list(TeamMedic.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
+        medicName = medic[0]['Name']
+        medicID = medic[0]['ID']
+        medicTel = medic[0]['PhoneNum']
+                    
+        medicDict = medic[0]
+
+        playerList = list(Player.objects.filter(TeamName=TeamName_id).values('PlayerID','ID', 'Name', 'Age', 'Group', 'Event', 'CultureScore'))
+                    
+
+        coachList = list(TeamCoach.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum','Gender'))
+                    
+
+        judgeList = list(Judge.objects.filter(TeamName=TeamName_id).values('ID', 'Name', 'PhoneNum'))
                    
 
         return render(request, os.path.join("master", "EnrollAction.html"), {
@@ -459,9 +494,446 @@ def EnrollAction(request):
             'JudgeList':  json.dumps(judgeList)
         })
     else:
-        return HttpResponse("<h1>发生错误!请重新登录！<h1>")
+        return render(request, os.path.join("master", "login.html"))
 
+    
 
 def ShowScore(request):
     #显示成绩页面
     return render(request,os.path.join("master","Score.html"))
+
+
+
+
+
+
+
+
+#裁判相关
+def JudgeLoginTest(request):
+    return render(request, os.path.join("master", "Login2.html"))
+
+def LoginJudge(request):
+    if request.method == 'POST':
+        judge = Judge.objects.filter(JudgeAccount=request.POST['JudgeName'], Password=request.POST['password'])
+            #print("******")
+        #judge = Judge.objects.filter(JudgeAccount=request.POST['JudgeName'], Password=request.POST['password'])
+        if len(judge) == 1:
+            return IndexJudge(request, judge)
+        else:
+            return HttpResponse('用户名或密码输入错误')
+    else:
+        judge=Judge.objects.filter(ID=request.session['JudgeID'])
+        print(request.session['JudgeID'])
+        print(judge)
+        return IndexJudge(request, judge)
+
+def IndexJudge(request,judge):
+    #if request.method == 'POST':
+        request.session['JudgeID']=judge[0].ID
+        judge=Judge.objects.filter(ID=request.session['JudgeID'])
+        #request.session['judge'] = judge
+        #if not any(judge):
+         #   judge=request.session['judge']
+        c = 0
+        a = Match.objects.filter(MatchStatus="Running")
+        for i in a:
+            b = MatchJudge.objects.filter(MatchID_id=i.MatchID)
+            for j in b:
+                if j.ID_id == judge[0].ID:
+                    c = 1
+        if c == 0:
+            return HttpResponse('当前没有您的比赛');
+        else:
+            if len(Match.objects.filter(ChiefID_id=judge[0].ID)) == 0:
+                a = json.dumps(2)
+                pobjects1 = PlayMatch.objects.filter(ScoreState=1)
+                if (len(pobjects1)==0):
+                    return HttpResponse('您的评分以通过')
+                else:
+                    pobjects=pobjects1[0]
+                PlayerID = pobjects.PlayerID_id
+                PlayerName = Player.objects.get(PlayerID=PlayerID).Name
+                MatchID = pobjects.MatchID_id
+                JudgeID = judge[0].ID
+                score = Score.objects.get(MatchID_id=MatchID, PlayerID_id=PlayerID, ID_id=judge[0].ID).Score
+                Event = Match.objects.get(MatchID=MatchID).Event
+                ScoreAccept = Score.objects.get(MatchID_id=MatchID, PlayerID_id=PlayerID, ID_id=judge[0].ID).ScoreAccept
+                list = {'Event': Event, 'PlayerName': PlayerName, 'MatchID': MatchID,
+                        'PlayerID': PlayerID, 'Score': int(score),
+                        'ScoreAccept': ScoreAccept}
+                request.session['ID_id'] = judge[0].ID
+                request.session['MatchID_id'] = MatchID
+                request.session['PlayerID'] = PlayerID
+                request.session['Event'] = Event
+                request.session['PlayerName'] = PlayerName
+                request.session['a'] = a
+
+            else:
+                # list = {"Event": "单杠", "PlayerName": "张三", "MatchID": 00, "PlayerID": 00, "ScoreState": "Running",
+                #           "Score1": 3, "ScoreAccept1": 0, "Score2": 4, "ScoreAccept2": 1, "Score3": 5,
+                #          "ScoreAccept3": 2, "Score4": "-1", "ScoreAccept4": 0, "Score5": "-1", "ScoreAccept5": 0, }
+                a = json.dumps(1)
+                pobjects = PlayMatch.objects.filter(ScoreState=1)
+                if (len(pobjects) == 0):
+                    return HttpResponse('正在准备下一位运动员的比赛')
+                pobjects = pobjects[0]
+                MatchID = pobjects.MatchID_id
+                Event = Match.objects.get(MatchID=MatchID).Event
+                PlayerID = pobjects.PlayerID_id
+                PlayerName = Player.objects.get(PlayerID=PlayerID).Name
+                Scorelist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by(
+                    'ID_id').values_list('Score')
+                JudgeIDlist = MatchJudge.objects.filter(MatchID_id=MatchID, IsChief=0).order_by('ID_id').values_list(
+                    'ID_id')
+                ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by(
+                    'ID_id').values_list('ScoreAccept')
+                request.session['mainID_id'] = judge[0].ID
+                request.session['mainMatchID_id'] = MatchID
+                request.session['mainPlayerID'] = PlayerID
+                request.session['mainEvent'] = Event
+                request.session['mainPlayerName'] = PlayerName
+                request.session['maina'] = a
+                request.session['a']=a
+                list = {'Event': Event, 'PlayerName': PlayerName, 'MatchID': MatchID,
+                        'PlayerID': PlayerID, 'ScoreState': "Running",
+                        'Score1': Scorelist[0], 'ScoreAccept1': ScoreAcceptlist[0], 'JudgeID1': JudgeIDlist[0],
+                        'Score2': Scorelist[1], 'ScoreAccept2': ScoreAcceptlist[1], 'JudgeID2': JudgeIDlist[1],
+                        'Score3': Scorelist[2], 'ScoreAccept3': ScoreAcceptlist[2], 'JudgeID3': JudgeIDlist[2],
+                        'Score4': Scorelist[3], 'ScoreAccept4': ScoreAcceptlist[3], 'JudgeID4': JudgeIDlist[3],
+                        'Score5': Scorelist[4], 'ScoreAccept5': ScoreAcceptlist[4], 'JudgeID5': JudgeIDlist[4]}
+                request.session['mainlist'] = list
+            return render(request, "master/pages/Index2.html", {'flag': a, 'list': json.dumps(list)})
+
+def submitScore(request):
+    if request.method == 'POST':
+        score1 = request.POST['SScore']
+        PlayerID=request.session['PlayerID']
+        ID_id=request.session['ID_id']
+        Event=request.session['Event']
+        MatchID_id=request.session['MatchID_id']
+        PlayerName=request.session['PlayerName']
+        a=request.session['a']
+        obj=Score.objects.get(PlayerID=PlayerID,MatchID=MatchID_id,ID_id=ID_id)
+        obj.Score=int(score1)
+        obj.ScoreAccept=0
+        obj.save()
+        list = {'Event': Event, 'PlayerName': PlayerName, 'MatchID': MatchID_id, 'PlayerID': PlayerID, 'Score': score1,
+                'ScoreAccept': 0}
+        print(score1)
+        print("**************")
+        #把分数写入数据库
+        # 这里查询一下flag和list的信息，然后把两个值传回Index2.html
+        # return render(request, os.path.join("master", "Index2.html"), {'list': json.dumps(list), 'flag': 2})
+        return render(request, "master/pages/Index2.html", {'flag': a, 'list': json.dumps(list)})
+    else:
+        return  HttpResponseRedirect('http://127.0.0.1:8000/GameAdmin/LoginJudge')
+
+
+# 主裁判提交P分D分
+def xsubmitPD(request):
+    print "submitPD"
+    if request.method == 'POST':
+        PScore = request.POST['PScore']
+        DScore = request.POST['DScore']
+        #value1 = request.COOKIES["PScore"]
+        #value2 = request.COOKIES["DScore"]
+        MatchID=request.session['mainMatchID_id']
+        PlayerID=request.session['mainPlayerID']
+        Event=request.session['mainEvent']
+        PlayerName=request.session['PlayerName']
+        list=request.session['mainlist']
+        a=request.session['a']
+        obj=PlayMatch.objects.get(PlayerID_id=PlayerID,MatchID_id=MatchID)
+        obj.DScore=int(DScore)
+        obj.PScore=int(PScore)
+        obj.ScoreState=2
+        obj.save()
+        a=0
+        # 写数据
+        return render(request, "master/pages/Index2.html", {'flag': a, 'list': json.dumps(list)})
+
+
+
+def Reject(request):
+    #拒绝裁判一的分数，想数据库执行写操作
+    #拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID1"]
+    Score1 = request.COOKIES["Score1"]
+    ScoreAccept = request.COOKIES["ScoreAccept1"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=1
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+def Accept(request):
+    print "拒绝1"
+    #接受裁判一的分数，执行写操作
+    # 拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID1"]
+    Score1 = request.COOKIES["Score1"]
+    ScoreAccept = request.COOKIES["ScoreAccept1"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=2
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+
+#裁判二
+def Reject2(request):
+    #拒绝裁判二的分数，想数据库执行写操作
+    #拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID2"]
+    Score1 = request.COOKIES["Score2"]
+    ScoreAccept = request.COOKIES["ScoreAccept2"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=1
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+def Accept2(request):
+    print "拒绝2"
+    #接受裁判二的分数，执行写操作
+    # 拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID2"]
+    Score1 = request.COOKIES["Score2"]
+    ScoreAccept = request.COOKIES["ScoreAccept2"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=2
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+
+#裁判三
+def Reject3(request):
+    #拒绝裁判二的分数，想数据库执行写操作
+    #拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID3"]
+    Score1 = request.COOKIES["Score3"]
+    ScoreAccept = request.COOKIES["ScoreAccept3"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=1
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+def Accept3(request):
+    print "拒绝3"
+    #接受裁判二的分数，执行写操作
+    # 拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID3"]
+    Score1 = request.COOKIES["Score3"]
+    ScoreAccept = request.COOKIES["ScoreAccept3"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=2
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+
+#裁判四
+def Reject4(request):
+    #拒绝裁判二的分数，想数据库执行写操作
+    #拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID4"]
+    Score1 = request.COOKIES["Score4"]
+    ScoreAccept = request.COOKIES["ScoreAccept4"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=1
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+def Accept4(request):
+    print "拒绝4"
+    #接受裁判二的分数，执行写操作
+    # 拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID4"]
+    Score1 = request.COOKIES["Score4"]
+    ScoreAccept = request.COOKIES["ScoreAccept4"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=2
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+
+#裁判五
+def Reject5(request):
+    #拒绝裁判二的分数，想数据库执行写操作
+    #拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID5"]
+    Score1 = request.COOKIES["Score5"]
+    ScoreAccept = request.COOKIES["ScoreAccept5"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1  )
+    obj.ScoreAccept=1
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+def Accept5(request):
+    #接受裁判二的分数，执行写操作
+    # 拿到flag和list，返回Index2.html
+    MatchID = request.COOKIES["MatchID"]
+    PlayerID = request.COOKIES["PlayerID"]
+    JudgeID = request.COOKIES["JudgeID5"]
+    Score1 = request.COOKIES["Score5"]
+    ScoreAccept = request.COOKIES["ScoreAccept5"]
+    obj = Score.objects.get(PlayerID=PlayerID, MatchID=MatchID,ID_id=JudgeID)
+    obj.Score = int(Score1)
+    obj.ScoreAccept=2
+    obj.save()
+    list = request.session['mainlist']
+    ScoreAcceptlist = Score.objects.filter(MatchID_id=MatchID, PlayerID_id=PlayerID).order_by('ID_id').values_list(
+        'ScoreAccept')
+    list['ScoreAccept1']=ScoreAcceptlist[0]
+    list['ScoreAccept2'] = ScoreAcceptlist[1]
+    list['ScoreAccept3'] = ScoreAcceptlist[2]
+    list['ScoreAccept4'] = ScoreAcceptlist[3]
+    list['ScoreAccept5'] = ScoreAcceptlist[4]
+    return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
+
+
+def JudgeIndex(request):
+    if request.method == 'GET':
+        list=request.session['mainlist']
+        ID=request.session['ID_id']
+        judge=Judge.objects.get(ID=ID)
+        try:
+            c = 0
+            a = Match.objects.filter(MatchStatus="Running")
+            for i in a:
+                b = MatchJudge.objects.filter(MatchID_id=i.MatchID)
+                for j in b:
+                    if j.ID_id == judge.ID:
+                        c = 1
+            if (c==0):
+                return HttpResponse("当前没有您的比赛")
+            else:
+                if len(Match.objects.filter(CheifID_id=ID))==1:
+                    a=1
+                else :
+                    a=2
+        except:
+            pass
+        finally:
+            pass
+        list['a']=a
+        data = serializers.serialize("json", list)
+        """"
+        tableName = request.GET['Table']
+        target_table = TableDic[tableName]
+        queryset = target_table.objects.all()
+        try:
+            matchid = request.GET['MatchID']
+            queryset = target_table.objects.filter(MatchID__exact=matchid)
+        except:
+            pass
+        finally:
+            pass
+
+        data = serializers.serialize("json", queryset)
+        """
+        jdata = json.loads(data)
+        return JsonResponse(jdata, safe=False)
