@@ -44,7 +44,6 @@
                 Name:getValue('姓名',table.$data.thId+1,table.options.uniqueId),
                 PhoneNum:getValue('电话',table.$data.thId+1,table.options.uniqueId),
                 Gender:getValue('性别',table.$data.thId+1,table.options.uniqueId),
-                SubGroup:getValue('子组',table.$data.thId+1,table.options.uniqueId),
                 PlayerID:getValue('运动员号',table.$data.thId+1,table.options.uniqueId),
                 Age:getValue('年龄',table.$data.thId+1,table.options.uniqueId),
                 Group:getValue('比赛年龄组',table.$data.thId+1,table.options.uniqueId),
