@@ -48,6 +48,8 @@
                 CultureScore:getValue('文化成绩',table.$data.thId+1,table.options.uniqueId),
                 MatchID:getValue('比赛号',table.$data.thId+1,table.options.uniqueId),
                 Event:getValue('项目',table.$data.thId+1,table.options.uniqueId),
+                PScore:getValue('P分',table.$data.thId+1,table.options.uniqueId),
+                DScore:getValue('D分',table.$data.thId+1,table.options.uniqueId),
                 ChiefID:getValue('主裁判身份证',table.$data.thId+1,table.options.uniqueId),
                 StartTime:getValue('预期开始时间',table.$data.thId+1,table.options.uniqueId),
                 EndTime:getValue('预期结束时间',table.$data.thId+1,table.options.uniqueId),
@@ -131,6 +133,9 @@
         }
         //为当前页面表格的数量
         var colindex = $('.table').eq(tableTotal-1).find("[data-field]:contains('"+property+"')").index();
+        if (colindex==-1&&property=='身份证号') {
+            var colindex = $('.table').eq(tableTotal-1).find("[data-field]:contains('裁判身份证')").index();
+        }
         var cells = document.getElementsByClassName('table')[tableTotal-1].rows[rowindex].cells
         
         if (colindex == -1) {
