@@ -174,6 +174,8 @@ def Set(request):
             tobj=GetTargetObj(request,target_table)
             for para in request.POST:
                 SetColumn(tobj,para,request.POST[para])
+            print(tobj.MatchID_id)
+            print(tobj.PlayerID_id)
             tobj.save()
         elif(request.POST['Type']=='Add'):
             newobj = target_table()
