@@ -630,7 +630,11 @@ def submitScore(request):
 
 # 主裁判提交P分D分
 def xsubmitPD(request):
+<<<<<<< HEAD
     print("submitPD")
+=======
+    print "submitPD"
+>>>>>>> 16d5d3ec51fcc24016aaeff1709478a2d40377c6
     if request.method == 'POST':
         PScore = request.POST['PScore']
         DScore = request.POST['DScore']
@@ -677,7 +681,11 @@ def Reject(request):
 
 
 def Accept(request):
+<<<<<<< HEAD
     print("拒绝1")
+=======
+    print "拒绝1"
+>>>>>>> 16d5d3ec51fcc24016aaeff1709478a2d40377c6
     #接受裁判一的分数，执行写操作
     # 拿到flag和list，返回Index2.html
     MatchID = request.COOKIES["MatchID"]
@@ -725,7 +733,11 @@ def Reject2(request):
     return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
 
 def Accept2(request):
+<<<<<<< HEAD
     print("拒绝2")
+=======
+    print "拒绝2"
+>>>>>>> 16d5d3ec51fcc24016aaeff1709478a2d40377c6
     #接受裁判二的分数，执行写操作
     # 拿到flag和list，返回Index2.html
     MatchID = request.COOKIES["MatchID"]
@@ -774,7 +786,11 @@ def Reject3(request):
 
 
 def Accept3(request):
+<<<<<<< HEAD
     print("拒绝3")
+=======
+    print "拒绝3"
+>>>>>>> 16d5d3ec51fcc24016aaeff1709478a2d40377c6
     #接受裁判二的分数，执行写操作
     # 拿到flag和list，返回Index2.html
     MatchID = request.COOKIES["MatchID"]
@@ -822,7 +838,11 @@ def Reject4(request):
     return render(request, "master/pages/Index2.html", {'flag': 1, 'list': json.dumps(list)})
 
 def Accept4(request):
+<<<<<<< HEAD
     print("拒绝4")
+=======
+    print "拒绝4"
+>>>>>>> 16d5d3ec51fcc24016aaeff1709478a2d40377c6
     #接受裁判二的分数，执行写操作
     # 拿到flag和list，返回Index2.html
     MatchID = request.COOKIES["MatchID"]
