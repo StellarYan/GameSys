@@ -167,6 +167,7 @@ def GenerateFinal(request):
 
         
 def Set(request):
+    
     if not IsAdmin(request):
         return HttpResponse('<h1>please login<h1>')
     print('-------Start Set--------')
