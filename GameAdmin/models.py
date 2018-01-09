@@ -120,6 +120,9 @@ def GetTargetObj(request,target_table):
         #objs = target_table.objects.all()
         my_filter = {}
         for tid in target_table._meta.unique_together[0]:
+            print("LLLLLLL")
+            print(tid)
+            print(request.POST[tid])
             my_filter[tid] = request.POST[tid]
         objs=target_table.objects.filter(**my_filter)
         return objs.first()
