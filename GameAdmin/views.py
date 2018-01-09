@@ -277,7 +277,7 @@ def LoginAdmin(request):
             else:
                 return HttpResponse("<h1>login fail!<h1>")
         #登陆失败
-        elif name == None or password == None:
+        else:
             return HttpResponse("<h1>login fail!<h1>")
     else:
         return render(request, os.path.join("master", "login.html"))
@@ -388,6 +388,7 @@ def Enroll(request):
             coach.PhoneNum = request.POST['couchTel' + str(a)]
             coach.Name = request.POST['couchName' + str(a)]
             coach.Gender = request.POST['couchSex' + str(a)]
+            TeamName_id = request.session.get('TeamName', None)
             coach.TeamName_id = TeamName_id
             coach.save()
             a = a + 1
@@ -402,6 +403,7 @@ def Enroll(request):
             judge.ID = request.POST['judgeID' + str(z)]
             judge.Name = request.POST['judgeName' + str(z)]
             judge.PhoneNum = request.POST['judgeTel' + str(z)]
+            TeamName_id = request.session.get('TeamName', None)
             judge.TeamName_id = TeamName_id
             judge.save()
             z = z + 1
