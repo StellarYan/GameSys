@@ -185,19 +185,21 @@ def Set(request):
             newobj.save()
             #some special process to Match Table
             if(request.POST['Table']=='Match'):
-                matchjudge = TableDic['MatchJudge']()
-                playmatch = TableDic['PlayMatch']()
                 for var in request.POST.getlist('ParticipateJudge'):
+                    matchjudge = TableDic['MatchJudge']()
+                    print(var)
                     SetColumn(matchjudge,'ID',var)
                     SetColumn(matchjudge,'MatchID',request.POST['MatchID'])
                     SetColumn(matchjudge,'IsChief',0)
+                    print(matchjudge.ID_id)
                     matchjudge.save()
-
+                matchjudge = TableDic['MatchJudge']()
                 SetColumn(matchjudge,'ID',request.POST['ChiefID_id'])
                 SetColumn(matchjudge,'MatchID',request.POST['MatchID'])
                 SetColumn(matchjudge,'IsChief',1)
                 matchjudge.save()
                 for var in request.POST.getlist('ParticipatePlayer'):
+                    playmatch = TableDic['PlayMatch']()
                     SetColumn(playmatch,'MatchID',request.POST['MatchID'])
                     SetColumn(playmatch,'PlayerID',var)
                     SetColumn(playmatch,'ScoreState',0)
