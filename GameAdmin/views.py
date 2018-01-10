@@ -149,7 +149,23 @@ def GenerateFinal(request):
             newMatch.Group = grp
             newMatch.Event = eve
             newMatch.MatchType=2
+            newMatch.MatchStatus='Waiting'
             newMatch.save()
+            #添加裁判
+            tmp = 0
+            for judge in TableDic['Judge'].objects.all():
+                #print(judge.ID)
+                newJudge=MatchJudge()
+                newJudge.MatchID = newMatch
+                newJudge.ID = judge
+                if tmp == 5:
+                    newJudge.IsChief = 'True'
+                    newJudge.save()
+                    break
+                newJudge.IsChief = 'False'
+                newJudge.save()
+                tmp = tmp + 1
+                pass
             for j in range(0,FinalPlayerCount):
                 pm = PlayMatch()
                 pm.MatchID = newMatch
@@ -158,7 +174,7 @@ def GenerateFinal(request):
                 pm.PScore=0
                 pm.AllScore=0
                 pm.ScoreState=0
-                pm.save();
+                pm.save()
     return HttpResponse("成功生成决赛")
                 
              
