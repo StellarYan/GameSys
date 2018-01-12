@@ -214,14 +214,12 @@
               <br/>
               <div id="toolbar">
                   <button id="delete" class="btn btn-danger">删除</button>
-                  <button id="create" 
-                  class="btn btn-default"
-                  data-toggle="modal" 
-                  data-target="#Modal-Match">
+                  <button id="create" class="btn btn-default" data-toggle="modal" data-target="#Modal-Match">
                   添加
                   </button>
                   <button id="startgame" class="btn btn-primary">开始比赛</button>
                   <button id="details" class="btn btn-info">详细</button>
+                  <button id="generatefinal" class="btn btn-danger">安排决赛</button>
               </div>
               <table id="match" class="table table-bordered table-striped">
               </table>
@@ -381,7 +379,7 @@
       }
     });
     $('#score').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=Score&MatchID=1",
       clickEdit: true,
       showRefresh:true,
       toolbar:"#title-score",
@@ -413,7 +411,7 @@
       }
     });
     $('#matchjudge').bootstrapTable({
-      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge",
+      url: "http://"+window.location.hostname+"/GameAdmin/GetJSON?Table=MatchJudge&MatchID=1",
       clickEdit: true,
       showRefresh:true,
       uniqueId:"MatchJudge",
@@ -534,6 +532,10 @@
       );
     });
   });
+  //安排决赛
+  $('#generatefinal').click(function(){
+    $.post("http://"+window.location.hostname+"/GameAdmin/GenerateFinal");
+  });
 </script>
 
   <div class="modal fade" id="Modal-Match" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -560,12 +562,12 @@
             </div>
             <div class="form-group">
               <label for="MatchID" class="control-label col-sm-4">比赛号</label>
-              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchID" name="MatchID" required minlength="5"></div>
+              <div class="col-sm-6"><input type="text" class="form-control input-md" id="MatchID" name="MatchID" required></div>
             </div>
             <div class="form-group">
                 <label for="Group" class="control-label col-sm-4">比赛年龄组</label>
                 <div class="col-sm-6">
-                  <select class="form-control selectpicker show-tick" name="Group" required>
+                  <select class="form-control selectpicker show-tick" id="Group" name="Group" required>
                     <option value="Male1">Male1</option>
                     <option value="Male2">Male2</option>
                     <option value="Male3">Male3</option>
@@ -611,7 +613,6 @@
                 <div class="col-sm-6">
                 <select class="form-control selectpicker show-tick" id="MatchType" name="MatchType" required>
                   <option value="1">1. 初赛</option>
-                  <option value="2">2. 决赛</option>
                 </select>
                 </div>
             </div>
@@ -648,7 +649,7 @@
     $('#StartTime').datetimepicker();
     $('#EndTime').datetimepicker();
 
-    //显示详细信息
+    //显示单场比赛详细信息
     $(function () {
       $('#details').click(function () {
         var pk = $.map($("#match").bootstrapTable('getSelections'), function (row) {
@@ -661,21 +662,63 @@
     });
 
     //参赛选手选项
-    $.ajax({  
-        // get请求地址  
-        url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Player',  
-        dataType: "json",  
-        success: function (data) {  
-        var optArr = [];
-        for (var i = 0; i < data.length; i++) {
-          $('#ParticipatePlayer').append('<option value="' + data[i].pk + '">'+
-          data[i].fields.Name +'</option>');
-        }
-        // 缺一不可  
-        $('#ParticipatePlayer').selectpicker('refresh');  
-        $('#ParticipatePlayer').selectpicker('render');
-        }
+    var playerSelect = function(){
+      $.ajax({  
+        // // get请求地址  
+        // url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Match',
+        // dataType: "json",  
+        // success: function (data) {
+        //   data.forEach(element => {
+        //     if (
+        //       element.fields.Event==$("#Event").val()&&
+        //       element.fields.Group==$("#Group").val()&&
+        //       element.fields.SubGroup==$("#SubGroup").val()&&
+        //       element.fields.MatchType==$("#MatchType").val()
+        //     ) {
+        //       var matchid = element.fields.MatchID;
+        //       $.ajax({  
+        //         // get请求地址  
+                url: 'http://'+window.location.hostname+'/GameAdmin/GetJSON?Table=Player',
+                dataType: "json",
+                success: function (data) {
+                  // var canDisplay = function (player) {
+                  //   if((player.MatchID==$('#MatchID').val()))
+                  //       return false;//如果该运动员已经被安排到某个项目的某个子组下，就不能重复添加。
+                  //   else return true;
+                  // }
+                  $('#ParticipatePlayer').empty();
+                  for (var i = 0; i < data.length; i++) {
+                    // var player = data[i];
+                    // // if (canDisplay(player)) {
+                      $('#ParticipatePlayer').append('<option value="' + data[i].pk + '">'+
+                      data[i].fields.Name +'</option>');
+                    // }
+                  }
+                  // 缺一不可  
+                  $('#ParticipatePlayer').selectpicker('refresh');  
+                  $('#ParticipatePlayer').selectpicker('render');
+                }
+        //       });
+        //     }
+        //   });
+        // }
+      });
+    }
+    
+    playerSelect();
+    $("#Group").change(function () {
+      playerSelect();
     });
+    $("#Event").change(function () {
+      playerSelect();
+    });
+    $("#SubGroup").change(function () {
+      playerSelect();
+    });
+    $("#MatchType").change(function () {
+      playerSelect();
+    });
+
     //主裁判选项
     $.ajax({  
         // get请求地址  
@@ -702,29 +745,25 @@
             if($('#ChiefID').val()!=data[i].pk){
                 $('#ParticipateJudge').append('<option value="' + data[i].pk + '">'+
                 data[i].pk +'</option>');
-              }
+            }
           }
-          // 缺一不可  
+          // 刷新下拉选框，缺一不可  
           $('#ParticipateJudge').selectpicker('refresh');  
           $('#ParticipateJudge').selectpicker('render');
         },
-        error:function(res){$.ajax(otherjudgeitem)}
+        error:function(res){$.ajax(otherjudgeitem);}
     };
+    //初始化分裁判下拉选框
     $.ajax(otherjudgeitem);
-
+    //当主裁判改变时，
     $("#ChiefID").change(function () {
       $('#ParticipateJudge').empty();
-      data = $.ajax(otherjudgeitem);
-      for (var i = 0; i < data.length; i++) {
-        if($('#ChiefID').val()!=data[i].pk){
-          $('#ParticipateJudge').append('<option value="' + data[i].pk + '">'+
-          data[i].pk +'</option>');
-        }
-      }
+      $.ajax(otherjudgeitem);
       // 缺一不可  
       $('#ParticipateJudge').selectpicker('refresh');  
       $('#ParticipateJudge').selectpicker('render');
-    })
+    });
   </script>
+
 </body>
 </html>

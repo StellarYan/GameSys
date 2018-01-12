@@ -35,28 +35,28 @@
             $.post("Set",{
                 Type:"Upgrade",
                 Table: table.options.uniqueId,
-                TeamName: getValue('小队名称',table.$data.thId+1,table.options.uniqueId),
-                TeamAccount: getValue('小队账号',table.$data.thId+1,table.options.uniqueId),
-                Password: getValue('密码',table.$data.thId+1,table.options.uniqueId),
-                Score: getValue('成绩',table.$data.thId+1,table.options.uniqueId),
-                IsChief:getValue('是否为主裁判',table.$data.thId+1,table.options.uniqueId),
-                ID:getValue('身份证号',table.$data.thId+1,table.options.uniqueId),
-                Name:getValue('姓名',table.$data.thId+1,table.options.uniqueId),
-                PhoneNum:getValue('电话',table.$data.thId+1,table.options.uniqueId),
-                Gender:getValue('性别',table.$data.thId+1,table.options.uniqueId),
-                PlayerID:getValue('运动员号',table.$data.thId+1,table.options.uniqueId),
-                Age:getValue('年龄',table.$data.thId+1,table.options.uniqueId),
-                Group:getValue('比赛年龄组',table.$data.thId+1,table.options.uniqueId),
-                CultureScore:getValue('文化成绩',table.$data.thId+1,table.options.uniqueId),
-                MatchID:getValue('比赛号',table.$data.thId+1,table.options.uniqueId),
-                Event:getValue('项目',table.$data.thId+1,table.options.uniqueId),
-                PScore:getValue('P分',table.$data.thId+1,table.options.uniqueId),
-                DScore:getValue('D分',table.$data.thId+1,table.options.uniqueId),
-                ChiefID:getValue('主裁判身份证',table.$data.thId+1,table.options.uniqueId),
-                StartTime:getValue('预期开始时间',table.$data.thId+1,table.options.uniqueId),
-                EndTime:getValue('预期结束时间',table.$data.thId+1,table.options.uniqueId),
-                JudgeAccount:getValue('裁判账号',table.$data.thId+1,table.options.uniqueId),
-				MatchType:getValue('比赛类型',table.$data.thId+1,table.options.uniqueId)
+                TeamName: getValue('小队名称',table.$data.thId,table.options.uniqueId),
+                TeamAccount: getValue('小队账号',table.$data.thId,table.options.uniqueId),
+                Password: getValue('密码',table.$data.thId,table.options.uniqueId),
+                Score: getValue('成绩',table.$data.thId,table.options.uniqueId),
+                IsChief:getValue('是否为主裁判',table.$data.thId,table.options.uniqueId),
+                ID:getValue('身份证号',table.$data.thId,table.options.uniqueId),
+                Name:getValue('姓名',table.$data.thId,table.options.uniqueId),
+                PhoneNum:getValue('电话',table.$data.thId,table.options.uniqueId),
+                Gender:getValue('性别',table.$data.thId,table.options.uniqueId),
+                PlayerID:getValue('运动员号',table.$data.thId,table.options.uniqueId),
+                Age:getValue('年龄',table.$data.thId,table.options.uniqueId),
+                Group:getValue('比赛年龄组',table.$data.thId,table.options.uniqueId),
+                CultureScore:getValue('文化成绩',table.$data.thId,table.options.uniqueId),
+                MatchID:getValue('比赛号',table.$data.thId,table.options.uniqueId),
+                Event:getValue('项目',table.$data.thId,table.options.uniqueId),
+                PScore:getValue('P分',table.$data.thId,table.options.uniqueId),
+                DScore:getValue('D分',table.$data.thId,table.options.uniqueId),
+                ChiefID:getValue('主裁判身份证',table.$data.thId,table.options.uniqueId),
+                StartTime:getValue('预期开始时间',table.$data.thId,table.options.uniqueId),
+                EndTime:getValue('预期结束时间',table.$data.thId,table.options.uniqueId),
+                JudgeAccount:getValue('裁判账号',table.$data.thId,table.options.uniqueId),
+				MatchType:getValue('比赛类型',table.$data.thId,table.options.uniqueId)
             });
             $('.table').bootstrapTable('updateRow', {
                 index: table.$data.thId,
@@ -138,19 +138,21 @@
         if (colindex==-1&&property=='身份证号') {
             var colindex = $('.table').eq(tableTotal-1).find("[data-field]:contains('裁判身份证')").index();
         }
-        var cells = document.getElementsByClassName('table')[tableTotal-1].rows[rowindex].cells
+        var table = document.getElementsByClassName('table')[tableTotal-1];
+        var row = $(table).find('[data-index="'+rowindex+'"]')[0];
+        var cell = $(row)[0].children[colindex];
         
         if (colindex == -1) {
             var cellcontent = "";//当页面上不存在这个内容时
         }
-        else if ($(cells[colindex]).find('input').length!=0) {
-            var cellcontent = $(cells[colindex]).find('input').first().val();//当单元格为输入框时;
+        else if ($(cell).find('input').length!=0) {
+            var cellcontent = $(cell).find('input').val();//当单元格为输入框时;
         }
-        else if($(cells[colindex]).find('select').length!=0) {
-            var cellcontent = $(cells[colindex]).find('select').first().val();//当单元格为下拉框时；
+        else if($(cell).find('select').length!=0) {
+            var cellcontent = $(cell).find('select').val();//当单元格为下拉框时；
         }
         else {
-            var cellcontent = cells[colindex].innerHTML//当单元格不可编辑时
+            var cellcontent = $(cell)[0].innerHTML//当单元格不可编辑时
         }
         //获取单元格内容，其中row为行序，col为列序
         return cellcontent;
